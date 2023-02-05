@@ -1,4 +1,4 @@
-# project-bastiagueiro-client
+# event-rider-client
 
 ## Project setup
 ```
