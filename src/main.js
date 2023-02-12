@@ -1,4 +1,4 @@
-import "bootstrap/dist/css/bootstrap.css";
+import "../src/theme/bootswatch/dist/cerulean/bootstrap.css";
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";

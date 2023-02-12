@@ -10,6 +10,7 @@ import LoginForm from "@/components/LoginForm.vue";
 
 import auth from "@/common/auth";
 import { getStore } from "@/common/store";
+import SignupForm from "@/components/SignupForm";
 
 const routes = [
   {
@@ -17,6 +18,12 @@ const routes = [
     name: "Login",
     component: LoginForm,
     meta: { public: true, isLoginPage: true },
+  },
+  {
+    path: "/signup",
+    name: "Signup",
+    component: SignupForm,
+    meta: { public: true, isSignupPage: true },
   },
   {
     path: "/",

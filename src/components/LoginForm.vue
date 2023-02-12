@@ -1,16 +1,18 @@
 <template>
-  <form>
-    <div class="mb-3">
-      <label for="login" class="form-label">Nombre del usuario</label>
+  <h1 class="mt-3">Log In</h1>
+  <form class="w-25 m-auto mt-2">
+    <div class="mb-2 text-start">
+      <label for="email" class="form-label">Email Address</label>
+      <!-- TODO: he cambiado 'login' por 'email', cambiarlo en donde más haga falta (en el backend seguramente) -->
       <input
         type="text"
         class="form-control"
-        id="login"
-        v-model="loginForm.login"
+        id="email"
+        v-model="loginForm.email"
       />
     </div>
-    <div class="mb-3">
-      <label for="password" class="form-label">Contraseña</label>
+    <div class="mb-2 text-start">
+      <label for="password" class="form-label">Password</label>
       <input
         type="password"
         class="form-control"
@@ -18,7 +20,7 @@
         v-model="loginForm.password"
       />
     </div>
-    <button type="submit" class="btn btn-primary" @click.prevent="login()">
+    <button type="submit" class="btn btn-primary mt-2" @click.prevent="login()">
       Submit
     </button>
   </form>
@@ -31,7 +33,7 @@ export default {
   data() {
     return {
       loginForm: {
-        login: null,
+        email: null,
         password: null,
       },
     };

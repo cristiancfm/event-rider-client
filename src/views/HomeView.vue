@@ -5,7 +5,7 @@
     <img
       alt="Landing pictures"
       src="../assets/landing-pics.png"
-      width="600"
+      width="500"
       style="margin: 10px"
     />
     <p>concerts - meetups - live shows - exhibitions - more...</p>
@@ -14,7 +14,6 @@
       <li><i class="bi bi-heart-fill"></i> Create yours</li>
       <li><i class="bi bi-envelope-fill"></i> Get updates</li>
     </ul>
-    <h2>Start Now!</h2>
     <router-link class="btn btn-secondary" to="/events" active-class="active">
       Browse Events
     </router-link>

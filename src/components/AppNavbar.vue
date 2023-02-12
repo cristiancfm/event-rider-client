@@ -1,11 +1,11 @@
 <template>
-  <nav class="navbar navbar-expand-lg bg-light">
+  <nav class="navbar navbar-expand-lg bg-light p-0">
     <div class="container-fluid">
       <router-link class="navbar-brand" to="/">
         <img
           src="../assets/event-rider-logo.png"
           alt="Event Rider"
-          width="150"
+          width="100"
         />
       </router-link>
       <button
@@ -85,33 +85,39 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item" v-if="!isLogged">
+        </ul>
+        <div class="d-flex">
+          <div class="nav-item" v-if="!isLogged">
             <router-link
-              class="nav-link btn btn-primary"
+              class="btn btn-primary m-2"
               to="/login"
               active-class="active"
             >
               Log In
             </router-link>
-          </li>
-          <li class="nav-item" v-if="!isLogged">
+          </div>
+          <div class="nav-item" v-if="!isLogged">
             <router-link
-              class="nav-link btn btn-primary"
+              class="btn btn-primary m-2"
               to="/signup"
               active-class="active"
             >
               Sign Up
             </router-link>
-          </li>
-          <li class="nav-item" v-if="isLogged">
-            <router-link class="nav-link" to="/profile" active-class="active">
+          </div>
+          <div class="nav-item" v-if="isLogged">
+            <router-link
+              class="btn btn-primary m-2"
+              to="/profile"
+              active-class="active"
+            >
               Profile
             </router-link>
-          </li>
-          <li class="nav-item" v-if="isLogged">
-            <a class="nav-link btn btn-primary" @click="logout()"> Log Out </a>
-          </li>
-        </ul>
+          </div>
+          <div class="nav-item" v-if="isLogged">
+            <a class="btn btn-primary m-2" @click="logout()"> Log Out </a>
+          </div>
+        </div>
       </div>
     </div>
   </nav>
