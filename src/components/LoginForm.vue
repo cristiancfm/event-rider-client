@@ -3,7 +3,6 @@
   <form class="w-25 m-auto mt-2">
     <div class="mb-2 text-start">
       <label for="email" class="form-label">Email Address</label>
-      <!-- TODO: he cambiado 'login' por 'email', cambiarlo en donde más haga falta (en el backend seguramente) -->
       <input
         type="text"
         class="form-control"

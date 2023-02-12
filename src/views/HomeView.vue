@@ -17,15 +17,32 @@
     <router-link class="btn btn-secondary" to="/events" active-class="active">
       Browse Events
     </router-link>
-    <router-link class="btn btn-primary" to="/signup" active-class="active">
+    <router-link
+      class="btn btn-primary"
+      to="/signup"
+      active-class="active"
+      v-if="!isLogged"
+    >
       Sign Up
     </router-link>
   </div>
 </template>
 
 <script>
+import { getStore } from "@/common/store";
+
 export default {
   name: "HomeView",
+  data() {
+    return {
+      store: getStore(),
+    };
+  },
+  computed: {
+    isLogged() {
+      return this.store.state.user.logged;
+    },
+  },
 };
 </script>
 
