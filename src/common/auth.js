@@ -3,6 +3,7 @@ import AccountRepository from "../repositories/AccountRepository";
 
 export default {
   login,
+  signup,
   logout,
   getToken,
   isAdmin,
@@ -13,6 +14,10 @@ async function login(credentials) {
   const response = await AccountRepository.authenticate(credentials);
   _saveToken(response.token);
   return _authenticate();
+}
+
+async function signup(user) {
+  await AccountRepository.registerAccount(user);
 }
 
 function logout() {
