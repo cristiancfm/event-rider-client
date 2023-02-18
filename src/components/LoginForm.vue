@@ -1,6 +1,6 @@
 <template>
   <h1 class="mt-3">Log In</h1>
-  <form class="w-25 m-auto mt-2">
+  <form class="w-25 m-auto mt-2" @submit.prevent="login()">
     <div class="mb-2 text-start">
       <label for="email" class="form-label">Email Address</label>
       <input
@@ -8,6 +8,8 @@
         class="form-control"
         id="email"
         v-model="loginForm.email"
+        required
+        minlength="4"
       />
     </div>
     <div class="mb-2 text-start">
@@ -17,11 +19,31 @@
         class="form-control"
         id="password"
         v-model="loginForm.password"
+        required
+        minlength="4"
       />
     </div>
-    <button type="submit" class="btn btn-primary mt-2" @click.prevent="login()">
+    <button
+      type="submit"
+      class="btn btn-primary mt-2"
+      @click="loginForm.error = null"
+    >
       Submit
     </button>
+    <div
+      class="alert alert-danger alert-dismissible fade show mt-3"
+      role="alert"
+      v-if="loginForm.error"
+    >
+      <strong>Error:</strong> {{ loginForm.error }}
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+        @click="loginForm.error = null"
+      ></button>
+    </div>
   </form>
 </template>
 
@@ -34,6 +56,7 @@ export default {
       loginForm: {
         email: null,
         password: null,
+        error: null,
       },
     };
   },
@@ -43,6 +66,8 @@ export default {
         await auth.login(this.loginForm);
         this.$router.go(-1);
       } catch (err) {
+        const response = JSON.parse(err.request.response);
+        this.loginForm.error = response.message;
         console.error(err);
       }
     },
