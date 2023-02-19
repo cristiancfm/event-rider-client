@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg bg-light p-0">
+  <nav class="navbar navbar-expand-md bg-light p-0">
     <div class="container-fluid">
       <router-link class="navbar-brand" to="/">
         <img
@@ -20,7 +20,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav me-auto">
           <li class="nav-item">
             <router-link
               to="/"
