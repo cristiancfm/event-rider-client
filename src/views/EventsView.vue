@@ -2,6 +2,7 @@
   <div class="text-start m-4">
     <h1>Upcoming Events</h1>
     <EventFilters />
+    <br />
     <EventCard />
   </div>
 </template>

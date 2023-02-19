@@ -10921,6 +10921,11 @@ textarea.form-control-lg {
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
 }
 
+.btn-primary,
+.btn-outline-primary {
+  color: rgba(255, 255, 255, 0.8);
+}
+
 .btn-secondary,
 .btn-outline-secondary {
   color: #495057;
