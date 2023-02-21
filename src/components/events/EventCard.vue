@@ -1,5 +1,5 @@
 <template>
-  <div style="max-width: 500px">
+  <div class="card" style="max-width: 400px">
     <div id="carouselExampleIndicators" class="carousel slide">
       <div class="carousel-indicators">
         <button
@@ -57,13 +57,19 @@
         <span class="visually-hidden">Next</span>
       </button>
     </div>
-    <div class="row mt-3">
+    <div class="row p-3">
       <div class="col">
-        <p>Meisel 93</p>
-        <p>Fundación MOP</p>
-        <p class="text-secondary">oct 2022 - may 2023</p>
-        <p class="text-secondary">Exhibition</p>
-        <p class="text-secondary">Porto de A Coruña</p>
+        <h3>
+          <router-link :to="'/events/' + event.id">
+            {{ event.title }}
+          </router-link>
+        </h3>
+        <p>{{ event.host.name }} {{ event.host.surname }}</p>
+        <p class="text-secondary">
+          {{ event.startingDate }} - {{ event.endingDate }}
+        </p>
+        <p class="text-secondary">(category)</p>
+        <p class="text-secondary">{{ event.locationDetails }}</p>
       </div>
       <div class="col">
         <button class="btn btn-secondary m-1">
@@ -85,6 +91,17 @@
 <script>
 export default {
   name: "EventCard",
+  props: {
+    event: {
+      type: Object,
+      required: true,
+    },
+    showDetails: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
+  },
 };
 </script>
 

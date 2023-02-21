@@ -4,7 +4,7 @@
     <div class="card-body">
       <h6 class="card-subtitle mb-2 text-muted">
         <router-link class="card-link" :to="'/authors/' + post.author.login">
-          {{ post.author.login }}
+          {{ post.author.email }}
         </router-link>
       </h6>
       <p class="card-text">
