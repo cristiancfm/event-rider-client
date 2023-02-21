@@ -10,7 +10,7 @@
         <select class="form-select" id="select" v-model="post.author">
           <option selected>Seleccione un autor/a</option>
           <option v-for="autor in authors" :key="autor.id" :value="autor">
-            {{ autor.login }}
+            {{ autor.email }}
           </option>
         </select>
       </div>
