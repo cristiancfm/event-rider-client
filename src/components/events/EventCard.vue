@@ -1,42 +1,23 @@
 <template>
   <div class="card" style="max-width: 400px">
     <div id="carouselExampleIndicators" class="carousel slide">
-      <div class="carousel-indicators">
-        <button
-          type="button"
-          data-bs-target="#carouselExampleIndicators"
-          data-bs-slide-to="0"
-          class="active"
-          aria-current="true"
-          aria-label="Slide 1"
-        ></button>
-        <button
-          type="button"
-          data-bs-target="#carouselExampleIndicators"
-          data-bs-slide-to="1"
-          aria-label="Slide 2"
-        ></button>
-        <button
-          type="button"
-          data-bs-target="#carouselExampleIndicators"
-          data-bs-slide-to="2"
-          aria-label="Slide 3"
-        ></button>
-      </div>
       <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="../../assets/meisel1.jpg" class="d-block w-100" alt="..." />
-        </div>
-        <div class="carousel-item">
-          <img src="../../assets/meisel2.jpg" class="d-block w-100" alt="..." />
-        </div>
-        <div class="carousel-item">
-          <img
-            src="../../assets/meisel3.webp"
-            class="d-block w-100"
-            alt="..."
-          />
-        </div>
+        <template v-for="item in event.numImages" :key="item">
+          <div v-if="item - 1 === 0" class="carousel-item active">
+            <img
+              :src="getImageSrc(item - 1)"
+              class="d-block w-100"
+              alt="Event image"
+            />
+          </div>
+          <div v-if="item - 1 !== 0" class="carousel-item">
+            <img
+              :src="getImageSrc(item - 1)"
+              class="d-block w-100"
+              alt="Event image"
+            />
+          </div>
+        </template>
       </div>
       <button
         class="carousel-control-prev"
@@ -66,7 +47,9 @@
         </h3>
         <p>{{ event.host.name }} {{ event.host.surname }}</p>
         <p class="text-secondary">
-          {{ event.startingDate }} - {{ event.endingDate }}
+          {{ event.startingDate.toLocaleString() }}
+          -
+          {{ event.endingDate.toLocaleString() }}
         </p>
         <p class="text-secondary">(category)</p>
         <p class="text-secondary">{{ event.locationDetails }}</p>
@@ -89,6 +72,8 @@
 </template>
 
 <script>
+import { BACKEND_URL } from "@/constants";
+
 export default {
   name: "EventCard",
   props: {
@@ -100,6 +85,14 @@ export default {
       type: Boolean,
       required: false,
       default: true,
+    },
+  },
+  methods: {
+    getImageSrc(item) {
+      if (this.event.numImages > 0) {
+        return `${BACKEND_URL}/events/${this.event.id}/image/${item}`;
+      }
+      return "/placeholder.png";
     },
   },
 };

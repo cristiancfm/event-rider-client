@@ -9,7 +9,7 @@
       style="margin: 10px"
     />
     <p>concerts - meetups - live shows - exhibitions - more...</p>
-    <ul style="list-style-type: none">
+    <ul style="list-style-type: none; padding: 0">
       <li><i class="bi bi-calendar-week-fill"></i> Browse events</li>
       <li><i class="bi bi-heart-fill"></i> Create yours</li>
       <li><i class="bi bi-envelope-fill"></i> Get updates</li>
