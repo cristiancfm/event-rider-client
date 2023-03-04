@@ -12,6 +12,7 @@ import auth from "@/common/auth";
 import { getStore } from "@/common/store";
 import SignupForm from "@/components/SignupForm";
 import EventsView from "@/views/EventsView";
+import EventDetailView from "@/views/EventDetailView";
 
 const routes = [
   {
@@ -28,14 +29,20 @@ const routes = [
   },
   {
     path: "/",
-    name: "home",
+    name: "Home",
     component: HomeView,
     meta: { public: true },
   },
   {
     path: "/events",
-    name: "events",
+    name: "Events",
     component: EventsView,
+    meta: { public: true },
+  },
+  {
+    path: "/events/:id",
+    name: "EventDetail",
+    component: EventDetailView,
     meta: { public: true },
   },
   {

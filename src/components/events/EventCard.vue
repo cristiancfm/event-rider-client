@@ -1,6 +1,6 @@
 <template>
-  <div class="card" style="max-width: 400px">
-    <div id="carouselExampleIndicators" class="carousel slide">
+  <div class="card m-2" style="max-width: 400px">
+    <div id="event-carousel-indicators" class="carousel slide">
       <div class="carousel-inner">
         <template v-for="item in event.numImages" :key="item">
           <div v-if="item - 1 === 0" class="carousel-item active">
@@ -19,24 +19,26 @@
           </div>
         </template>
       </div>
-      <button
-        class="carousel-control-prev"
-        type="button"
-        data-bs-target="#carouselExampleIndicators"
-        data-bs-slide="prev"
-      >
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button
-        class="carousel-control-next"
-        type="button"
-        data-bs-target="#carouselExampleIndicators"
-        data-bs-slide="next"
-      >
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
+      <div v-if="event.numImages > 1">
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#event-carousel-indicators"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#event-carousel-indicators"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
     </div>
     <div class="row p-3">
       <div class="col">
