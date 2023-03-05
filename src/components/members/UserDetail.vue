@@ -1,16 +1,16 @@
 <template>
   <div class="container-fluid text-start p-4">
     <div class="row">
-      <div class="col-3">
+      <div class="col-3" style="max-width: 200px">
         <img :src="getImageSrc()" class="d-block w-100" alt="Profile image" />
       </div>
       <div class="col-9">
-        <h1>
+        <h3>
           {{ user.name }} {{ user.surname }}
           <button class="btn btn-secondary m-1">
             <i class="bi bi-person-plus"></i> Follow
           </button>
-        </h1>
+        </h3>
         <p class="text-secondary">
           {{ user.upcomingEvents }}
           <span v-if="user.upcomingEvents === 1">upcoming event</span>
@@ -26,8 +26,8 @@
       </div>
       <div class="col-sm-6"></div>
     </div>
-    <div class="row">
-      <p>(description)</p>
+    <div class="row mt-3">
+      <p>{{ user.biography }}</p>
     </div>
     <br />
     <div class="row">

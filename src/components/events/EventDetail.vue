@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-sm-6">
         <div class="row">
-          <h1>{{ event.title }}</h1>
+          <h3>{{ event.title }}</h3>
           <div class="col">
             <p class="text-secondary">
               <i class="bi bi-person-fill"></i> {{ event.host.name }}
@@ -87,7 +87,7 @@
     </div>
     <div class="row">
       <div class="col-sm">
-        <h3>Description</h3>
+        <h4>Description</h4>
         <p>{{ event.description }}</p>
       </div>
       <div class="col-sm">

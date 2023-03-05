@@ -2,7 +2,6 @@
   <div class="text-start m-4">
     <h1>Members</h1>
     <UserFilters />
-    <br />
     <div class="d-flex flex-wrap justify-content-start">
       <div v-for="user in users" :key="user.id">
         <UserCard :user="user"></UserCard>

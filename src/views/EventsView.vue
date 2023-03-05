@@ -2,7 +2,6 @@
   <div class="text-start p-4">
     <h1>Upcoming Events</h1>
     <EventFilters />
-    <br />
     <div class="d-flex flex-wrap justify-content-start">
       <div v-for="event in events" :key="event.id">
         <EventCard :event="event"></EventCard>
