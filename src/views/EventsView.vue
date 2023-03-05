@@ -1,10 +1,12 @@
 <template>
-  <div class="text-start m-4">
+  <div class="text-start p-4">
     <h1>Upcoming Events</h1>
     <EventFilters />
     <br />
-    <div class="" v-for="event in events" :key="event.id">
-      <EventCard :event="event"></EventCard>
+    <div class="d-flex flex-wrap justify-content-start">
+      <div v-for="event in events" :key="event.id">
+        <EventCard :event="event"></EventCard>
+      </div>
     </div>
   </div>
 </template>
@@ -14,7 +16,7 @@ import EventFilters from "@/components/events/EventFilters";
 import EventCard from "@/components/events/EventCard";
 import EventRepository from "@/repositories/EventRepository";
 export default {
-  name: "EventView",
+  name: "EventsView",
   data() {
     return {
       events: [],

@@ -1,6 +1,10 @@
 <template>
   <div class="card m-2" style="max-width: 400px">
-    <div id="event-carousel-indicators" class="carousel slide">
+    <div
+      :id="'event-' + event.id + '-carousel'"
+      class="carousel slide"
+      data-bs-ride="carousel"
+    >
       <div class="carousel-inner">
         <template v-for="item in event.numImages" :key="item">
           <div v-if="item - 1 === 0" class="carousel-item active">
@@ -23,7 +27,7 @@
         <button
           class="carousel-control-prev"
           type="button"
-          data-bs-target="#event-carousel-indicators"
+          :data-bs-target="'#event-' + event.id + '-carousel'"
           data-bs-slide="prev"
         >
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -32,7 +36,7 @@
         <button
           class="carousel-control-next"
           type="button"
-          data-bs-target="#event-carousel-indicators"
+          :data-bs-target="'#event-' + event.id + '-carousel'"
           data-bs-slide="next"
         >
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
@@ -56,7 +60,7 @@
         <p class="text-secondary">(category)</p>
         <p class="text-secondary">{{ event.locationDetails }}</p>
       </div>
-      <div class="col">
+      <div class="col text-end">
         <button class="btn btn-secondary m-1">
           <i class="bi bi-map-fill"></i> Show in map
         </button>
