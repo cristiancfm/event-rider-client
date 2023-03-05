@@ -13,6 +13,8 @@ import { getStore } from "@/common/store";
 import SignupForm from "@/components/SignupForm";
 import EventsView from "@/views/EventsView";
 import EventDetailView from "@/views/EventDetailView";
+import UsersView from "@/views/UsersView";
+import UserDetailView from "@/views/UserDetailView";
 
 const routes = [
   {
@@ -41,8 +43,20 @@ const routes = [
   },
   {
     path: "/events/:id",
-    name: "EventDetail",
+    name: "Event Detail",
     component: EventDetailView,
+    meta: { public: true },
+  },
+  {
+    path: "/members",
+    name: "Members",
+    component: UsersView,
+    meta: { public: true },
+  },
+  {
+    path: "/members/:id",
+    name: "Member Detail",
+    component: UserDetailView,
     meta: { public: true },
   },
   {

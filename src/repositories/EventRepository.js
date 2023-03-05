@@ -13,7 +13,6 @@ export default {
     let url = resource;
     const response = await HTTP.get(url);
     response.data.forEach(applyDate);
-    console.log(response);
     return response.data;
   },
   async findOne(id) {
