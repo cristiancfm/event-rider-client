@@ -57,7 +57,7 @@
           -
           {{ event.endingDate.toLocaleString() }}
         </p>
-        <p class="text-secondary">(category)</p>
+        <p class="text-secondary">{{ event.category.name }}</p>
         <p class="text-secondary">{{ event.locationDetails }}</p>
       </div>
       <div class="col text-end">

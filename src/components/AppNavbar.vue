@@ -39,7 +39,7 @@
           <li class="nav-item">
             <router-link
               class="nav-link"
-              to="/categories"
+              to="/event-categories"
               active-class="active"
             >
               Categories
