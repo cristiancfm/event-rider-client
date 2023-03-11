@@ -25,9 +25,4 @@ export default {
     response.data.pastHostedEvents.forEach(applyDate);
     return response.data;
   },
-  // async findUserEvents(id) {
-  //   const response = await HTTP.get(`${resource}/${id}/events`);
-  //   response.data.forEach(applyDate);
-  //   return response.data;
-  // },
 };

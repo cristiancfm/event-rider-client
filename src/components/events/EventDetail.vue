@@ -17,7 +17,7 @@
             </p>
             <p class="text-secondary">
               <i class="bi bi-ticket-perforated-fill"></i>
-              (category)
+              {{ event.category.name }}
             </p>
             <p class="text-secondary">
               <i class="bi bi-geo-alt-fill"></i>
