@@ -9,8 +9,17 @@ function applyDate(event) {
 }
 
 export default {
-  async findAll() {
+  async findAll(query, sort) {
+    const params = new URLSearchParams();
+    if (query) {
+      for (let i = 0; i < query.length; i++) {
+        params.append(query[i].name, query[i].value);
+      }
+    }
+    if (sort) params.append("sort", sort);
+    const paramsStr = params.toString();
     let url = resource;
+    if (paramsStr) url += "?" + paramsStr;
     const response = await HTTP.get(url);
     response.data.forEach(applyDate);
     return response.data;

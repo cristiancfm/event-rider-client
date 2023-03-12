@@ -1,7 +1,7 @@
 <template>
   <div class="text-start p-4">
     <h1>Upcoming Events</h1>
-    <EventFilters />
+    <EventFilters @filters-applied="applyFilters" />
     <div class="d-flex flex-wrap justify-content-start">
       <div v-for="event in events" :key="event.id">
         <EventCard :event="event"></EventCard>
@@ -22,6 +22,31 @@ export default {
     };
   },
   components: { EventFilters, EventCard },
+  methods: {
+    async applyFilters(filters) {
+      try {
+        const query = [];
+        filters.title
+          ? query.push({ name: "title", value: filters.title })
+          : "";
+        filters.location
+          ? query.push({ name: "location", value: filters.location })
+          : "";
+        filters.date ? query.push({ name: "date", value: filters.date }) : "";
+        filters.distance
+          ? query.push({ name: "distance", value: filters.distance })
+          : "";
+        filters.category
+          ? query.push({ name: "category", value: filters.category })
+          : "";
+        await EventRepository.findAll(query, null).then((response) => {
+          this.events = response;
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    },
+  },
   mounted() {
     EventRepository.findAll().then((response) => {
       this.events = response;
