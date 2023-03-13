@@ -29,8 +29,11 @@ export default {
         filters.title
           ? query.push({ name: "title", value: filters.title })
           : "";
-        filters.location
-          ? query.push({ name: "location", value: filters.location })
+        filters.latitude
+          ? query.push({ name: "location", value: filters.latitude })
+          : "";
+        filters.longitude
+          ? query.push({ name: "location", value: filters.longitude })
           : "";
         filters.date ? query.push({ name: "date", value: filters.date }) : "";
         filters.distance
