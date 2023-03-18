@@ -85,7 +85,13 @@
             <button class="btn btn-primary mt-1" type="submit">Apply</button>
           </div>
           <div class="col-auto pt-4 me-3">
-            <button class="btn btn-secondary mt-1" type="reset">Clear</button>
+            <button
+              class="btn btn-secondary mt-1"
+              type="reset"
+              @click="clearFilters"
+            >
+              Clear
+            </button>
           </div>
         </div>
       </fieldset>
@@ -137,6 +143,16 @@ export default {
         this.filters.latitude = "";
         this.filters.longitude = "";
       }
+    },
+    clearFilters() {
+      this.locationInput = "";
+      this.filters.title = "";
+      this.filters.latitude = "";
+      this.filters.longitude = "";
+      this.filters.date = "";
+      this.filters.distance = "";
+      this.filters.category = "";
+      this.emitFilters();
     },
   },
   mounted() {
