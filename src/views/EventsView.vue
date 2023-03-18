@@ -30,10 +30,10 @@ export default {
           ? query.push({ name: "title", value: filters.title })
           : "";
         filters.latitude
-          ? query.push({ name: "location", value: filters.latitude })
+          ? query.push({ name: "latitude", value: filters.latitude })
           : "";
         filters.longitude
-          ? query.push({ name: "location", value: filters.longitude })
+          ? query.push({ name: "longitude", value: filters.longitude })
           : "";
         filters.date ? query.push({ name: "date", value: filters.date }) : "";
         filters.distance

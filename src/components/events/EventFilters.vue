@@ -12,7 +12,7 @@
               Event Title
             </label>
             <input
-              type="text"
+              type="search"
               class="form-control form-control-sm"
               v-model="filters.title"
             />
@@ -22,7 +22,7 @@
               Location
             </label>
             <input
-              type="text"
+              type="search"
               class="form-control form-control-sm"
               v-model="locationInput"
               list="locations-list"
@@ -54,7 +54,14 @@
             <select
               class="form-control form-control-sm"
               v-model="filters.distance"
-            ></select>
+            >
+              <option selected value="">(all)</option>
+              <option value="5000">&lt; 5 km</option>
+              <option value="10000">5 - 10 km</option>
+              <option value="50000">10 - 50 km</option>
+              <option value="100000">50 - 100 km</option>
+              <option value="more than 100">&gt; 100km</option>
+            </select>
           </div>
           <div class="col me-3" style="min-width: 150px">
             <label for="event-category" class="form-label m-0 mt-1">
@@ -74,8 +81,11 @@
               </option>
             </select>
           </div>
-          <div class="col-auto pt-4">
+          <div class="col-auto pt-4 me-3">
             <button class="btn btn-primary mt-1" type="submit">Apply</button>
+          </div>
+          <div class="col-auto pt-4 me-3">
+            <button class="btn btn-secondary mt-1" type="reset">Clear</button>
           </div>
         </div>
       </fieldset>
@@ -95,11 +105,11 @@ export default {
       locationInput: "",
       locationList: [],
       filters: {
-        title: null,
-        latitude: null,
-        longitude: null,
-        date: null,
-        distance: null,
+        title: "",
+        latitude: "",
+        longitude: "",
+        date: "",
+        distance: "",
         category: "",
       },
       eventCategories: [],
@@ -124,8 +134,8 @@ export default {
         console.log(results);
         console.log(results[0].y + "," + results[0].x);
       } else {
-        this.filters.latitude = null;
-        this.filters.longitude = null;
+        this.filters.latitude = "";
+        this.filters.longitude = "";
       }
     },
   },
