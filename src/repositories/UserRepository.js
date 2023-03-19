@@ -9,8 +9,8 @@ function applyDate(event) {
 }
 
 export default {
-  async findAll() {
-    const response = await HTTP.get(resource);
+  async findAllWithEvents() {
+    const response = await HTTP.get(`${resource}/with-events`);
     response.data.forEach(function (user) {
       user.hostedEvents.forEach(applyDate);
       user.upcomingHostedEvents.forEach(applyDate);
@@ -20,6 +20,10 @@ export default {
   },
   async findOne(id) {
     const response = await HTTP.get(`${resource}/${id}`);
+    return response.data;
+  },
+  async findOneWithEvents(id) {
+    const response = await HTTP.get(`${resource}/${id}/with-events`);
     response.data.hostedEvents.forEach(applyDate);
     response.data.upcomingHostedEvents.forEach(applyDate);
     response.data.pastHostedEvents.forEach(applyDate);

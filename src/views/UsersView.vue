@@ -23,7 +23,7 @@ export default {
   },
   components: { UserCard, UserFilters },
   mounted() {
-    UserRepository.findAll().then((response) => {
+    UserRepository.findAllWithEvents().then((response) => {
       this.users = response;
     });
   },

@@ -69,9 +69,28 @@
           <i class="bi bi-bookmark"></i> Save
         </button>
         <br />
-        <button class="btn btn-secondary m-1">
+        <button
+          class="btn btn-secondary m-1"
+          @click="subscribeToEvent"
+          v-if="isLogged && !isSubscribed"
+        >
           <i class="bi bi-star"></i> Subscribe
         </button>
+        <button
+          class="btn btn-secondary m-1"
+          @click="subscribeToEvent"
+          v-if="isLogged && isSubscribed"
+        >
+          <i class="bi bi-star-fill"></i> Subscribed
+        </button>
+        <router-link
+          class="btn btn-secondary m-1"
+          to="/login"
+          active-class="active"
+          v-if="!isLogged"
+        >
+          <i class="bi bi-star"></i> Subscribe
+        </router-link>
       </div>
     </div>
   </div>
@@ -79,6 +98,8 @@
 
 <script>
 import { BACKEND_URL } from "@/constants";
+import { getStore } from "@/common/store";
+import UserRepository from "@/repositories/UserRepository";
 
 export default {
   name: "EventCard",
@@ -93,12 +114,38 @@ export default {
       default: true,
     },
   },
+  data() {
+    return {
+      isSubscribed: false,
+    };
+  },
   methods: {
     getImageSrc(item) {
       if (this.event.numImages > 0) {
         return `${BACKEND_URL}/events/${this.event.id}/image/${item}`;
       }
       return "/placeholder.png";
+    },
+    async subscribeToEvent() {
+      this.$emit("subscribers", this.event);
+    },
+  },
+  computed: {
+    isLogged() {
+      return getStore().state.user.logged;
+    },
+  },
+  watch: {
+    "event.subscribers": {
+      handler: async function (newSubscribers) {
+        const account = await UserRepository.findOne(getStore().state.user.id);
+        const index = newSubscribers.findIndex(
+          (subscriber) => subscriber.id === account.id
+        );
+        this.isSubscribed = index >= 0;
+      },
+      immediate: true,
+      deep: true,
     },
   },
 };

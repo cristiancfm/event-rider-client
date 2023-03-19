@@ -22,7 +22,9 @@ export default {
   methods: {
     async fetchData() {
       try {
-        this.user = await UserRepository.findOne(this.$route.params.id);
+        this.user = await UserRepository.findOneWithEvents(
+          this.$route.params.id
+        );
       } catch (err) {
         console.error(err);
       }

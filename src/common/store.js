@@ -3,8 +3,9 @@ import { ref } from "vue";
 const store = ref({
   state: {
     user: {
+      id: "",
       authority: "",
-      login: "",
+      email: "",
       logged: false,
     },
   },

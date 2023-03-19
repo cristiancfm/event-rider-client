@@ -33,14 +33,9 @@ import { getStore } from "@/common/store";
 
 export default {
   name: "HomeView",
-  data() {
-    return {
-      store: getStore(),
-    };
-  },
   computed: {
     isLogged() {
-      return this.store.state.user.logged;
+      return getStore().state.user.logged;
     },
   },
 };

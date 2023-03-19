@@ -19,4 +19,11 @@ export default {
     const event = (await HTTP.get(`${resource}/${id}`)).data;
     return applyDate(event);
   },
+  async save(event) {
+    if (event.id) {
+      return (await HTTP.put(`${resource}/${event.id}`, event)).data;
+    } else {
+      return (await HTTP.post(`${resource}`, event)).data;
+    }
+  },
 };
