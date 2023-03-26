@@ -60,7 +60,7 @@
               <option value="10000">5 - 10 km</option>
               <option value="50000">10 - 50 km</option>
               <option value="100000">50 - 100 km</option>
-              <option value="more than 100">&gt; 100km</option>
+              <option value="500000">100 - 500 km</option>
             </select>
           </div>
           <div class="col me-3" style="min-width: 150px">
