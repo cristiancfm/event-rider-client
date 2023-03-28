@@ -4,7 +4,11 @@
     <EventFilters @filters-applied="applyFilters" />
     <div class="d-flex flex-wrap justify-content-start">
       <div v-for="event in events" :key="event.id">
-        <EventCard :event="event" @subscribers="updateSubscribers"></EventCard>
+        <EventCard
+          :event="event"
+          @subscribers="updateSubscribers"
+          @saves="updateSaves"
+        ></EventCard>
       </div>
     </div>
   </div>
@@ -64,6 +68,22 @@ export default {
         } else {
           //add subscriber
           event.subscribers.push(account);
+        }
+        await EventRepository.save(event);
+      } catch (err) {
+        console.error(err);
+      }
+    },
+    async updateSaves(event) {
+      try {
+        const account = await UserRepository.findOne(getStore().state.user.id);
+        const index = event.saves.findIndex((save) => save.id === account.id);
+        if (index >= 0) {
+          //delete save
+          event.saves.splice(index, 1);
+        } else {
+          //add save
+          event.saves.push(account);
         }
         await EventRepository.save(event);
       } catch (err) {

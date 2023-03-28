@@ -25,10 +25,36 @@
             </p>
           </div>
           <div class="col">
-            <button class="btn btn-secondary m-1">
+            <!-- Save button -->
+            <button
+              class="btn btn-secondary m-1"
+              @click="saveEvent"
+              v-if="isLogged && !isSaved"
+            >
               <i class="bi bi-bookmark"></i> Save
             </button>
-            <p>(times saved)</p>
+            <button
+              class="btn btn-secondary m-1"
+              @click="saveEvent"
+              v-if="isLogged && isSaved"
+            >
+              <i class="bi bi-bookmark-fill"></i> Saved
+            </button>
+            <router-link
+              class="btn btn-secondary m-1"
+              to="/login"
+              active-class="active"
+              v-if="!isLogged"
+            >
+              <i class="bi bi-bookmark"></i> Save
+            </router-link>
+            <!-- **** -->
+            <p>
+              {{ event.saves.length }}
+              <span v-if="event.saves.length === 1">save</span>
+              <span v-else>saves</span>
+            </p>
+            <!-- Subscribe button -->
             <button
               class="btn btn-secondary m-1"
               @click="subscribeToEvent"
@@ -51,6 +77,7 @@
             >
               <i class="bi bi-star"></i> Subscribe
             </router-link>
+            <!-- **** -->
             <p>
               {{ event.subscribers.length }}
               <span v-if="event.subscribers.length === 1">subscriber</span>
@@ -141,6 +168,7 @@ export default {
   data() {
     return {
       isSubscribed: false,
+      isSaved: false,
     };
   },
   methods: {
@@ -152,6 +180,9 @@ export default {
     },
     async subscribeToEvent() {
       this.$emit("subscribers", this.event);
+    },
+    async saveEvent() {
+      this.$emit("saves", this.event);
     },
   },
   computed: {
@@ -167,6 +198,15 @@ export default {
           (subscriber) => subscriber.id === account.id
         );
         this.isSubscribed = index >= 0;
+      },
+      immediate: true,
+      deep: true,
+    },
+    "event.saves": {
+      handler: async function (newSaves) {
+        const account = await UserRepository.findOne(getStore().state.user.id);
+        const index = newSaves.findIndex((save) => save.id === account.id);
+        this.isSaved = index >= 0;
       },
       immediate: true,
       deep: true,
