@@ -65,10 +65,32 @@
           <i class="bi bi-map-fill"></i> Show in map
         </button>
         <br />
-        <button class="btn btn-secondary m-1">
+        <!-- Save button -->
+        <button
+          class="btn btn-secondary m-1"
+          @click="saveEvent"
+          v-if="isLogged && !isSaved"
+        >
           <i class="bi bi-bookmark"></i> Save
         </button>
+        <button
+          class="btn btn-secondary m-1"
+          @click="saveEvent"
+          v-if="isLogged && isSaved"
+        >
+          <i class="bi bi-bookmark-fill"></i> Saved
+        </button>
+        <router-link
+          class="btn btn-secondary m-1"
+          to="/login"
+          active-class="active"
+          v-if="!isLogged"
+        >
+          <i class="bi bi-bookmark"></i> Save
+        </router-link>
+        <!-- **** -->
         <br />
+        <!-- Subscribe button -->
         <button
           class="btn btn-secondary m-1"
           @click="subscribeToEvent"
@@ -91,6 +113,7 @@
         >
           <i class="bi bi-star"></i> Subscribe
         </router-link>
+        <!-- **** -->
       </div>
     </div>
   </div>
@@ -117,6 +140,7 @@ export default {
   data() {
     return {
       isSubscribed: false,
+      isSaved: false,
     };
   },
   methods: {
@@ -128,6 +152,9 @@ export default {
     },
     async subscribeToEvent() {
       this.$emit("subscribers", this.event);
+    },
+    async saveEvent() {
+      this.$emit("saves", this.event);
     },
   },
   computed: {
@@ -143,6 +170,15 @@ export default {
           (subscriber) => subscriber.id === account.id
         );
         this.isSubscribed = index >= 0;
+      },
+      immediate: true,
+      deep: true,
+    },
+    "event.saves": {
+      handler: async function (newSaves) {
+        const account = await UserRepository.findOne(getStore().state.user.id);
+        const index = newSaves.findIndex((save) => save.id === account.id);
+        this.isSaved = index >= 0;
       },
       immediate: true,
       deep: true,
