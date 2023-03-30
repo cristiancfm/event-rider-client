@@ -68,12 +68,10 @@
           role="tabpanel"
           aria-labelledby="upcoming-events-tab"
         >
-          <EventFilters />
-          <div class="d-flex flex-wrap justify-content-start">
-            <div v-for="event in user.upcomingHostedEvents" :key="event.id">
-              <EventCard :event="event"></EventCard>
-            </div>
-          </div>
+          <EventsView
+            :title-prop="''"
+            :events-prop="user.upcomingHostedEvents"
+          />
         </div>
         <div
           class="tab-pane fade"
@@ -81,12 +79,7 @@
           role="tabpanel"
           aria-labelledby="past-events-tab"
         >
-          <EventFilters />
-          <div class="d-flex flex-wrap justify-content-start">
-            <div v-for="event in user.pastHostedEvents" :key="event.id">
-              <EventCard :event="event"></EventCard>
-            </div>
-          </div>
+          <EventsView :title-prop="''" :eventsProp="user.pastHostedEvents" />
         </div>
       </div>
     </div>
@@ -95,12 +88,11 @@
 
 <script>
 import { BACKEND_URL } from "@/constants";
-import EventFilters from "@/components/events/EventFilters";
-import EventCard from "@/components/events/EventCard";
+import EventsView from "@/views/EventsView";
 
 export default {
   name: "UserDetail",
-  components: { EventFilters, EventCard },
+  components: { EventsView },
   props: {
     user: {
       type: Object,

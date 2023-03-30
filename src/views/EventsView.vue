@@ -1,6 +1,6 @@
 <template>
-  <div class="text-start p-4">
-    <h1>Upcoming Events</h1>
+  <div class="text-start p-2">
+    <h2 class="m-2">{{ title }}</h2>
     <EventFilters @filters-applied="applyFilters" />
     <div class="d-flex flex-wrap justify-content-start">
       <div v-for="event in events" :key="event.id">
@@ -11,6 +11,9 @@
         ></EventCard>
       </div>
     </div>
+    <div v-if="events.length === 0" class="text-center mt-2">
+      <h2>No Events</h2>
+    </div>
   </div>
 </template>
 
@@ -18,83 +21,45 @@
 import EventFilters from "@/components/events/EventFilters";
 import EventCard from "@/components/events/EventCard";
 import EventRepository from "@/repositories/EventRepository";
-import { getStore } from "@/common/store";
-import UserRepository from "@/repositories/UserRepository";
+import { applyFilters, updateSubscribers, updateSaves } from "@/common/event";
 
 export default {
   name: "EventsView",
+  props: {
+    titleProp: {
+      type: String,
+      required: false,
+    },
+    eventsProp: {
+      type: Object,
+      required: false,
+    },
+  },
   data() {
     return {
+      title: "",
       events: [],
     };
   },
   components: { EventFilters, EventCard },
   methods: {
-    async applyFilters(filters) {
-      try {
-        const query = [];
-        filters.title
-          ? query.push({ name: "title", value: filters.title })
-          : "";
-        filters.latitude
-          ? query.push({ name: "latitude", value: filters.latitude })
-          : "";
-        filters.longitude
-          ? query.push({ name: "longitude", value: filters.longitude })
-          : "";
-        filters.date ? query.push({ name: "date", value: filters.date }) : "";
-        filters.distance
-          ? query.push({ name: "distance", value: filters.distance })
-          : "";
-        filters.category
-          ? query.push({ name: "category", value: filters.category })
-          : "";
-        await EventRepository.findAll(query, null).then((response) => {
-          this.events = response;
-        });
-      } catch (err) {
-        console.error(err);
-      }
-    },
-    async updateSubscribers(event) {
-      try {
-        const account = await UserRepository.findOne(getStore().state.user.id);
-        const index = event.subscribers.findIndex(
-          (subscriber) => subscriber.id === account.id
-        );
-        if (index >= 0) {
-          //delete subscriber
-          event.subscribers.splice(index, 1);
-        } else {
-          //add subscriber
-          event.subscribers.push(account);
-        }
-        await EventRepository.save(event);
-      } catch (err) {
-        console.error(err);
-      }
-    },
-    async updateSaves(event) {
-      try {
-        const account = await UserRepository.findOne(getStore().state.user.id);
-        const index = event.saves.findIndex((save) => save.id === account.id);
-        if (index >= 0) {
-          //delete save
-          event.saves.splice(index, 1);
-        } else {
-          //add save
-          event.saves.push(account);
-        }
-        await EventRepository.save(event);
-      } catch (err) {
-        console.error(err);
-      }
-    },
+    applyFilters,
+    updateSubscribers,
+    updateSaves,
   },
   mounted() {
-    EventRepository.findAll().then((response) => {
-      this.events = response;
-    });
+    if (this.titleProp === undefined) {
+      this.title = "Upcoming Events";
+    } else {
+      this.title = this.titleProp;
+    }
+    if (this.eventsProp === undefined) {
+      EventRepository.findAll().then((response) => {
+        this.events = response;
+      });
+    } else {
+      this.events = this.eventsProp;
+    }
   },
 };
 </script>

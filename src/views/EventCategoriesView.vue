@@ -1,6 +1,6 @@
 <template>
-  <div class="text-start m-4">
-    <h1>Event Categories</h1>
+  <div class="text-start p-2">
+    <h2 class="m-2">Event Categories</h2>
     <div class="d-flex flex-wrap justify-content-start">
       <div v-for="eventCategory in eventCategories" :key="eventCategory.id">
         <EventCategoryCard :eventCategory="eventCategory"></EventCategoryCard>

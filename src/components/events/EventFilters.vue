@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-3 mb-3">
+  <div class="m-2">
     <form @submit.prevent="emitFilters">
       <fieldset
         class="reset-style bg-gradient bg-light"
@@ -40,20 +40,13 @@
             </datalist>
           </div>
           <div class="col me-3" style="min-width: 150px">
-            <label for="event-date" class="form-label m-0 mt-1">Date</label>
-            <input
-              type="date"
-              class="form-control form-control-sm"
-              v-model="filters.date"
-            />
-          </div>
-          <div class="col me-3" style="min-width: 150px">
             <label for="event-distance" class="form-label m-0 mt-1">
               Distance
             </label>
             <select
               class="form-control form-control-sm"
               v-model="filters.distance"
+              :disabled="this.locationInput === ''"
             >
               <option selected value="">(all)</option>
               <option value="5000">&lt; 5 km</option>
@@ -62,6 +55,14 @@
               <option value="100000">50 - 100 km</option>
               <option value="500000">100 - 500 km</option>
             </select>
+          </div>
+          <div class="col me-3" style="min-width: 150px">
+            <label for="event-date" class="form-label m-0 mt-1">Date</label>
+            <input
+              type="date"
+              class="form-control form-control-sm"
+              v-model="filters.date"
+            />
           </div>
           <div class="col me-3" style="min-width: 150px">
             <label for="event-category" class="form-label m-0 mt-1">

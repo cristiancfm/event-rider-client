@@ -1,7 +1,6 @@
 <template>
-  <div class="text-start m-4">
-    <h1>Members</h1>
-    <UserFilters />
+  <div class="text-start p-2">
+    <h2 class="m-2">Members</h2>
     <div class="d-flex flex-wrap justify-content-start">
       <div v-for="user in users" :key="user.id">
         <UserCard :user="user"></UserCard>
@@ -13,7 +12,7 @@
 <script>
 import UserRepository from "@/repositories/UserRepository";
 import UserCard from "@/components/members/UserCard";
-import UserFilters from "@/components/members/UserFilters";
+
 export default {
   name: "UsersView.vue",
   data() {
@@ -21,7 +20,7 @@ export default {
       users: [],
     };
   },
-  components: { UserCard, UserFilters },
+  components: { UserCard },
   mounted() {
     UserRepository.findAllWithEvents().then((response) => {
       this.users = response;
