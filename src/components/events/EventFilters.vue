@@ -101,7 +101,7 @@
 </template>
 
 <script>
-import EventCategoriesRepository from "@/repositories/EventCategoriesRepository";
+import EventCategoriesRepository from "@/repositories/EventCategoryRepository";
 import { MapBoxProvider } from "leaflet-geosearch";
 import { MAPBOX_TOKEN } from "@/constants";
 
