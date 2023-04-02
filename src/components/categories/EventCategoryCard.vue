@@ -14,15 +14,39 @@
         </p>
       </div>
       <div class="col text-end">
-        <button class="btn btn-secondary m-1">
+        <!-- Subscribe button -->
+        <button
+          class="btn btn-secondary m-1"
+          @click="subscribeToEventCategory"
+          v-if="isLogged && !isSubscribed"
+        >
           <i class="bi bi-star"></i>
         </button>
+        <button
+          class="btn btn-secondary m-1"
+          @click="subscribeToEventCategory"
+          v-if="isLogged && isSubscribed"
+        >
+          <i class="bi bi-star-fill"></i>
+        </button>
+        <router-link
+          class="btn btn-secondary m-1"
+          to="/login"
+          active-class="active"
+          v-if="!isLogged"
+        >
+          <i class="bi bi-star"></i>
+        </router-link>
+        <!-- **** -->
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { getStore } from "@/common/store";
+import UserRepository from "@/repositories/UserRepository";
+
 export default {
   name: "EventCategoryCard",
   props: {
@@ -34,6 +58,34 @@ export default {
       type: Boolean,
       required: false,
       default: true,
+    },
+  },
+  data() {
+    return {
+      isSubscribed: false,
+    };
+  },
+  methods: {
+    async subscribeToEventCategory() {
+      this.$emit("subscribers", this.eventCategory);
+    },
+  },
+  computed: {
+    isLogged() {
+      return getStore().state.user.logged;
+    },
+  },
+  watch: {
+    "eventCategory.subscribers": {
+      handler: async function (newSubscribers) {
+        const account = await UserRepository.findOne(getStore().state.user.id);
+        const index = newSubscribers.findIndex(
+          (subscriber) => subscriber.id === account.id
+        );
+        this.isSubscribed = index >= 0;
+      },
+      immediate: true,
+      deep: true,
     },
   },
 };
