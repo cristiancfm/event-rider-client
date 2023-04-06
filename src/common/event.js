@@ -29,7 +29,7 @@ export async function applyFilters(filters) {
 
 export async function updateSubscribers(event) {
   try {
-    const account = await UserRepository.findOne(getStore().state.user.id);
+    const account = await UserRepository.findOneBase(getStore().state.user.id);
     const index = event.subscribers.findIndex(
       (subscriber) => subscriber.id === account.id
     );
@@ -48,7 +48,7 @@ export async function updateSubscribers(event) {
 
 export async function updateSaves(event) {
   try {
-    const account = await UserRepository.findOne(getStore().state.user.id);
+    const account = await UserRepository.findOneBase(getStore().state.user.id);
     const index = event.saves.findIndex((save) => save.id === account.id);
     if (index >= 0) {
       //delete save

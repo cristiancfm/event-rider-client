@@ -4,7 +4,7 @@ import EventCategoryRepository from "@/repositories/EventCategoryRepository";
 
 export async function updateSubscribers(eventCategory) {
   try {
-    const account = await UserRepository.findOne(getStore().state.user.id);
+    const account = await UserRepository.findOneBase(getStore().state.user.id);
     const index = eventCategory.subscribers.findIndex(
       (subscriber) => subscriber.id === account.id
     );

@@ -7,9 +7,30 @@
       <div class="col-9">
         <h3>
           {{ user.name }} {{ user.surname }}
-          <button class="btn btn-secondary m-1">
+          <!-- Follow button -->
+          <button
+            class="btn btn-secondary m-1"
+            @click="followUser"
+            v-if="isLogged && !isFollowed"
+          >
             <i class="bi bi-person-plus"></i> Follow
           </button>
+          <button
+            class="btn btn-secondary m-1"
+            @click="followUser"
+            v-if="isLogged && isFollowed"
+          >
+            <i class="bi bi-person-plus-fill"></i> Followed
+          </button>
+          <router-link
+            class="btn btn-secondary m-1"
+            to="/login"
+            active-class="active"
+            v-if="!isLogged"
+          >
+            <i class="bi bi-person-plus"></i> Follow
+          </router-link>
+          <!-- **** -->
         </h3>
         <p class="text-secondary">
           {{ user.upcomingEvents }}
@@ -89,6 +110,8 @@
 <script>
 import { BACKEND_URL } from "@/constants";
 import EventsView from "@/views/EventsView";
+import { getStore } from "@/common/store";
+import UserRepository from "@/repositories/UserRepository";
 
 export default {
   name: "UserDetail",
@@ -107,6 +130,7 @@ export default {
   data() {
     return {
       events: [],
+      isFollowed: false,
     };
   },
   methods: {
@@ -116,8 +140,32 @@ export default {
       }
       return "/profile-placeholder.jpg";
     },
+    async followUser() {
+      this.$emit("followers", this.user);
+    },
   },
-  mounted() {},
+  computed: {
+    isLogged() {
+      return getStore().state.user.logged;
+    },
+  },
+  watch: {
+    "user.followers": {
+      handler: async function (newFollowers) {
+        if (this.isLogged) {
+          const account = await UserRepository.findOneBase(
+            getStore().state.user.id
+          );
+          const index = newFollowers.findIndex(
+            (follower) => follower.id === account.id
+          );
+          this.isFollowed = index >= 0;
+        }
+      },
+      immediate: true,
+      deep: true,
+    },
+  },
 };
 </script>
 

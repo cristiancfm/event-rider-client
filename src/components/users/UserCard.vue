@@ -24,9 +24,30 @@
         </p>
       </div>
       <div class="col text-end">
-        <button class="btn btn-secondary m-1">
+        <!-- Follow button -->
+        <button
+          class="btn btn-secondary m-1"
+          @click="followUser"
+          v-if="isLogged && !isFollowed"
+        >
           <i class="bi bi-person-plus"></i> Follow
         </button>
+        <button
+          class="btn btn-secondary m-1"
+          @click="followUser"
+          v-if="isLogged && isFollowed"
+        >
+          <i class="bi bi-person-plus-fill"></i> Followed
+        </button>
+        <router-link
+          class="btn btn-secondary m-1"
+          to="/login"
+          active-class="active"
+          v-if="!isLogged"
+        >
+          <i class="bi bi-person-plus"></i> Follow
+        </router-link>
+        <!-- **** -->
       </div>
     </div>
   </div>
@@ -34,6 +55,8 @@
 
 <script>
 import { BACKEND_URL } from "@/constants";
+import { getStore } from "@/common/store";
+import UserRepository from "@/repositories/UserRepository";
 
 export default {
   name: "UserCard",
@@ -48,12 +71,42 @@ export default {
       default: true,
     },
   },
+  data() {
+    return {
+      isFollowed: false,
+    };
+  },
   methods: {
     getImageSrc() {
       if (this.user.image) {
         return `${BACKEND_URL}/users/${this.user.id}/image`;
       }
       return "/profile-placeholder.jpg";
+    },
+    async followUser() {
+      this.$emit("followers", this.user);
+    },
+  },
+  computed: {
+    isLogged() {
+      return getStore().state.user.logged;
+    },
+  },
+  watch: {
+    "user.followers": {
+      handler: async function (newFollowers) {
+        if (this.isLogged) {
+          const account = await UserRepository.findOneBase(
+            getStore().state.user.id
+          );
+          const index = newFollowers.findIndex(
+            (follower) => follower.id === account.id
+          );
+          this.isFollowed = index >= 0;
+        }
+      },
+      immediate: true,
+      deep: true,
     },
   },
 };
