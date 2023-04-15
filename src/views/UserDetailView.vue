@@ -1,5 +1,10 @@
 <template>
-  <UserDetail v-if="user" :user="user" @followers="updateFollowers" :showDetails="false"></UserDetail>
+  <UserDetail
+    v-if="user"
+    :user="user"
+    @followers="updateFollowers"
+    :showDetails="false"
+  ></UserDetail>
 </template>
 
 <script>

@@ -61,7 +61,7 @@
         <p class="text-secondary">{{ event.locationDetails }}</p>
       </div>
       <div class="col text-end">
-        <button class="btn btn-secondary m-1">
+        <button class="btn btn-secondary m-1" @click="showInMap">
           <i class="bi bi-map-fill"></i> Show in map
         </button>
         <br />
@@ -156,6 +156,9 @@ export default {
     async saveEvent() {
       this.$emit("saves", this.event);
     },
+    showInMap() {
+      this.$emit("show-in-map", this.event);
+    },
   },
   computed: {
     isLogged() {
@@ -178,7 +181,9 @@ export default {
     },
     "event.saves": {
       handler: async function (newSaves) {
-        const account = await UserRepository.findOneBase(getStore().state.user.id);
+        const account = await UserRepository.findOneBase(
+          getStore().state.user.id
+        );
         const index = newSaves.findIndex((save) => save.id === account.id);
         this.isSaved = index >= 0;
       },
