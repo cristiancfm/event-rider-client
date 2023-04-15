@@ -143,9 +143,7 @@ export default {
     logout() {
       auth.logout();
       // Después de hacer logout nos vamos a home
-      if (this.$router.currentRoute.name != "home") {
-        this.$router.push({ name: "home" });
-      }
+      this.$router.push("/");
     },
   },
 };

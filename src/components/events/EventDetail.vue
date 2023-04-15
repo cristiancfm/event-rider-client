@@ -193,24 +193,28 @@ export default {
   watch: {
     "event.subscribers": {
       handler: async function (newSubscribers) {
-        const account = await UserRepository.findOneBase(
-          getStore().state.user.id
-        );
-        const index = newSubscribers.findIndex(
-          (subscriber) => subscriber.id === account.id
-        );
-        this.isSubscribed = index >= 0;
+        if (this.isLogged) {
+          const account = await UserRepository.findOneBase(
+            getStore().state.user.id
+          );
+          const index = newSubscribers.findIndex(
+            (subscriber) => subscriber.id === account.id
+          );
+          this.isSubscribed = index >= 0;
+        }
       },
       immediate: true,
       deep: true,
     },
     "event.saves": {
       handler: async function (newSaves) {
-        const account = await UserRepository.findOneBase(
-          getStore().state.user.id
-        );
-        const index = newSaves.findIndex((save) => save.id === account.id);
-        this.isSaved = index >= 0;
+        if (this.isLogged) {
+          const account = await UserRepository.findOneBase(
+            getStore().state.user.id
+          );
+          const index = newSaves.findIndex((save) => save.id === account.id);
+          this.isSaved = index >= 0;
+        }
       },
       immediate: true,
       deep: true,
