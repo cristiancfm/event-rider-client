@@ -6,7 +6,6 @@
 
 <script>
 import "leaflet/dist/leaflet.css";
-import createMap from "@/common/eventMap";
 import L from "leaflet";
 
 export default {
@@ -40,32 +39,46 @@ export default {
     },
   },
   methods: {
-    createMap,
+    createMap() {
+      // Initialize the map
+      this.map = L.map(this.$refs.map).setView(
+        [this.latitude, this.longitude],
+        this.zoom
+      );
+      // Add the tile layer
+      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution:
+          '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      }).addTo(this.map);
+    },
+    addMarkers() {
+      this.events.map((e) => {
+        let marker = L.marker([e.coordinateX, e.coordinateY]).addTo(this.map);
+        marker.bindPopup("<b>" + e.title + "</b><br>" + e.locationDetails);
+        // Add popup close event
+        marker.on("popupclose", () => {
+          this.$emit("popup-closed");
+        });
+        this.markers.push(marker);
+      });
+    },
+    removeMarkers() {
+      this.markers.forEach((marker) => {
+        marker.remove();
+      });
+      this.markers = [];
+    },
   },
   mounted() {
-    // Initialize the map
-    this.map = L.map(this.$refs.map).setView(
-      [this.latitude, this.longitude],
-      this.zoom
-    );
-    // Add the tile layer
-    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      maxZoom: 19,
-      attribution:
-        '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-    }).addTo(this.map);
-    // Add the markers
-    this.events.map((e) => {
-      let marker = L.marker([e.coordinateX, e.coordinateY]).addTo(this.map);
-      marker.bindPopup("<b>" + e.title + "</b><br>" + e.locationDetails);
-      // Add popup close event
-      marker.on("popupclose", () => {
-        this.$emit("popup-closed");
-      });
-      this.markers.push(marker);
-    });
+    this.createMap();
+    this.addMarkers();
   },
   watch: {
+    events() {
+      this.removeMarkers();
+      this.addMarkers();
+    },
     showInMapEvent() {
       if (this.showInMapEvent !== null) {
         // Look for the selected event marker

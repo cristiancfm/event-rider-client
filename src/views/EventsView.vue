@@ -3,9 +3,13 @@
     <h2 class="m-2">{{ title }}</h2>
     <EventFilters @filters-applied="applyFilters" />
     <div class="row">
-      <div class="col-sm-8">
+      <div class="col-sm-12 col-md-8">
         <div class="d-flex flex-wrap justify-content-start">
-          <div v-for="event in events" :key="event.id">
+          <div
+            class="col-sm-12 col-md-6 col-xxl-4"
+            v-for="event in events"
+            :key="event.id"
+          >
             <EventCard
               :event="event"
               @subscribers="updateSubscribers"
@@ -15,7 +19,7 @@
           </div>
         </div>
       </div>
-      <div class="col-sm-4">
+      <div class="col-md-4">
         <EventMap
           v-if="events.length > 0"
           :events="events"

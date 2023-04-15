@@ -1,5 +1,5 @@
 <template>
-  <div class="card m-2" style="max-width: 400px">
+  <div class="card m-2">
     <div
       :id="'event-' + event.id + '-carousel'"
       class="carousel slide"
@@ -44,13 +44,17 @@
         </button>
       </div>
     </div>
-    <div class="row p-3">
-      <div class="col">
+    <div class="row p-3 pb-0">
+      <div class="col-12">
         <h3>
           <router-link :to="'/events/' + event.id">
             {{ event.title }}
           </router-link>
         </h3>
+      </div>
+    </div>
+    <div class="row p-3 pt-0">
+      <div class="col">
         <p>{{ event.host.name }} {{ event.host.surname }}</p>
         <p class="text-secondary">
           {{ event.startingDate.toLocaleString() }}
