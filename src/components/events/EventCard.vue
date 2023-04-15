@@ -1,5 +1,5 @@
 <template>
-  <div class="card m-2" style="max-width: 400px">
+  <div class="card m-2">
     <div
       :id="'event-' + event.id + '-carousel'"
       class="carousel slide"
@@ -44,13 +44,17 @@
         </button>
       </div>
     </div>
-    <div class="row p-3">
-      <div class="col">
+    <div class="row p-3 pb-0">
+      <div class="col-12">
         <h3>
           <router-link :to="'/events/' + event.id">
             {{ event.title }}
           </router-link>
         </h3>
+      </div>
+    </div>
+    <div class="row p-3 pt-0">
+      <div class="col">
         <p>{{ event.host.name }} {{ event.host.surname }}</p>
         <p class="text-secondary">
           {{ event.startingDate.toLocaleString() }}
@@ -61,7 +65,7 @@
         <p class="text-secondary">{{ event.locationDetails }}</p>
       </div>
       <div class="col text-end">
-        <button class="btn btn-secondary m-1">
+        <button class="btn btn-secondary m-1" @click="showInMap">
           <i class="bi bi-map-fill"></i> Show in map
         </button>
         <br />
@@ -156,6 +160,9 @@ export default {
     async saveEvent() {
       this.$emit("saves", this.event);
     },
+    showInMap() {
+      this.$emit("show-in-map", this.event);
+    },
   },
   computed: {
     isLogged() {
@@ -178,7 +185,9 @@ export default {
     },
     "event.saves": {
       handler: async function (newSaves) {
-        const account = await UserRepository.findOneBase(getStore().state.user.id);
+        const account = await UserRepository.findOneBase(
+          getStore().state.user.id
+        );
         const index = newSaves.findIndex((save) => save.id === account.id);
         this.isSaved = index >= 0;
       },

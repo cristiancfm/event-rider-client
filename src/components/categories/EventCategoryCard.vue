@@ -78,7 +78,9 @@ export default {
   watch: {
     "eventCategory.subscribers": {
       handler: async function (newSubscribers) {
-        const account = await UserRepository.findOneBase(getStore().state.user.id);
+        const account = await UserRepository.findOneBase(
+          getStore().state.user.id
+        );
         const index = newSubscribers.findIndex(
           (subscriber) => subscriber.id === account.id
         );
