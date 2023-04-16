@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <router-link class="navbar-brand" to="/">
         <img
-          src="../assets/event-rider-logo.png"
+          src="../../public/event-rider-logo.png"
           alt="Event Rider"
           width="100"
         />
