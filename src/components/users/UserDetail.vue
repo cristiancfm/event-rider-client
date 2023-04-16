@@ -121,11 +121,6 @@ export default {
       type: Object,
       required: true,
     },
-    showDetails: {
-      type: Boolean,
-      required: false,
-      default: true,
-    },
   },
   data() {
     return {

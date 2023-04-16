@@ -3,7 +3,6 @@
     v-if="user"
     :user="user"
     @followers="updateFollowers"
-    :showDetails="false"
   ></UserDetail>
 </template>
 

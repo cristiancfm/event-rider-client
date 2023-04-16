@@ -16,6 +16,7 @@ import EventDetailView from "@/views/EventDetailView";
 import UsersView from "@/views/UsersView";
 import UserDetailView from "@/views/UserDetailView";
 import EventCategoriesView from "@/views/EventCategoriesView";
+import ProfileView from "@/views/ProfileView";
 
 const routes = [
   {
@@ -55,9 +56,9 @@ const routes = [
     meta: { public: true },
   },
   {
-    path: "/event-categories/:id",
+    path: "/event-categories/:id", // return the events of the category
     name: "Event Category Detail",
-    // component: EventCategoryDetailView, TODO
+    component: EventsView,
     meta: { public: true },
   },
   {
@@ -74,8 +75,14 @@ const routes = [
   },
   {
     path: "/about",
-    name: "about",
+    name: "About",
     component: AboutView,
+    meta: { public: true },
+  },
+  {
+    path: "/profile",
+    name: "Profile",
+    component: ProfileView,
     meta: { public: true },
   },
   {

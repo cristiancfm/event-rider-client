@@ -1,7 +1,11 @@
 <template>
   <div class="text-start p-2">
     <h2 class="m-2">{{ title }}</h2>
-    <EventFilters @filters-applied="applyFilters" />
+    <EventFilters
+      ref="eventFilters"
+      @filters-applied="applyFilters"
+      :category-id="categoryId"
+    />
     <div class="row">
       <div class="col-sm-12 col-md-8">
         <div class="d-flex flex-wrap justify-content-start">
@@ -56,6 +60,11 @@ export default {
       required: false,
     },
   },
+  computed: {
+    categoryId() {
+      return parseInt(this.$route.params.id);
+    },
+  },
   data() {
     return {
       title: "",
@@ -87,6 +96,12 @@ export default {
       });
     } else {
       this.events = this.eventsProp;
+    }
+    if (this.categoryId !== undefined) {
+      // wait until the component is fully rendered
+      setTimeout(() => {
+        this.$refs.eventFilters.emitFilters();
+      }, 100);
     }
   },
 };
