@@ -33,17 +33,23 @@
           <!-- **** -->
         </h3>
         <p class="text-secondary">
-          {{ user.upcomingEvents }}
-          <span v-if="user.upcomingEvents === 1">upcoming event</span>
+          {{ user.upcomingHostedEvents.length }}
+          <span v-if="user.upcomingHostedEvents.length === 1"
+            >upcoming event</span
+          >
           <span v-else>upcoming events</span>
         </p>
         <p class="text-secondary">
-          {{ user.totalEvents }}
-          <span v-if="user.totalEvents === 1">total event</span>
-          <span v-else>total events</span>
+          {{ user.hostedEvents.length }}
+          <span v-if="user.hostedEvents.length === 1">hosted event</span>
+          <span v-else>hosted events</span>
         </p>
-        <p>(followers)</p>
-        <p>(following)</p>
+        <p>
+          {{ user.followers.length }}
+          <span v-if="user.followers.length === 1">follower</span>
+          <span v-else>followers</span>
+        </p>
+        <p>{{ user.following.length }} following</p>
       </div>
       <div class="col-sm-6"></div>
     </div>
@@ -89,10 +95,7 @@
           role="tabpanel"
           aria-labelledby="upcoming-events-tab"
         >
-          <EventsView
-            :title-prop="''"
-            :events-prop="user.upcomingHostedEvents"
-          />
+          <EventsView :title="''" :events="user.upcomingHostedEvents" />
         </div>
         <div
           class="tab-pane fade"
@@ -100,7 +103,7 @@
           role="tabpanel"
           aria-labelledby="past-events-tab"
         >
-          <EventsView :title-prop="''" :eventsProp="user.pastHostedEvents" />
+          <EventsView :title="''" :events="user.pastHostedEvents" />
         </div>
       </div>
     </div>
@@ -109,7 +112,7 @@
 
 <script>
 import { BACKEND_URL } from "@/constants";
-import EventsView from "@/views/EventsView";
+import EventsView from "@/components/events/EventsList.vue";
 import { getStore } from "@/common/store";
 import UserRepository from "@/repositories/UserRepository";
 
@@ -124,7 +127,6 @@ export default {
   },
   data() {
     return {
-      events: [],
       isFollowed: false,
     };
   },

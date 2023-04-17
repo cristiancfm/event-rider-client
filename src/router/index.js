@@ -11,12 +11,16 @@ import LoginForm from "@/components/LoginForm.vue";
 import auth from "@/common/auth";
 import { getStore } from "@/common/store";
 import SignupForm from "@/components/SignupForm";
-import EventsView from "@/views/EventsView";
+import EventsView from "@/components/events/EventsList.vue";
 import EventDetailView from "@/views/EventDetailView";
 import UsersView from "@/views/UsersView";
 import UserDetailView from "@/views/UserDetailView";
 import EventCategoriesView from "@/views/EventCategoriesView";
-import ProfileView from "@/views/ProfileView";
+import ProfileView from "@/views/ProfileDetailView.vue";
+import ProfileHostedEvents from "@/components/users/ProfileHostedEvents.vue";
+import ProfileSavedEvents from "@/components/users/ProfileSavedEvents.vue";
+import ProfileSubscribedEvents from "@/components/users/ProfileSubscribedEvents.vue";
+import ProfileSubscribedCategories from "@/components/users/ProfileSubscribedCategories.vue";
 
 const routes = [
   {
@@ -83,6 +87,12 @@ const routes = [
     path: "/profile",
     name: "Profile",
     component: ProfileView,
+    children: [
+      { path: "hosted-events", component: ProfileHostedEvents },
+      { path: "saved-events", component: ProfileSavedEvents },
+      { path: "subscribed-events", component: ProfileSubscribedEvents },
+      { path: "subscribed-categories", component: ProfileSubscribedCategories },
+    ],
     meta: { public: true },
   },
   {

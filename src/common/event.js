@@ -2,26 +2,36 @@ import EventRepository from "@/repositories/EventRepository";
 import UserRepository from "@/repositories/UserRepository";
 import { getStore } from "@/common/store";
 
-export async function applyFilters(filters) {
+export const EventType = {
+  UNREVIEWED: "unreviewed",
+  REJECTED: "rejected",
+  UPCOMING: "cancelled",
+  PAST: "past",
+};
+
+function applyFilters(filters) {
+  let query = [];
+  filters.title ? query.push({ name: "title", value: filters.title }) : "";
+  filters.latitude
+    ? query.push({ name: "latitude", value: filters.latitude })
+    : "";
+  filters.longitude
+    ? query.push({ name: "longitude", value: filters.longitude })
+    : "";
+  filters.date ? query.push({ name: "date", value: filters.date }) : "";
+  filters.distance
+    ? query.push({ name: "distance", value: filters.distance })
+    : "";
+  filters.category
+    ? query.push({ name: "category", value: filters.category })
+    : "";
+  return query;
+}
+
+export async function searchEvents(filters) {
   try {
-    const query = [];
-    filters.title ? query.push({ name: "title", value: filters.title }) : "";
-    filters.latitude
-      ? query.push({ name: "latitude", value: filters.latitude })
-      : "";
-    filters.longitude
-      ? query.push({ name: "longitude", value: filters.longitude })
-      : "";
-    filters.date ? query.push({ name: "date", value: filters.date }) : "";
-    filters.distance
-      ? query.push({ name: "distance", value: filters.distance })
-      : "";
-    filters.category
-      ? query.push({ name: "category", value: filters.category })
-      : "";
-    await EventRepository.findAll(query, null).then((response) => {
-      this.events = response;
-    });
+    const query = applyFilters(filters);
+    return await EventRepository.findAll(query, null);
   } catch (err) {
     console.error(err);
   }

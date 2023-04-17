@@ -107,12 +107,6 @@ import { MAPBOX_TOKEN } from "@/constants";
 
 export default {
   name: "EventFilters",
-  props: {
-    categoryId: {
-      type: Number,
-      required: false,
-    },
-  },
   data() {
     return {
       locationInput: "",
@@ -123,7 +117,7 @@ export default {
         longitude: "",
         date: "",
         distance: "",
-        category: this.categoryId || "", // add categoryId if present in props
+        category: "",
       },
       eventCategories: [],
     };
@@ -131,9 +125,9 @@ export default {
   methods: {
     emitFilters() {
       this.$emit("filters-applied", this.filters);
-      if (this.$route.path === "/event-categories/" + this.categoryId) {
-        this.$router.push("/events"); // change URL back to /events when it is /event-categories/:id
-      }
+      // if (this.$route.path === "/event-categories/" + this.categoryId) {
+      //   this.$router.push("/events"); // change URL back to /events when it is /event-categories/:id
+      // }
     },
     async autocompleteLocation() {
       if (this.locationInput !== "") {
