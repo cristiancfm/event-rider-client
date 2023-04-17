@@ -2,13 +2,6 @@ import EventRepository from "@/repositories/EventRepository";
 import UserRepository from "@/repositories/UserRepository";
 import { getStore } from "@/common/store";
 
-export const EventType = {
-  UNREVIEWED: "unreviewed",
-  REJECTED: "rejected",
-  UPCOMING: "cancelled",
-  PAST: "past",
-};
-
 function applyFilters(filters) {
   let query = [];
   filters.title ? query.push({ name: "title", value: filters.title }) : "";
@@ -28,10 +21,18 @@ function applyFilters(filters) {
   return query;
 }
 
-export async function searchEvents(filters) {
+export async function findEvents(type = "all", filters) {
   try {
-    const query = applyFilters(filters);
-    return await EventRepository.findAll(query, null);
+    let query = null;
+    if (filters) query = applyFilters(filters);
+    switch (type) {
+      case "upcoming":
+        return await EventRepository.findAllUpcoming(query, null);
+      case "past":
+        return await EventRepository.findAllPast(query, null);
+      default:
+        return await EventRepository.findAll(query, null);
+    }
   } catch (err) {
     console.error(err);
   }

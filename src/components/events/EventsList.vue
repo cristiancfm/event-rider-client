@@ -1,7 +1,7 @@
 <template>
   <div class="text-start p-2">
     <h2 class="m-2">{{ title }}</h2>
-    <EventFilters ref="eventFilters" @filters-applied="onFiltersApplied" />
+    <EventFilters ref="eventFilters" @filters-applied="handleFiltersApplied" />
     <div class="row">
       <div class="col-sm-12 col-md-8">
         <div class="d-flex flex-wrap justify-content-start">
@@ -40,7 +40,7 @@
 <script>
 import EventFilters from "@/components/events/EventFilters.vue";
 import EventCard from "@/components/events/EventCard.vue";
-import { searchEvents, updateSubscribers, updateSaves } from "@/common/event";
+import { updateSubscribers, updateSaves } from "@/common/event";
 import EventMap from "@/components/events/EventMap.vue";
 
 export default {
@@ -51,36 +51,22 @@ export default {
       type: String,
       required: true,
     },
-    events: {
-      // the events to show in the component
-      type: Object,
+    getEventsFunction: {
+      // the function to retrieve the events
+      type: Function,
       required: true,
-    },
-    eventType: {
-      // the events with the provided type to retrieve when using the filters
-      type: String,
-      required: false,
-    },
-    cancelledEvents: {
-      // whether to include cancelled events or not
-      type: Boolean,
-      required: false,
-    },
-    eventCategoryId: {
-      // the events with the provided category to retrieve
-      type: Number,
-      required: false,
     },
   },
   data() {
     return {
+      events: [],
       showInMapEvent: null,
     };
   },
   components: { EventFilters, EventCard, EventMap },
   methods: {
-    onFiltersApplied() {
-      searchEvents();
+    async handleFiltersApplied(filters) {
+      this.events = await this.getEventsFunction(filters);
     },
     updateSubscribers,
     updateSaves,
@@ -91,13 +77,8 @@ export default {
       this.showInMapEvent = null;
     },
   },
-  mounted() {
-    if (this.categoryId !== undefined) {
-      // wait until the component is fully rendered
-      setTimeout(() => {
-        this.$refs.eventFilters.emitFilters();
-      }, 100);
-    }
+  async mounted() {
+    this.events = await this.getEventsFunction();
   },
 };
 </script>

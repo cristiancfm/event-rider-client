@@ -11,7 +11,7 @@ import LoginForm from "@/components/LoginForm.vue";
 import auth from "@/common/auth";
 import { getStore } from "@/common/store";
 import SignupForm from "@/components/SignupForm";
-import EventsView from "@/components/events/EventsList.vue";
+import EventsView from "@/views/EventsView";
 import EventDetailView from "@/views/EventDetailView";
 import UsersView from "@/views/UsersView";
 import UserDetailView from "@/views/UserDetailView";

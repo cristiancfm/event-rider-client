@@ -1,32 +1,20 @@
 <template>
   <EventsList
     :title="'Upcoming Events'"
-    :events="events"
-    :event-type="EventType.UPCOMING"
+    :get-events-function="getEventsFunction"
   />
 </template>
 
 <script>
 import EventsList from "@/components/events/EventsList.vue";
-import EventRepository from "@/repositories/EventRepository";
-import { EventType } from "@/common/event";
+import { findEvents } from "@/common/event";
 
 export default {
   name: "EventsView",
-  data() {
-    return {
-      events: [],
-    };
-  },
   components: { EventsList },
-  mounted() {
-    EventRepository.findUpcoming().then((response) => {
-      this.users = response;
-    });
-  },
-  computed: {
-    EventType() {
-      return EventType;
+  methods: {
+    getEventsFunction(filters) {
+      return findEvents("upcoming", filters);
     },
   },
 };

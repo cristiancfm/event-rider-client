@@ -8,36 +8,40 @@ function applyDate(event) {
   return event;
 }
 
+function createParams(query, sort) {
+  const params = new URLSearchParams();
+  if (query) {
+    for (let i = 0; i < query.length; i++) {
+      params.append(query[i].name, query[i].value);
+    }
+  }
+  if (sort) params.append("sort", sort);
+  return params.toString();
+}
+
+async function find(url, query, sort) {
+  const paramsStr = createParams(query, sort);
+  if (paramsStr) url += "?" + paramsStr;
+  const response = await HTTP.get(url);
+  response.data.forEach(applyDate);
+  return response.data;
+}
+
 export default {
   async findAll(query, sort) {
-    const params = new URLSearchParams();
-    if (query) {
-      for (let i = 0; i < query.length; i++) {
-        params.append(query[i].name, query[i].value);
-      }
-    }
-    if (sort) params.append("sort", sort);
-    const paramsStr = params.toString();
-    let url = resource;
-    if (paramsStr) url += "?" + paramsStr;
-    const response = await HTTP.get(url);
-    response.data.forEach(applyDate);
-    return response.data;
+    return find(resource, query, sort);
   },
-  async findUpcoming(query, sort) {
-    const params = new URLSearchParams();
-    if (query) {
-      for (let i = 0; i < query.length; i++) {
-        params.append(query[i].name, query[i].value);
-      }
-    }
-    if (sort) params.append("sort", sort);
-    const paramsStr = params.toString();
-    let url = resource + "/upcoming";
-    if (paramsStr) url += "?" + paramsStr;
-    const response = await HTTP.get(url);
-    response.data.forEach(applyDate);
-    return response.data;
+  async findAllUpcoming(query, sort) {
+    return find(`${resource}/upcoming`, query, sort);
+  },
+  async findAllPast(query, sort) {
+    return find(`${resource}/past`, query, sort);
+  },
+  async findUserUnreviewed(query, sort) {
+    return find(`${resource}/unreviewed`, query, sort);
+  },
+  async findUserRejected(query, sort) {
+    return find(`${resource}/rejected`, query, sort);
   },
   async findOne(id) {
     const event = (await HTTP.get(`${resource}/${id}`)).data;
