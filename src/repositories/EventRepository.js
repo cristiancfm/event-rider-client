@@ -19,7 +19,7 @@ function createParams(query, sort) {
   return params.toString();
 }
 
-async function find(url, query, sort) {
+export async function find(url, query, sort) {
   const paramsStr = createParams(query, sort);
   if (paramsStr) url += "?" + paramsStr;
   const response = await HTTP.get(url);
@@ -33,15 +33,6 @@ export default {
   },
   async findAllUpcoming(query, sort) {
     return find(`${resource}/upcoming`, query, sort);
-  },
-  async findAllPast(query, sort) {
-    return find(`${resource}/past`, query, sort);
-  },
-  async findUserUnreviewed(query, sort) {
-    return find(`${resource}/unreviewed`, query, sort);
-  },
-  async findUserRejected(query, sort) {
-    return find(`${resource}/rejected`, query, sort);
   },
   async findOne(id) {
     const event = (await HTTP.get(`${resource}/${id}`)).data;

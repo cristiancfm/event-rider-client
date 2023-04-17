@@ -12,6 +12,7 @@
               :src="getImageSrc(item - 1)"
               class="d-block w-100"
               alt="Event image"
+              @error="setPlaceholder"
             />
           </div>
           <div v-if="item - 1 !== 0" class="carousel-item">
@@ -19,6 +20,7 @@
               :src="getImageSrc(item - 1)"
               class="d-block w-100"
               alt="Event image"
+              @error="setPlaceholder"
             />
           </div>
         </template>
@@ -177,6 +179,9 @@ export default {
         return `${BACKEND_URL}/events/${this.event.id}/image/${item}`;
       }
       return "/placeholder.png";
+    },
+    setPlaceholder(event) {
+      event.target.src = "/placeholder.png";
     },
     async subscribeToEvent() {
       this.$emit("subscribers", this.event);

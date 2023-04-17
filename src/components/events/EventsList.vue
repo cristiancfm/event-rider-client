@@ -1,7 +1,7 @@
 <template>
   <div class="text-start p-2">
     <h2 class="m-2">{{ title }}</h2>
-    <EventFilters ref="eventFilters" @filters-applied="handleFiltersApplied" />
+    <EventFilters ref="eventFilters" @filters-applied="applyFilters" />
     <div class="row">
       <div class="col-sm-12 col-md-8">
         <div class="d-flex flex-wrap justify-content-start">
@@ -51,7 +51,7 @@ export default {
       type: String,
       required: true,
     },
-    getEventsFunction: {
+    getEvents: {
       // the function to retrieve the events
       type: Function,
       required: true,
@@ -65,8 +65,23 @@ export default {
   },
   components: { EventFilters, EventCard, EventMap },
   methods: {
-    async handleFiltersApplied(filters) {
-      this.events = await this.getEventsFunction(filters);
+    async applyFilters(filters) {
+      let query = [];
+      filters.title ? query.push({ name: "title", value: filters.title }) : "";
+      filters.latitude
+        ? query.push({ name: "latitude", value: filters.latitude })
+        : "";
+      filters.longitude
+        ? query.push({ name: "longitude", value: filters.longitude })
+        : "";
+      filters.date ? query.push({ name: "date", value: filters.date }) : "";
+      filters.distance
+        ? query.push({ name: "distance", value: filters.distance })
+        : "";
+      filters.category
+        ? query.push({ name: "category", value: filters.category })
+        : "";
+      this.events = await this.getEvents(query, null);
     },
     updateSubscribers,
     updateSaves,
@@ -78,7 +93,7 @@ export default {
     },
   },
   async mounted() {
-    this.events = await this.getEventsFunction();
+    this.events = await this.getEvents();
   },
 };
 </script>

@@ -73,7 +73,7 @@
         role="tabpanel"
         aria-labelledby="unreviewed-events-tab"
       >
-        <EventsView :title="''" :events="user.hostedEvents" />
+        <EventsList :title="''" :get-events="getUnreviewedEvents" />
       </div>
       <div
         class="tab-pane fade"
@@ -81,7 +81,7 @@
         role="tabpanel"
         aria-labelledby="rejected-events-tab"
       >
-        <EventsView :title="''" :events="user.hostedEvents" />
+        <EventsList :title="''" :get-events="getRejectedEvents" />
       </div>
       <div
         class="tab-pane fade"
@@ -89,7 +89,7 @@
         role="tabpanel"
         aria-labelledby="upcoming-events-tab"
       >
-        <EventsView :title="''" :events="user.hostedEvents" />
+        <EventsList :title="''" :get-events="getUpcomingEvents" />
       </div>
       <div
         class="tab-pane fade"
@@ -97,22 +97,54 @@
         role="tabpanel"
         aria-labelledby="past-events-tab"
       >
-        <EventsView :title="''" :events="user.hostedEvents" />
+        <EventsList :title="''" :get-events="getPastEvents" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import EventsView from "@/components/events/EventsList.vue";
+import EventsList from "@/components/events/EventsList";
+import UserRepository from "@/repositories/UserRepository";
+import { getStore } from "@/common/store";
 
 export default {
   name: "ProfileHostedEvents",
-  components: { EventsView },
+  components: { EventsList },
   props: {
     user: {
       type: Object,
       required: true,
+    },
+  },
+  methods: {
+    async getUpcomingEvents(query) {
+      return await UserRepository.findUserUpcomingEvents(
+        getStore().state.user.id,
+        query,
+        null
+      );
+    },
+    async getPastEvents(query) {
+      return await UserRepository.findUserPastEvents(
+        getStore().state.user.id,
+        query,
+        null
+      );
+    },
+    async getUnreviewedEvents(query) {
+      return await UserRepository.findUserUnreviewedEvents(
+        getStore().state.user.id,
+        query,
+        null
+      );
+    },
+    async getRejectedEvents(query) {
+      return await UserRepository.findUserRejectedEvents(
+        getStore().state.user.id,
+        query,
+        null
+      );
     },
   },
 };

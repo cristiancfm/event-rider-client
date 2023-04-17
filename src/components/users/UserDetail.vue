@@ -95,7 +95,7 @@
           role="tabpanel"
           aria-labelledby="upcoming-events-tab"
         >
-          <EventsView :title="''" :events="user.upcomingHostedEvents" />
+          <EventsList :title="''" :get-events="getUpcomingEvents" />
         </div>
         <div
           class="tab-pane fade"
@@ -103,7 +103,7 @@
           role="tabpanel"
           aria-labelledby="past-events-tab"
         >
-          <EventsView :title="''" :events="user.pastHostedEvents" />
+          <EventsList :title="''" :get-events="getPastEvents" />
         </div>
       </div>
     </div>
@@ -112,13 +112,13 @@
 
 <script>
 import { BACKEND_URL } from "@/constants";
-import EventsView from "@/components/events/EventsList.vue";
 import { getStore } from "@/common/store";
 import UserRepository from "@/repositories/UserRepository";
+import EventsList from "@/components/events/EventsList";
 
 export default {
   name: "UserDetail",
-  components: { EventsView },
+  components: { EventsList },
   props: {
     user: {
       type: Object,
@@ -139,6 +139,16 @@ export default {
     },
     async followUser() {
       this.$emit("followers", this.user);
+    },
+    async getUpcomingEvents(query) {
+      return await UserRepository.findUserUpcomingEvents(
+        this.user.id,
+        query,
+        null
+      );
+    },
+    async getPastEvents(query) {
+      return await UserRepository.findUserPastEvents(this.user.id, query, null);
     },
   },
   computed: {
