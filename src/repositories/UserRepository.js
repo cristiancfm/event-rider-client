@@ -60,6 +60,9 @@ export default {
   async findUserSubscribedPastEvents(id, query, sort) {
     return find(`${resource}/${id}/events/subscribed/past`, query, sort);
   },
+  async findUserSubscribedCategories(id, query, sort) {
+    return find(`${resource}/${id}/categories/subscribed`, query, sort);
+  },
   async save(user) {
     if (user.id) {
       return (await HTTP.put(`${resource}/${user.id}`, user)).data;
