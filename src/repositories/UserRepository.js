@@ -54,6 +54,12 @@ export default {
   async findUserSavedPastEvents(id, query, sort) {
     return find(`${resource}/${id}/events/saved/past`, query, sort);
   },
+  async findUserSubscribedUpcomingEvents(id, query, sort) {
+    return find(`${resource}/${id}/events/subscribed/upcoming`, query, sort);
+  },
+  async findUserSubscribedPastEvents(id, query, sort) {
+    return find(`${resource}/${id}/events/subscribed/past`, query, sort);
+  },
   async save(user) {
     if (user.id) {
       return (await HTTP.put(`${resource}/${user.id}`, user)).data;
