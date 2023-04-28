@@ -18,7 +18,7 @@
           <span v-else>upcoming events</span>
         </p>
         <p class="text-secondary">
-          {{ user.hostedEvents.length }}
+          {{ user.upcomingHostedEvents.length + user.pastHostedEvents.length }}
           <span v-if="user.hostedEvents.length === 1">total event</span>
           <span v-else>total events</span>
         </p>
