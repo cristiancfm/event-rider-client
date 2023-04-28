@@ -17,10 +17,10 @@ import UsersView from "@/views/UsersView";
 import UserDetailView from "@/views/UserDetailView";
 import EventCategoriesView from "@/views/EventCategoriesView";
 import ProfileView from "@/views/ProfileDetailView.vue";
-import ProfileHostedEvents from "@/components/users/ProfileHostedEvents.vue";
-import ProfileSavedEvents from "@/components/users/ProfileSavedEvents.vue";
-import ProfileSubscribedEvents from "@/components/users/ProfileSubscribedEvents.vue";
-import ProfileSubscribedCategories from "@/components/users/ProfileSubscribedCategories.vue";
+import ProfileHostedEvents from "@/components/profile/ProfileHostedEvents.vue";
+import ProfileSavedEvents from "@/components/profile/ProfileSavedEvents.vue";
+import ProfileSubscribedEvents from "@/components/profile/ProfileSubscribedEvents.vue";
+import ProfileSubscribedCategories from "@/components/profile/ProfileSubscribedCategories.vue";
 
 const routes = [
   {

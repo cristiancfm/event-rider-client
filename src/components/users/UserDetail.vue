@@ -141,14 +141,24 @@ export default {
       this.$emit("followers", this.user);
     },
     async getUpcomingEvents(query) {
-      return await UserRepository.findUserUpcomingEvents(
+      let events = await UserRepository.findUserUpcomingEvents(
         this.user.id,
         query,
         null
       );
+      // Cancelled events will not be shown
+      events = events.filter((event) => event.status === "PUBLISHED");
+      return events;
     },
     async getPastEvents(query) {
-      return await UserRepository.findUserPastEvents(this.user.id, query, null);
+      let events = await UserRepository.findUserPastEvents(
+        this.user.id,
+        query,
+        null
+      );
+      // Cancelled events will not be shown
+      events = events.filter((event) => event.status === "PUBLISHED");
+      return events;
     },
     handleTabChange() {
       // Leaflet will not render correctly when the user changes between tabs

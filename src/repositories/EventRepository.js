@@ -31,7 +31,7 @@ export default {
   async findAll(query, sort) {
     return find(resource, query, sort);
   },
-  async findAllUpcoming(query, sort) {
+  async findPublishedUpcoming(query, sort) {
     return find(`${resource}/upcoming`, query, sort);
   },
   async findOne(id) {

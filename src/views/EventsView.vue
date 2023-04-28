@@ -11,7 +11,7 @@ export default {
   components: { EventsList },
   methods: {
     async getEvents(query) {
-      return await EventRepository.findAllUpcoming(query, null);
+      return await EventRepository.findPublishedUpcoming(query, null);
     },
   },
 };

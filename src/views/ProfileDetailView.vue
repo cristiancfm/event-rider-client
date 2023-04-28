@@ -5,7 +5,7 @@
 <script>
 import { getStore } from "@/common/store";
 import UserRepository from "@/repositories/UserRepository";
-import ProfileDetail from "@/components/users/ProfileDetail.vue";
+import ProfileDetail from "@/components/profile/ProfileDetail.vue";
 
 export default {
   name: "ProfileDetailView",
