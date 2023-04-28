@@ -150,6 +150,17 @@ export default {
     async getPastEvents(query) {
       return await UserRepository.findUserPastEvents(this.user.id, query, null);
     },
+    handleTabChange() {
+      // Leaflet will not render correctly when the user changes between tabs
+      // because the containers are hidden and shown and Leaflet is not aware
+      // of that. Resizing the browser window will fix the issue, since Leaflet
+      // listens to the browser resizing event.
+      window.dispatchEvent(new Event("resize"));
+    },
+  },
+  mounted() {
+    const eventsNav = document.querySelector("#events-nav");
+    eventsNav.addEventListener("shown.bs.tab", this.handleTabChange);
   },
   computed: {
     isLogged() {
