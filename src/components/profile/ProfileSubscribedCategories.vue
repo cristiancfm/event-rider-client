@@ -5,8 +5,11 @@
       Subscribed Categories
     </h2>
   </div>
-  <div class="row">
-    <EventCategoriesList :title="''" :get-events="getSubscribedCategories" />
+  <div class="row" style="border-top: 1px solid gainsboro">
+    <EventCategoriesList
+      :title="''"
+      :get-categories="getSubscribedCategories"
+    />
   </div>
 </template>
 

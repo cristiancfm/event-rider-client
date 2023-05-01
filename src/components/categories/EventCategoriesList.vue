@@ -9,6 +9,9 @@
         ></EventCategoryCard>
       </div>
     </div>
+    <div v-if="categories.length === 0" class="text-center mt-2">
+      <h2>No Categories</h2>
+    </div>
   </div>
 </template>
 
