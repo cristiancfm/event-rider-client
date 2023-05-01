@@ -2820,7 +2820,7 @@ textarea.form-control-lg {
   --bs-btn-bg: transparent;
   --bs-btn-border-width: 1px;
   --bs-btn-border-color: transparent;
-  --bs-btn-border-radius: 0.5rem;
+  --bs-btn-border-radius: 5px;
   --bs-btn-hover-border-color: transparent;
   --bs-btn-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075);
   --bs-btn-disabled-opacity: 0.65;
@@ -2890,14 +2890,14 @@ textarea.form-control-lg {
 .btn-primary {
   --bs-btn-color: #fff;
   --bs-btn-bg: #2fa4e7;
-  --bs-btn-border-color: #2e5bb6;
+  --bs-btn-border-color: #4070d5;
   --bs-btn-hover-color: #fff;
   --bs-btn-hover-bg: #288bc4;
-  --bs-btn-hover-border-color: #2e5bb6;
+  --bs-btn-hover-border-color: #4070d5;
   --bs-btn-focus-shadow-rgb: 78, 178, 235;
   --bs-btn-active-color: #fff;
   --bs-btn-active-bg: #2683b9;
-  --bs-btn-active-border-color: #2e5bb6;
+  --bs-btn-active-border-color: #4070d5;
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   --bs-btn-disabled-color: #fff;
   --bs-btn-disabled-bg: #2fa4e7;
@@ -2905,14 +2905,14 @@ textarea.form-control-lg {
 }
 
 .btn-secondary {
-  --bs-btn-color: #000;
+  --bs-btn-color: #2e4051;
   --bs-btn-bg: #e9ecef;
   --bs-btn-border-color: #d5d7da;
-  --bs-btn-hover-color: #000;
+  --bs-btn-hover-color: #2e4051;
   --bs-btn-hover-bg: #eceff1;
   --bs-btn-hover-border-color: #d5d7da;
   --bs-btn-focus-shadow-rgb: 198, 201, 203;
-  --bs-btn-active-color: #000;
+  --bs-btn-active-color: #2e4051;
   --bs-btn-active-bg: #edf0f2;
   --bs-btn-active-border-color: #d5d7da;
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
@@ -3025,7 +3025,7 @@ textarea.form-control-lg {
 
 .btn-outline-primary {
   --bs-btn-color: #2fa4e7;
-  --bs-btn-border-color: #2fa4e7;
+  --bs-btn-border-color: #48bafc;
   --bs-btn-hover-color: #fff;
   --bs-btn-hover-bg: #2fa4e7;
   --bs-btn-hover-border-color: #2fa4e7;
@@ -10921,32 +10921,30 @@ textarea.form-control-lg {
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
 }
 
-.btn-primary,
-.btn-outline-primary {
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.btn-secondary,
-.btn-outline-secondary {
-  color: #495057;
-}
-
 .btn-primary {
-  background-image: linear-gradient(#6994f8, #3a73e7 60%, #3366cc);
-  box-shadow: 0px 1px 3px -3px rgba(0,0,0,0.75);
+  background: linear-gradient(180deg, rgba(144,181,233,1) 0%, rgba(65,130,213,1) 45%, rgba(35,117,217,1) 55%, rgba(123,189,253,1) 100%);
+  box-shadow: 0px 1px 2px -1px rgba(0,0,0,0.75);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(180deg, rgb(161, 195, 248) 0%, rgb(78, 142, 227) 45%, rgba(35,117,217,1) 55%, rgba(123,189,253,1) 100%);
 }
 
 .btn-primary:active{
-  background-image: linear-gradient(#3366cc, #3a73e7 60%, #6994f8);
+  background: linear-gradient(180deg, rgb(124, 161, 215) 0%, rgb(54, 118, 199) 45%, rgb(27, 107, 206) 55%, rgb(109, 173, 238) 100%);
 }
 
 .btn-secondary {
-  background-image: linear-gradient(#edeff2, #e9ecef 60%, #dbdee1);
-  box-shadow: 0px 1px 3px -3px rgba(0,0,0,0.75);
+  background: linear-gradient(180deg, rgb(247, 248, 250) 0%, rgb(234, 235, 238) 45%, rgb(224, 225, 229) 55%, rgb(240, 243, 246) 100%);
+  box-shadow: 0px 1px 2px -1px rgba(0,0,0,0.75);
+}
+
+.btn-secondary:hover {
+  background: linear-gradient(180deg, rgb(248, 248, 250) 0%, rgb(243, 243, 245) 45%, rgb(233, 235, 238) 55%, rgb(240, 243, 246) 100%);
 }
 
 .btn-secondary:active{
-  background-image: linear-gradient(#dbdee1, #e9ecef 60%, #edeff2);
+  background: linear-gradient(180deg, rgb(235, 235, 238) 0%, rgb(214, 215, 218) 45%, rgb(208, 209, 213) 55%, rgb(226, 229, 232) 100%);
 }
 
 .btn-success {
