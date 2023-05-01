@@ -32,6 +32,11 @@
       </div>
     </div>
     <div v-if="events.length === 0" class="text-center mt-2">
+      <img
+        src="../../../public/event-rider-logo-alt.png"
+        style="opacity: 10%; filter: grayscale(100%)"
+        alt=""
+      />
       <h2>No Events</h2>
     </div>
   </div>

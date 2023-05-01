@@ -10,6 +10,11 @@
       </div>
     </div>
     <div v-if="categories.length === 0" class="text-center mt-2">
+      <img
+        src="../../../public/event-rider-logo-alt.png"
+        style="opacity: 10%; filter: grayscale(100%)"
+        alt=""
+      />
       <h2>No Categories</h2>
     </div>
   </div>
