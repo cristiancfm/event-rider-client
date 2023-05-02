@@ -21,6 +21,7 @@ import ProfileHostedEvents from "@/components/profile/ProfileHostedEvents.vue";
 import ProfileSavedEvents from "@/components/profile/ProfileSavedEvents.vue";
 import ProfileSubscribedEvents from "@/components/profile/ProfileSubscribedEvents.vue";
 import ProfileSubscribedCategories from "@/components/profile/ProfileSubscribedCategories.vue";
+import ProfileEditView from "@/views/ProfileEditView.vue";
 
 const routes = [
   {
@@ -93,7 +94,13 @@ const routes = [
       { path: "subscribed-events", component: ProfileSubscribedEvents },
       { path: "subscribed-categories", component: ProfileSubscribedCategories },
     ],
-    meta: { public: true },
+    meta: { public: false },
+  },
+  {
+    path: "/profile/edit",
+    name: "Edit Profile",
+    component: ProfileEditView,
+    meta: { public: false },
   },
   {
     path: "/posts",

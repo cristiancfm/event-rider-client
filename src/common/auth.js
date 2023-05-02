@@ -4,6 +4,7 @@ import AccountRepository from "../repositories/AccountRepository";
 export default {
   login,
   signup,
+  update,
   logout,
   getToken,
   isAdmin,
@@ -18,6 +19,10 @@ async function login(credentials) {
 
 async function signup(user) {
   await AccountRepository.registerAccount(user);
+}
+
+async function update(user) {
+  await AccountRepository.updateAccount(user);
 }
 
 function logout() {

@@ -12,4 +12,8 @@ export default {
   async registerAccount(user) {
     return (await HTTP.post(`register`, user)).data;
   },
+
+  async updateAccount(user) {
+    return (await HTTP.post(`account/update`, user)).data;
+  },
 };

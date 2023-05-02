@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid text-start p-4">
+  <div class="container-fluid text-start p-3">
     <div class="row">
       <div class="col-3" style="max-width: 200px">
         <img
@@ -13,13 +13,13 @@
         <h3>
           {{ user.name }} {{ user.surname }}
           <!-- Edit profile button -->
-          <button
+          <router-link
             class="btn btn-secondary m-1"
-            @click="editProfile"
+            to="/profile/edit"
             v-if="isLogged"
           >
             <i class="bi bi-pencil-fill"></i> Edit profile
-          </button>
+          </router-link>
           <!-- **** -->
         </h3>
         <p class="text-secondary">
