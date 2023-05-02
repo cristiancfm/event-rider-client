@@ -2,7 +2,12 @@
   <div class="card m-2" style="min-width: 250px; max-width: 450px">
     <div class="row p-3">
       <div class="col-3">
-        <img :src="getImageSrc()" class="d-block w-100" alt="Profile image" />
+        <img
+          :src="getImageSrc()"
+          class="d-block w-100"
+          alt="Profile image"
+          @error="setPlaceholder"
+        />
       </div>
       <div class="col">
         <p>
@@ -77,6 +82,9 @@ export default {
         return `${BACKEND_URL}/users/${this.user.id}/image`;
       }
       return "/profile-placeholder.jpg";
+    },
+    setPlaceholder(event) {
+      event.target.src = "/placeholder-square.png";
     },
     async followUser() {
       this.$emit("followers", this.user);

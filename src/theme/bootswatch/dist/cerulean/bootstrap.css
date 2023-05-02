@@ -10927,7 +10927,7 @@ textarea.form-control-lg {
 }
 
 .btn-primary:hover {
-  background: linear-gradient(180deg, rgb(161, 195, 248) 0%, rgb(78, 142, 227) 45%, rgba(35,117,217,1) 55%, rgba(123,189,253,1) 100%);
+  background: linear-gradient(180deg, rgb(161, 195, 248) 0%, rgb(78, 142, 227) 45%, rgb(38, 122, 225) 55%, rgba(123,189,253,1) 100%);
 }
 
 .btn-primary:active{

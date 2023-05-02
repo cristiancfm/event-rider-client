@@ -2,7 +2,12 @@
   <div class="container-fluid text-start p-4">
     <div class="row">
       <div class="col-3" style="max-width: 200px">
-        <img :src="getImageSrc()" class="d-block w-100" alt="Profile image" />
+        <img
+          :src="getImageSrc()"
+          class="d-block w-100"
+          alt="Profile image"
+          @error="setPlaceholder"
+        />
       </div>
       <div class="col-9">
         <h3>
@@ -123,6 +128,9 @@ export default {
         return `${BACKEND_URL}/users/${this.user.id}/image`;
       }
       return "/profile-placeholder.jpg";
+    },
+    setPlaceholder(event) {
+      event.target.src = "/placeholder-square.png";
     },
   },
   computed: {
