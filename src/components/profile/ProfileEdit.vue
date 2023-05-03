@@ -4,14 +4,29 @@
       <h2 class="m-2">Edit Profile</h2>
       <div class="row p-2">
         <div class="col-3">
-          <img
-            :src="getImageSrc()"
-            class="d-block w-100"
-            alt="Profile image"
-            @error="setPlaceholder"
-          />
+          <div style="aspect-ratio: 1/1">
+            <img
+              :src="getImageSrc()"
+              class="d-block w-100"
+              style="object-fit: cover; width: 100%; height: 100%"
+              alt="Profile image"
+              @error="setPlaceholder"
+            />
+          </div>
           <div class="text-center">
-            <button class="btn btn-secondary mt-2">Change picture</button>
+            <button
+              class="btn btn-secondary mt-3 mb-1"
+              @click.prevent="startFileUpload()"
+            >
+              Change image
+            </button>
+            <span v-if="image">{{ image }}</span>
+            <input
+              ref="hiddenInput"
+              type="file"
+              class="d-none"
+              @change="updateFileUpload()"
+            />
           </div>
         </div>
         <div class="col-9">
@@ -33,17 +48,6 @@
                 class="form-control"
                 id="surname"
                 v-model="profileForm.surname"
-              />
-            </div>
-            <div class="mb-2">
-              <label for="email" class="form-label">Email Address</label>
-              <input
-                type="text"
-                class="form-control"
-                id="email"
-                v-model="profileForm.email"
-                required
-                minlength="4"
               />
             </div>
             <div class="mb-2">
@@ -89,6 +93,7 @@
 import { BACKEND_URL } from "@/constants";
 import { getStore } from "@/common/store";
 import auth from "@/common/auth";
+import UserRepository from "@/repositories/UserRepository";
 
 export default {
   name: "ProfileEdit",
@@ -100,11 +105,11 @@ export default {
   },
   data() {
     return {
+      image: null,
       profileForm: {
         id: null,
         name: null,
         surname: null,
-        email: null,
         biography: null,
         error: null,
       },
@@ -122,6 +127,12 @@ export default {
     },
     async updateProfile() {
       try {
+        if (this.$refs.hiddenInput.files.length > 0) {
+          await UserRepository.saveUserImage(
+            this.user.id,
+            this.$refs.hiddenInput.files[0]
+          );
+        }
         await auth.update(this.profileForm);
         this.$router.go(-1);
       } catch (err) {
@@ -129,6 +140,12 @@ export default {
         this.profileForm.error = response.message;
         console.error(err);
       }
+    },
+    updateFileUpload() {
+      this.image = this.$refs.hiddenInput.files[0].name;
+    },
+    startFileUpload() {
+      this.$refs.hiddenInput.click();
     },
   },
   computed: {
@@ -140,10 +157,7 @@ export default {
     this.profileForm.id = this.user.id;
     this.profileForm.name = this.user.name;
     this.profileForm.surname = this.user.surname;
-    this.profileForm.email = this.user.email;
     this.profileForm.biography = this.user.biography;
-    /* TODO arreglar que no se muestra nada cuando se cambia el email y se
-    vuelve a entrar en editar perfil */
   },
 };
 </script>

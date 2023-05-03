@@ -36,6 +36,17 @@ export default {
     const response = await HTTP.get(`${resource}/${id}/base`);
     return response.data;
   },
+  async saveUserImage(id, file) {
+    const formData = new FormData();
+    formData.append("file", file);
+    return (
+      await HTTP.post(`${resource}/${id}/image`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+    ).data;
+  },
   async findUserUpcomingEvents(id, query, sort) {
     return find(`${resource}/${id}/events/upcoming`, query, sort);
   },

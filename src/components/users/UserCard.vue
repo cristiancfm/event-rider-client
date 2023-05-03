@@ -2,12 +2,15 @@
   <div class="card m-2" style="min-width: 250px; max-width: 450px">
     <div class="row p-3">
       <div class="col-3">
-        <img
-          :src="getImageSrc()"
-          class="d-block w-100"
-          alt="Profile image"
-          @error="setPlaceholder"
-        />
+        <div style="aspect-ratio: 1/1">
+          <img
+            :src="getImageSrc()"
+            class="d-block w-100"
+            style="object-fit: cover; width: 100%; height: 100%"
+            alt="Profile image"
+            @error="setPlaceholder"
+          />
+        </div>
       </div>
       <div class="col">
         <p>

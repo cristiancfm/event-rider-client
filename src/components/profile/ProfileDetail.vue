@@ -1,15 +1,18 @@
 <template>
   <div class="container-fluid text-start p-3">
     <div class="row">
-      <div class="col-3" style="max-width: 200px">
-        <img
-          :src="getImageSrc()"
-          class="d-block w-100"
-          alt="Profile image"
-          @error="setPlaceholder"
-        />
+      <div class="col-sm-3 col-md-2">
+        <div style="aspect-ratio: 1/1">
+          <img
+            :src="getImageSrc()"
+            class="d-block w-100"
+            style="object-fit: cover; width: 100%; height: 100%"
+            alt="Profile image"
+            @error="setPlaceholder"
+          />
+        </div>
       </div>
-      <div class="col-9">
+      <div class="col-sm-9 col-md-10">
         <h3>
           {{ user.name }} {{ user.surname }}
           <!-- Edit profile button -->
