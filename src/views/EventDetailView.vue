@@ -2,7 +2,6 @@
   <EventDetail
     v-if="event"
     :event="event"
-    :showDetails="false"
     @subscribers="updateSubscribers"
     @saves="updateSaves"
   ></EventDetail>

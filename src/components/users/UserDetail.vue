@@ -1,10 +1,18 @@
 <template>
   <div class="container-fluid text-start p-4">
     <div class="row">
-      <div class="col-3" style="max-width: 200px">
-        <img :src="getImageSrc()" class="d-block w-100" alt="Profile image" />
+      <div class="col-sm-3" style="max-width: 200px">
+        <div style="aspect-ratio: 1/1">
+          <img
+            :src="getImageSrc()"
+            class="d-block w-100 mb-3"
+            style="object-fit: cover; width: 100%; height: 100%"
+            alt="Profile image"
+            @error="setPlaceholder"
+          />
+        </div>
       </div>
-      <div class="col-9">
+      <div class="col-sm-9">
         <h3>
           {{ user.name }} {{ user.surname }}
           <!-- Follow button -->
@@ -33,17 +41,23 @@
           <!-- **** -->
         </h3>
         <p class="text-secondary">
-          {{ user.upcomingEvents }}
-          <span v-if="user.upcomingEvents === 1">upcoming event</span>
+          {{ user.upcomingHostedEvents.length }}
+          <span v-if="user.upcomingHostedEvents.length === 1"
+            >upcoming event</span
+          >
           <span v-else>upcoming events</span>
         </p>
         <p class="text-secondary">
-          {{ user.totalEvents }}
-          <span v-if="user.totalEvents === 1">total event</span>
-          <span v-else>total events</span>
+          {{ user.hostedEvents.length }}
+          <span v-if="user.hostedEvents.length === 1">hosted event</span>
+          <span v-else>hosted events</span>
         </p>
-        <p>(followers)</p>
-        <p>(following)</p>
+        <p>
+          {{ user.followers.length }}
+          <span v-if="user.followers.length === 1">follower</span>
+          <span v-else>followers</span>
+        </p>
+        <p>{{ user.following.length }} following</p>
       </div>
       <div class="col-sm-6"></div>
     </div>
@@ -89,10 +103,7 @@
           role="tabpanel"
           aria-labelledby="upcoming-events-tab"
         >
-          <EventsView
-            :title-prop="''"
-            :events-prop="user.upcomingHostedEvents"
-          />
+          <EventsList :title="''" :get-events="getUpcomingEvents" />
         </div>
         <div
           class="tab-pane fade"
@@ -100,7 +111,7 @@
           role="tabpanel"
           aria-labelledby="past-events-tab"
         >
-          <EventsView :title-prop="''" :eventsProp="user.pastHostedEvents" />
+          <EventsList :title="''" :get-events="getPastEvents" />
         </div>
       </div>
     </div>
@@ -109,27 +120,21 @@
 
 <script>
 import { BACKEND_URL } from "@/constants";
-import EventsView from "@/views/EventsView";
 import { getStore } from "@/common/store";
 import UserRepository from "@/repositories/UserRepository";
+import EventsList from "@/components/events/EventsList";
 
 export default {
   name: "UserDetail",
-  components: { EventsView },
+  components: { EventsList },
   props: {
     user: {
       type: Object,
       required: true,
     },
-    showDetails: {
-      type: Boolean,
-      required: false,
-      default: true,
-    },
   },
   data() {
     return {
-      events: [],
       isFollowed: false,
     };
   },
@@ -140,9 +145,43 @@ export default {
       }
       return "/profile-placeholder.jpg";
     },
+    setPlaceholder(event) {
+      event.target.src = "/placeholder-square.png";
+    },
     async followUser() {
       this.$emit("followers", this.user);
     },
+    async getUpcomingEvents(query) {
+      let events = await UserRepository.findUserUpcomingEvents(
+        this.user.id,
+        query,
+        null
+      );
+      // Cancelled events will not be shown
+      events = events.filter((event) => event.status === "PUBLISHED");
+      return events;
+    },
+    async getPastEvents(query) {
+      let events = await UserRepository.findUserPastEvents(
+        this.user.id,
+        query,
+        null
+      );
+      // Cancelled events will not be shown
+      events = events.filter((event) => event.status === "PUBLISHED");
+      return events;
+    },
+    handleTabChange() {
+      // Leaflet will not render correctly when the user changes between tabs
+      // because the containers are hidden and shown and Leaflet is not aware
+      // of that. Resizing the browser window will fix the issue, since Leaflet
+      // listens to the browser resizing event.
+      window.dispatchEvent(new Event("resize"));
+    },
+  },
+  mounted() {
+    const eventsNav = document.querySelector("#events-nav");
+    eventsNav.addEventListener("shown.bs.tab", this.handleTabChange);
   },
   computed: {
     isLogged() {

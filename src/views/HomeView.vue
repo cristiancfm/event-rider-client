@@ -4,7 +4,7 @@
     <p>Event Rider is the place for discovering your next event!</p>
     <img
       alt="Landing pictures"
-      src="../assets/landing-pics.png"
+      src="../../public/landing-pics.png"
       width="500"
       style="margin: 10px"
     />

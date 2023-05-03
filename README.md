@@ -1,5 +1,9 @@
 # event-rider-client
 
+## Dependencies
+Install the following dependencies:
+- NodeJS
+
 ## Project setup
 ```
 npm install

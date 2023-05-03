@@ -2,7 +2,15 @@
   <div class="card m-2" style="min-width: 250px; max-width: 450px">
     <div class="row p-3">
       <div class="col-3">
-        <img :src="getImageSrc()" class="d-block w-100" alt="Profile image" />
+        <div style="aspect-ratio: 1/1">
+          <img
+            :src="getImageSrc()"
+            class="d-block w-100"
+            style="object-fit: cover; width: 100%; height: 100%"
+            alt="Profile image"
+            @error="setPlaceholder"
+          />
+        </div>
       </div>
       <div class="col">
         <p>
@@ -18,7 +26,7 @@
           <span v-else>upcoming events</span>
         </p>
         <p class="text-secondary">
-          {{ user.hostedEvents.length }}
+          {{ user.upcomingHostedEvents.length + user.pastHostedEvents.length }}
           <span v-if="user.hostedEvents.length === 1">total event</span>
           <span v-else>total events</span>
         </p>
@@ -65,11 +73,6 @@ export default {
       type: Object,
       required: true,
     },
-    showDetails: {
-      type: Boolean,
-      required: false,
-      default: true,
-    },
   },
   data() {
     return {
@@ -82,6 +85,9 @@ export default {
         return `${BACKEND_URL}/users/${this.user.id}/image`;
       }
       return "/profile-placeholder.jpg";
+    },
+    setPlaceholder(event) {
+      event.target.src = "/placeholder-square.png";
     },
     async followUser() {
       this.$emit("followers", this.user);

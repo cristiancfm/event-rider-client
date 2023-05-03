@@ -16,6 +16,12 @@ import EventDetailView from "@/views/EventDetailView";
 import UsersView from "@/views/UsersView";
 import UserDetailView from "@/views/UserDetailView";
 import EventCategoriesView from "@/views/EventCategoriesView";
+import ProfileView from "@/views/ProfileDetailView.vue";
+import ProfileHostedEvents from "@/components/profile/ProfileHostedEvents.vue";
+import ProfileSavedEvents from "@/components/profile/ProfileSavedEvents.vue";
+import ProfileSubscribedEvents from "@/components/profile/ProfileSubscribedEvents.vue";
+import ProfileSubscribedCategories from "@/components/profile/ProfileSubscribedCategories.vue";
+import ProfileEditView from "@/views/ProfileEditView.vue";
 
 const routes = [
   {
@@ -55,9 +61,9 @@ const routes = [
     meta: { public: true },
   },
   {
-    path: "/event-categories/:id",
+    path: "/event-categories/:id", // return the events of the category
     name: "Event Category Detail",
-    // component: EventCategoryDetailView, TODO
+    component: EventsView,
     meta: { public: true },
   },
   {
@@ -74,9 +80,27 @@ const routes = [
   },
   {
     path: "/about",
-    name: "about",
+    name: "About",
     component: AboutView,
     meta: { public: true },
+  },
+  {
+    path: "/profile",
+    name: "Profile",
+    component: ProfileView,
+    children: [
+      { path: "hosted-events", component: ProfileHostedEvents },
+      { path: "saved-events", component: ProfileSavedEvents },
+      { path: "subscribed-events", component: ProfileSubscribedEvents },
+      { path: "subscribed-categories", component: ProfileSubscribedCategories },
+    ],
+    meta: { public: false },
+  },
+  {
+    path: "/profile/edit",
+    name: "Edit Profile",
+    component: ProfileEditView,
+    meta: { public: false },
   },
   {
     path: "/posts",

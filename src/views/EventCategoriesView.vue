@@ -1,37 +1,21 @@
 <template>
-  <div class="text-start p-2">
-    <h2 class="m-2">Event Categories</h2>
-    <div class="d-flex flex-wrap justify-content-start">
-      <div v-for="eventCategory in eventCategories" :key="eventCategory.id">
-        <EventCategoryCard
-          :eventCategory="eventCategory"
-          @subscribers="updateSubscribers"
-        ></EventCategoryCard>
-      </div>
-    </div>
-  </div>
+  <EventCategoriesList
+    :title="'Event Categories'"
+    :get-categories="getCategories"
+  />
 </template>
 
 <script>
-import EventCategoryCard from "@/components/categories/EventCategoryCard";
 import EventCategoriesRepository from "@/repositories/EventCategoryRepository";
-import { updateSubscribers } from "@/common/eventCategory";
+import EventCategoriesList from "@/components/categories/EventCategoriesList.vue";
 
 export default {
   name: "EventCategoryView",
-  data() {
-    return {
-      eventCategories: [],
-    };
-  },
-  components: { EventCategoryCard },
+  components: { EventCategoriesList },
   methods: {
-    updateSubscribers,
-  },
-  mounted() {
-    EventCategoriesRepository.findAll().then((response) => {
-      this.eventCategories = response;
-    });
+    async getCategories() {
+      return await EventCategoriesRepository.findAll();
+    },
   },
 };
 </script>

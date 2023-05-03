@@ -123,8 +123,11 @@ export default {
     };
   },
   methods: {
-    async emitFilters() {
+    emitFilters() {
       this.$emit("filters-applied", this.filters);
+      // if (this.$route.path === "/event-categories/" + this.categoryId) {
+      //   this.$router.push("/events"); // change URL back to /events when it is /event-categories/:id
+      // }
     },
     async autocompleteLocation() {
       if (this.locationInput !== "") {
@@ -138,8 +141,6 @@ export default {
         //take latitude and longitude from first result
         this.filters.latitude = results[0].y;
         this.filters.longitude = results[0].x;
-        console.log(results);
-        console.log(results[0].y + "," + results[0].x);
       } else {
         this.filters.latitude = "";
         this.filters.longitude = "";

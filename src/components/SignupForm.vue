@@ -1,6 +1,6 @@
 <template>
   <h1 class="mt-3">Sign Up</h1>
-  <form class="w-25 m-auto mt-2" @submit.prevent="signup()">
+  <form class="m-auto mt-2" style="max-width: 400px" @submit.prevent="signup()">
     <div class="mb-2 text-start">
       <label for="name" class="form-label">Name / Organization</label>
       <input

@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <router-link class="navbar-brand" to="/">
         <img
-          src="../assets/event-rider-logo.png"
+          src="../../public/event-rider-logo.png"
           alt="Event Rider"
           width="100"
         />
@@ -12,19 +12,19 @@
         class="navbar-toggler"
         type="button"
         data-bs-toggle="collapse"
-        data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
+        data-bs-target="#navbarMain"
+        aria-controls="navbarMain"
         aria-expanded="false"
         aria-label="Toggle navigation"
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="collapse navbar-collapse" id="navbarMain">
         <ul class="navbar-nav me-auto">
           <li class="nav-item">
             <router-link
-              to="/"
               class="nav-link"
+              to="/"
               aria-current="page"
               active-class="active"
             >

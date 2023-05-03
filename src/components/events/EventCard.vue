@@ -12,6 +12,7 @@
               :src="getImageSrc(item - 1)"
               class="d-block w-100"
               alt="Event image"
+              @error="setPlaceholder"
             />
           </div>
           <div v-if="item - 1 !== 0" class="carousel-item">
@@ -19,6 +20,7 @@
               :src="getImageSrc(item - 1)"
               class="d-block w-100"
               alt="Event image"
+              @error="setPlaceholder"
             />
           </div>
         </template>
@@ -48,12 +50,15 @@
       <div class="col-12">
         <h3>
           <router-link :to="'/events/' + event.id">
-            {{ event.title }}
+            <span v-if="event.status === 'CANCELLED'"
+              ><s>{{ event.title }}</s></span
+            >
+            <span v-else>{{ event.title }}</span>
           </router-link>
         </h3>
       </div>
     </div>
-    <div class="row p-3 pt-0">
+    <div class="row p-3 pt-0 pb-0">
       <div class="col">
         <p>{{ event.host.name }} {{ event.host.surname }}</p>
         <p class="text-secondary">
@@ -120,6 +125,32 @@
         <!-- **** -->
       </div>
     </div>
+    <!-- Rejected info card -->
+    <div
+      class="row p-1 m-3 bg-warning"
+      style="border-radius: 5px"
+      v-if="event.status === 'REJECTED'"
+    >
+      <p class="mt-1">
+        <i class="bi bi-slash-circle-fill"></i> <b>Rejected</b>
+      </p>
+      <p v-if="event.adminComments !== null">
+        Admin comments: {{ event.adminComments }}
+      </p>
+    </div>
+    <!-- **** -->
+    <!-- Cancelled info card -->
+    <div
+      class="row p-1 m-3 bg-danger"
+      style="border-radius: 5px"
+      v-if="event.status === 'CANCELLED'"
+    >
+      <p class="mt-1"><i class="bi bi-calendar-x-fill"></i> <b>Cancelled</b></p>
+      <p v-if="event.cancellationReason !== null">
+        Cancellation reason: {{ event.cancellationReason }}
+      </p>
+    </div>
+    <!-- **** -->
   </div>
 </template>
 
@@ -135,11 +166,6 @@ export default {
       type: Object,
       required: true,
     },
-    showDetails: {
-      type: Boolean,
-      required: false,
-      default: true,
-    },
   },
   data() {
     return {
@@ -153,6 +179,9 @@ export default {
         return `${BACKEND_URL}/events/${this.event.id}/image/${item}`;
       }
       return "/placeholder.png";
+    },
+    setPlaceholder(event) {
+      event.target.src = "/placeholder.png";
     },
     async subscribeToEvent() {
       this.$emit("subscribers", this.event);

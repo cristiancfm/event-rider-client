@@ -1,4 +1,5 @@
 import HTTP from "@/common/http";
+import { find } from "@/repositories/EventRepository";
 
 const resource = "users";
 
@@ -34,6 +35,44 @@ export default {
   async findOneBase(id) {
     const response = await HTTP.get(`${resource}/${id}/base`);
     return response.data;
+  },
+  async saveUserImage(id, file) {
+    const formData = new FormData();
+    formData.append("file", file);
+    return (
+      await HTTP.post(`${resource}/${id}/image`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+    ).data;
+  },
+  async findUserUpcomingEvents(id, query, sort) {
+    return find(`${resource}/${id}/events/upcoming`, query, sort);
+  },
+  async findUserPastEvents(id, query, sort) {
+    return find(`${resource}/${id}/events/past`, query, sort);
+  },
+  async findUserUnreviewedEvents(id, query, sort) {
+    return find(`${resource}/${id}/events/unreviewed`, query, sort);
+  },
+  async findUserRejectedEvents(id, query, sort) {
+    return find(`${resource}/${id}/events/rejected`, query, sort);
+  },
+  async findUserSavedUpcomingEvents(id, query, sort) {
+    return find(`${resource}/${id}/events/saved/upcoming`, query, sort);
+  },
+  async findUserSavedPastEvents(id, query, sort) {
+    return find(`${resource}/${id}/events/saved/past`, query, sort);
+  },
+  async findUserSubscribedUpcomingEvents(id, query, sort) {
+    return find(`${resource}/${id}/events/subscribed/upcoming`, query, sort);
+  },
+  async findUserSubscribedPastEvents(id, query, sort) {
+    return find(`${resource}/${id}/events/subscribed/past`, query, sort);
+  },
+  async findUserSubscribedCategories(id, query, sort) {
+    return find(`${resource}/${id}/categories/subscribed`, query, sort);
   },
   async save(user) {
     if (user.id) {
