@@ -1,27 +1,25 @@
 <template>
-  <EventDetail
+  <EventDetails
     v-if="event"
     :event="event"
     @subscribers="updateSubscribers"
     @saves="updateSaves"
-  ></EventDetail>
+  ></EventDetails>
 </template>
 
 <script>
 import EventRepository from "@/repositories/EventRepository";
-import EventDetail from "@/components/events/EventDetail";
+import EventDetails from "@/components/events/EventDetails.vue";
 import { updateSubscribers, updateSaves } from "@/common/event";
 
 export default {
-  name: "EventDetailView",
+  name: "EventDetailsView",
   data() {
     return {
       event: null,
     };
   },
-  components: {
-    EventDetail,
-  },
+  components: { EventDetails },
   mounted() {
     this.fetchData();
   },

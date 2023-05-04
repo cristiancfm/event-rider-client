@@ -155,7 +155,7 @@ import { getStore } from "@/common/store";
 import UserRepository from "@/repositories/UserRepository";
 
 export default {
-  name: "EventDetail",
+  name: "EventDetails",
   props: {
     event: {
       type: Object,
