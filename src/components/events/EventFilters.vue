@@ -21,23 +21,28 @@
             <label for="event-location" class="form-label m-0 mt-1">
               Location
             </label>
-            <input
-              type="search"
-              class="form-control form-control-sm"
-              v-model="locationInput"
-              list="locations-list"
-              @input="autocompleteLocation"
-            />
-            <datalist id="locations-list" v-if="locationList.length > 0">
-              <option selected value="">(all)</option>
-              <option
-                v-for="location in locationList"
-                :key="location"
-                :value="location.label"
-              >
-                {{ location.label }}
-              </option>
-            </datalist>
+            <div class="input-group input-group-sm">
+              <span class="input-group-text">
+                <i class="bi bi-search"></i>
+              </span>
+              <input
+                type="search"
+                class="form-control form-control-sm"
+                v-model="locationInput"
+                list="locations-list"
+                @input="autocompleteLocation"
+              />
+              <datalist id="locations-list" v-if="locationList.length > 0">
+                <option selected value="">(all)</option>
+                <option
+                  v-for="location in locationList"
+                  :key="location"
+                  :value="location.label"
+                >
+                  {{ location.label }}
+                </option>
+              </datalist>
+            </div>
           </div>
           <div class="col me-3" style="min-width: 150px">
             <label for="event-distance" class="form-label m-0 mt-1">

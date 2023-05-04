@@ -18,7 +18,7 @@
               class="btn btn-secondary mt-3 mb-1"
               @click.prevent="startFileUpload()"
             >
-              Change image
+              Change image...
             </button>
             <span v-if="image">{{ image }}</span>
             <input

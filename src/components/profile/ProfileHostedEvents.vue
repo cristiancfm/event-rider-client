@@ -2,9 +2,15 @@
   <div class="row">
     <h2>
       Hosted Events
-      <button class="btn btn-secondary">
+      <!-- Create event button -->
+      <router-link
+        class="btn btn-secondary"
+        to="/events/create"
+        v-if="isLogged"
+      >
         <i class="bi bi-plus-circle-fill"></i> Create event
-      </button>
+      </router-link>
+      <!-- **** -->
     </h2>
   </div>
   <div class="row">
@@ -152,6 +158,11 @@ export default {
       // of that. Resizing the browser window will fix the issue, since Leaflet
       // listens to the browser resizing event.
       window.dispatchEvent(new Event("resize"));
+    },
+  },
+  computed: {
+    isLogged() {
+      return getStore().state.user.logged;
     },
   },
   mounted() {

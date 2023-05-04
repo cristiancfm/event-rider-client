@@ -22,6 +22,7 @@ import ProfileSavedEvents from "@/components/profile/ProfileSavedEvents.vue";
 import ProfileSubscribedEvents from "@/components/profile/ProfileSubscribedEvents.vue";
 import ProfileSubscribedCategories from "@/components/profile/ProfileSubscribedCategories.vue";
 import ProfileEditView from "@/views/ProfileEditView.vue";
+import EventCreate from "@/components/events/EventCreate.vue";
 
 const routes = [
   {
@@ -57,8 +58,8 @@ const routes = [
   {
     path: "/events/create",
     name: "Create Event",
-    component: EventDetailsView,
-    meta: { public: true },
+    component: EventCreate,
+    meta: { public: false },
   },
   {
     path: "/event-categories",
