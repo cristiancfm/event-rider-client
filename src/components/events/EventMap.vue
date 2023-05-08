@@ -7,6 +7,7 @@
 <script>
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import { MAP_DEFAULT_LATITUDE, MAP_DEFAULT_LONGITUDE } from "@/constants";
 
 export default {
   name: "EventMap",
@@ -54,7 +55,10 @@ export default {
         );
       } else {
         // Set A Coruña as starting view
-        this.map = L.map(this.$refs.map).setView([43.37135, -8.396], 13);
+        this.map = L.map(this.$refs.map).setView(
+          [MAP_DEFAULT_LATITUDE, MAP_DEFAULT_LONGITUDE],
+          13
+        );
       }
       // Add the tile layer
       L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -81,10 +85,19 @@ export default {
         });
         this.markers.push(marker);
       });
-      if (this.events.length === 1) {
-        // Set map view to the event
+      // Set map view
+      if (this.latitude && this.longitude && this.zoom) {
+        this.map.setView([this.latitude, this.longitude], this.map.getZoom());
+      } else if (this.events.length > 0) {
+        // Use first event of the list to set the view
         this.map.setView(
           [this.events[0].coordinateX, this.events[0].coordinateY],
+          this.map.getZoom()
+        );
+      } else {
+        // Set default view
+        this.map.setView(
+          [MAP_DEFAULT_LATITUDE, MAP_DEFAULT_LONGITUDE],
           this.map.getZoom()
         );
       }

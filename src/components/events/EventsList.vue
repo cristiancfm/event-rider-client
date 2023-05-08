@@ -23,8 +23,8 @@
         <EventMap
           v-if="events.length > 0"
           :events="events"
-          :latitude="43.37135"
-          :longitude="-8.396"
+          :latitude="this.latitude"
+          :longitude="this.longitude"
           :zoom="13"
           :show-in-map-event="showInMapEvent"
           @popup-closed="popupClosed"
@@ -65,6 +65,8 @@ export default {
   data() {
     return {
       events: [],
+      latitude: null,
+      longitude: null,
       showInMapEvent: null,
     };
   },
@@ -73,12 +75,18 @@ export default {
     async applyFilters(filters) {
       let query = [];
       filters.title ? query.push({ name: "title", value: filters.title }) : "";
-      filters.latitude
-        ? query.push({ name: "latitude", value: filters.latitude })
-        : "";
-      filters.longitude
-        ? query.push({ name: "longitude", value: filters.longitude })
-        : "";
+      if (filters.latitude) {
+        query.push({ name: "latitude", value: filters.latitude });
+        this.latitude = filters.latitude;
+      } else {
+        this.latitude = null;
+      }
+      if (filters.longitude) {
+        query.push({ name: "longitude", value: filters.longitude });
+        this.longitude = filters.longitude;
+      } else {
+        this.longitude = null;
+      }
       filters.date ? query.push({ name: "date", value: filters.date }) : "";
       filters.distance
         ? query.push({ name: "distance", value: filters.distance })
