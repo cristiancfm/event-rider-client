@@ -78,7 +78,14 @@ export default {
       console.log(this.events);
       this.events.map((e) => {
         let marker = L.marker([e.coordinateX, e.coordinateY]).addTo(this.map);
-        marker.bindPopup("<b>" + e.title + "</b><br>" + e.locationDetails);
+        marker.bindPopup(
+          "<b><a href='/events/" +
+            e.id +
+            "'>" +
+            e.title +
+            "</a></b><br>" +
+            e.locationDetails
+        );
         // Add popup close event
         marker.on("popupclose", () => {
           this.$emit("popup-closed");
