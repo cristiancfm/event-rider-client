@@ -130,9 +130,6 @@ export default {
   methods: {
     emitFilters() {
       this.$emit("filters-applied", this.filters);
-      // if (this.$route.path === "/event-categories/" + this.categoryId) {
-      //   this.$router.push("/events"); // change URL back to /events when it is /event-categories/:id
-      // }
     },
     async autocompleteLocation() {
       if (this.locationInput !== "") {
@@ -166,6 +163,12 @@ export default {
     EventCategoriesRepository.findAll().then((response) => {
       this.eventCategories = response;
     });
+    // Set category if the URL is /event-categories/:id
+    if (this.$route.path.startsWith("/event-categories/")) {
+      if (this.$route.params.id) {
+        this.filters.category = this.$route.params.id;
+      }
+    }
   },
 };
 </script>

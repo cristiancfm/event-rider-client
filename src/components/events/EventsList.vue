@@ -67,6 +67,7 @@ export default {
       events: [],
       latitude: null,
       longitude: null,
+      permanentCategory: null,
       showInMapEvent: null,
     };
   },
@@ -105,8 +106,21 @@ export default {
       this.showInMapEvent = null;
     },
   },
+  created() {
+    // Set permanent category if the URL is /event-categories/:id
+    if (this.$route.path.startsWith("/event-categories/")) {
+      if (this.$route.params.id) {
+        this.permanentCategory = this.$route.params.id;
+      }
+    }
+  },
   async mounted() {
     this.events = await this.getEvents();
+    if (this.permanentCategory) {
+      let query = [];
+      query.push({ name: "category", value: this.permanentCategory });
+      this.events = await this.getEvents(query, null);
+    }
   },
 };
 </script>

@@ -75,7 +75,6 @@ export default {
       });
     },
     addMarkers() {
-      console.log(this.events);
       this.events.map((e) => {
         let marker = L.marker([e.coordinateX, e.coordinateY]).addTo(this.map);
         marker.bindPopup(
