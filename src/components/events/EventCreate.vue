@@ -174,9 +174,6 @@
             <div v-else>
               <EventMap
                 :events="[eventForm]"
-                :latitude="parseFloat(eventForm.coordinateX)"
-                :longitude="parseFloat(eventForm.coordinateY)"
-                :zoom="13"
                 @popup-closed="popupClosed"
               ></EventMap>
             </div>

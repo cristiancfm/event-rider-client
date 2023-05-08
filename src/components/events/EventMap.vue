@@ -23,15 +23,15 @@ export default {
     },
     latitude: {
       type: Number,
-      required: true,
+      required: false,
     },
     longitude: {
       type: Number,
-      required: true,
+      required: false,
     },
     zoom: {
       type: Number,
-      required: true,
+      required: false,
     },
     showInMapEvent: {
       type: Object,
@@ -41,10 +41,21 @@ export default {
   methods: {
     createMap() {
       // Initialize the map
-      this.map = L.map(this.$refs.map).setView(
-        [this.latitude, this.longitude],
-        this.zoom
-      );
+      if (this.latitude && this.longitude && this.zoom) {
+        this.map = L.map(this.$refs.map).setView(
+          [this.latitude, this.longitude],
+          this.zoom
+        );
+      } else if (this.events.length > 0) {
+        // Use first event of the list to set the view
+        this.map = L.map(this.$refs.map).setView(
+          [this.events[0].coordinateX, this.events[0].coordinateY],
+          13
+        );
+      } else {
+        // Set A Coruña as starting view
+        this.map = L.map(this.$refs.map).setView([43.37135, -8.396], 13);
+      }
       // Add the tile layer
       L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 19,
@@ -70,6 +81,13 @@ export default {
         });
         this.markers.push(marker);
       });
+      if (this.events.length === 1) {
+        // Set map view to the event
+        this.map.setView(
+          [this.events[0].coordinateX, this.events[0].coordinateY],
+          this.map.getZoom()
+        );
+      }
     },
     removeMarkers() {
       this.markers.forEach((marker) => {
