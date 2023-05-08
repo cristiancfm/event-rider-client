@@ -7,7 +7,11 @@
 <script>
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import { MAP_DEFAULT_LATITUDE, MAP_DEFAULT_LONGITUDE } from "@/constants";
+import {
+  MAP_DEFAULT_LATITUDE,
+  MAP_DEFAULT_LONGITUDE,
+  MAPBOX_TOKEN,
+} from "@/constants";
 
 export default {
   name: "EventMap",
@@ -42,30 +46,44 @@ export default {
   methods: {
     createMap() {
       // Initialize the map
+      this.map = L.map(this.$refs.map);
       if (this.latitude && this.longitude && this.zoom) {
-        this.map = L.map(this.$refs.map).setView(
-          [this.latitude, this.longitude],
-          this.zoom
-        );
+        this.map.setView([this.latitude, this.longitude], this.zoom);
       } else if (this.events.length > 0) {
         // Use first event of the list to set the view
-        this.map = L.map(this.$refs.map).setView(
+        this.map.setView(
           [this.events[0].coordinateX, this.events[0].coordinateY],
           13
         );
       } else {
         // Set A Coruña as starting view
-        this.map = L.map(this.$refs.map).setView(
-          [MAP_DEFAULT_LATITUDE, MAP_DEFAULT_LONGITUDE],
-          13
-        );
+        this.map.setView([MAP_DEFAULT_LATITUDE, MAP_DEFAULT_LONGITUDE], 13);
       }
-      // Add the tile layer
-      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        maxZoom: 19,
-        attribution:
-          '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      }).addTo(this.map);
+      // Create base layer
+      const osmLayer = L.tileLayer(
+        "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+          maxZoom: 19,
+          attribution:
+            '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        }
+      ).addTo(this.map);
+      // Create satellite layer
+      let mapboxLayer = L.tileLayer(
+        "https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?access_token=" +
+          MAPBOX_TOKEN,
+        {
+          maxZoom: 20,
+          attribution:
+            '&copy; <a href="http://www.mapbox.com/about/maps">Mapbox</a>',
+        }
+      );
+      // Add layers to the map
+      const baseLayers = {
+        Default: osmLayer,
+        Satellite: mapboxLayer,
+      };
+      L.control.layers(baseLayers).addTo(this.map);
       //Set URLs for Leaflet marker icons
       delete L.Icon.Default.prototype._getIconUrl;
       L.Icon.Default.mergeOptions({
