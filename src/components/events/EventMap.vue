@@ -127,9 +127,13 @@ export default {
             marker.getLatLng().lng === this.showInMapEvent.coordinateY
           );
         });
-        // If found, open its popup
+        // If found, open its popup and center map view
         if (selectedMarker) {
           selectedMarker.openPopup();
+          this.map.setView(
+            [selectedMarker.getLatLng().lat, selectedMarker.getLatLng().lng],
+            this.map.getZoom()
+          );
         }
       }
     },
