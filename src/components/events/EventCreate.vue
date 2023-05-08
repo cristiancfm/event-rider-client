@@ -48,17 +48,53 @@
               </label>
               <div class="row">
                 <div class="col-6">
+                  <div class="form-check">
+                    <input
+                      type="radio"
+                      class="form-check-input me-1"
+                      id="existingCategory"
+                      name="categoryType"
+                      v-model="existingCategory"
+                    />
+                    <label for="existingCategory" class="form-check-label">
+                      Existing category
+                    </label>
+                  </div>
                   <select
                     class="form-control"
                     id="category"
                     v-model="eventForm.category"
                     required
+                    :disabled="!existingCategory"
                   >
-                    <option>jasdlfjf</option>
+                    <option
+                      v-for="eventCategory in eventCategories"
+                      :key="eventCategory.id"
+                      :value="eventCategory.id"
+                    >
+                      {{ eventCategory.name }}
+                    </option>
                   </select>
                 </div>
                 <div class="col-6">
-                  <input type="text" class="form-control" id="categoryNew" />
+                  <div class="form-check">
+                    <input
+                      type="radio"
+                      class="form-check-input me-1"
+                      id="newCategory"
+                      name="categoryType"
+                      v-model="existingCategory"
+                    />
+                    <label for="newCategory" class="form-check-label">
+                      New category
+                    </label>
+                  </div>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="categoryNew"
+                    :disabled="existingCategory"
+                  />
                 </div>
               </div>
               <!-- Info card -->
@@ -139,21 +175,21 @@
             <!-- **** -->
           </div>
           <div class="col-6">
-            <div>
-              <button
-                class="btn btn-secondary mt-3 mb-1"
-                @click.prevent="startFileUpload()"
-              >
-                Upload image...
-              </button>
-              <span v-if="image">{{ image }}</span>
-              <input
-                ref="hiddenInput"
-                type="file"
-                class="d-none"
-                @change="updateFileUpload()"
-              />
-            </div>
+            <!--            <div>-->
+            <!--              <button-->
+            <!--                class="btn btn-secondary mt-3 mb-1"-->
+            <!--                @click.prevent="startFileUpload()"-->
+            <!--              >-->
+            <!--                Upload image...-->
+            <!--              </button>-->
+            <!--              <span v-if="image">{{ image }}</span>-->
+            <!--              <input-->
+            <!--                ref="hiddenInput"-->
+            <!--                type="file"-->
+            <!--                class="d-none"-->
+            <!--                @change="updateFileUpload()"-->
+            <!--              />-->
+            <!--            </div>-->
             <div
               class="mt-2"
               v-if="
@@ -203,6 +239,7 @@ import { MAPBOX_TOKEN } from "@/constants";
 import { getStore } from "@/common/store";
 import { MapBoxProvider } from "leaflet-geosearch";
 import EventMap from "@/components/events/EventMap.vue";
+import EventCategoriesRepository from "@/repositories/EventCategoryRepository";
 
 export default {
   name: "EventCreate",
@@ -211,6 +248,7 @@ export default {
       locationInput: "",
       locationList: [],
       eventCategories: [],
+      existingCategory: "",
       images: [],
       eventForm: {
         title: "",
@@ -237,6 +275,8 @@ export default {
         const results = await provider.search({ query: this.locationInput });
         this.locationList = results;
         //take latitude and longitude from first result
+        // - coordinateX is the latitude
+        // - coordinateY is the longitude
         this.eventForm.coordinateX = results[0].y;
         this.eventForm.coordinateY = results[0].x;
         console.log(
@@ -281,7 +321,11 @@ export default {
       return getStore().state.user.logged;
     },
   },
-  mounted() {},
+  mounted() {
+    EventCategoriesRepository.findAll().then((response) => {
+      this.eventCategories = response;
+    });
+  },
 };
 </script>
 
