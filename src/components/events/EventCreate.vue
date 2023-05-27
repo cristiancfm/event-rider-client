@@ -285,6 +285,7 @@ export default {
         const provider = new MapBoxProvider({
           params: {
             access_token: MAPBOX_TOKEN,
+            proximity: "ip", //the places closer to the user IP are shown first
           },
         });
         const results = await provider.search({ query: this.locationInput });

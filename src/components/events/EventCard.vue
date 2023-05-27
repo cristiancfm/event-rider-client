@@ -68,9 +68,6 @@
         </p>
         <p class="text-secondary">{{ event.category.name }}</p>
         <p class="text-secondary">{{ eventAddress }}</p>
-        <p class="text-secondary" v-if="event.locationDetails">
-          {{ event.locationDetails }}
-        </p>
       </div>
       <div class="col text-end">
         <button class="btn btn-secondary m-1" @click="showInMap">
