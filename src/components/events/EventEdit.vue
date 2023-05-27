@@ -1,8 +1,8 @@
 <template>
   <div class="m-auto" style="max-width: 720px">
     <div class="text-start p-2">
-      <h2 class="m-2">Create Event</h2>
-      <form @submit.prevent="createEvent()">
+      <h2 class="m-2">Edit Event</h2>
+      <form @submit.prevent="updateEvent()">
         <div class="row p-2">
           <div class="col-6">
             <div class="mb-2">
@@ -252,7 +252,13 @@ import EventCategoriesRepository from "@/repositories/EventCategoryRepository";
 import EventRepository from "@/repositories/EventRepository";
 
 export default {
-  name: "EventCreate",
+  name: "EventEdit",
+  props: {
+    event: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       locationInput: "",
@@ -295,7 +301,6 @@ export default {
         // - coordinateY is the longitude
         this.eventForm.coordinateX = results[0].y;
         this.eventForm.coordinateY = results[0].x;
-        console.log(this.eventForm.startingDate);
       } else {
         this.eventForm.coordinateX = "";
         this.eventForm.coordinateY = "";
@@ -307,7 +312,7 @@ export default {
     popupClosed() {
       this.showInMapEvent = null;
     },
-    async createEvent() {
+    async updateEvent() {
       try {
         await EventRepository.save(this.eventForm).then((response) => {
           this.newCreatedEvent.id = response.id;
@@ -335,16 +340,40 @@ export default {
     startFileUpload() {
       this.$refs.hiddenInput.click();
     },
+    async coordinatesToAddress() {
+      const provider = new MapBoxProvider({
+        params: {
+          access_token: MAPBOX_TOKEN,
+        },
+      });
+      const results = await provider.search({
+        query: this.event.coordinateY + "," + this.event.coordinateX,
+        //the mapbox url uses {longitude, latitude} in that order
+      });
+      //take address from first result
+      return results[0].label;
+    },
   },
   computed: {
     isLogged() {
       return getStore().state.user.logged;
     },
   },
-  mounted() {
+  async mounted() {
     EventCategoriesRepository.findAll().then((response) => {
       this.eventCategories = response;
     });
+    this.eventForm.title = this.event.title;
+    this.eventForm.startingDate = this.event.startingDate.toISOString();
+    this.eventForm.endingDate = this.event.endingDate.toISOString();
+    this.eventForm.existingCategoryId = this.event.category.id;
+    this.eventForm.coordinateX = this.event.coordinateX;
+    this.eventForm.coordinateY = this.event.coordinateY;
+    this.eventForm.locationDetails = this.event.locationDetails;
+    this.eventForm.description = this.event.description;
+    this.locationInput = await this.coordinatesToAddress();
+    console.log(this.event.startingDate);
+    console.log(this.eventForm.startingDate);
   },
 };
 </script>

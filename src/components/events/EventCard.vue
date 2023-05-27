@@ -78,14 +78,14 @@
         <button
           class="btn btn-secondary m-1"
           @click="saveEvent"
-          v-if="isLogged && !isSaved"
+          v-if="isLogged && !isSaved && !hostedEvents"
         >
           <i class="bi bi-bookmark"></i> Save
         </button>
         <button
           class="btn btn-secondary m-1"
           @click="saveEvent"
-          v-if="isLogged && isSaved"
+          v-if="isLogged && isSaved && !hostedEvents"
         >
           <i class="bi bi-bookmark-fill"></i> Saved
         </button>
@@ -93,24 +93,23 @@
           class="btn btn-secondary m-1"
           to="/login"
           active-class="active"
-          v-if="!isLogged"
+          v-if="!isLogged && !hostedEvents"
         >
           <i class="bi bi-bookmark"></i> Save
         </router-link>
         <!-- **** -->
-        <br />
         <!-- Subscribe button -->
         <button
           class="btn btn-secondary m-1"
           @click="subscribeToEvent"
-          v-if="isLogged && !isSubscribed"
+          v-if="isLogged && !isSubscribed && !hostedEvents"
         >
           <i class="bi bi-star"></i> Subscribe
         </button>
         <button
           class="btn btn-secondary m-1"
           @click="subscribeToEvent"
-          v-if="isLogged && isSubscribed"
+          v-if="isLogged && isSubscribed && !hostedEvents"
         >
           <i class="bi bi-star-fill"></i> Subscribed
         </button>
@@ -118,9 +117,19 @@
           class="btn btn-secondary m-1"
           to="/login"
           active-class="active"
-          v-if="!isLogged"
+          v-if="!isLogged && !hostedEvents"
         >
           <i class="bi bi-star"></i> Subscribe
+        </router-link>
+        <!-- **** -->
+        <!-- Edit button -->
+        <router-link
+          class="btn btn-secondary m-1"
+          :to="`/events/${this.event.id}/edit`"
+          active-class="active"
+          v-if="isLogged && hostedEvents"
+        >
+          <i class="bi bi-pencil-fill"></i> Edit...
         </router-link>
         <!-- **** -->
       </div>
@@ -166,6 +175,11 @@ export default {
     event: {
       type: Object,
       required: true,
+    },
+    hostedEvents: {
+      // whether the events are hosted by the user or not
+      type: Boolean,
+      required: false,
     },
   },
   data() {

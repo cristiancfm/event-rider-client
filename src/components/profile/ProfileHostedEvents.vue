@@ -79,7 +79,11 @@
         role="tabpanel"
         aria-labelledby="unreviewed-events-tab"
       >
-        <EventsList :title="''" :get-events="getUnreviewedEvents" />
+        <EventsList
+          :title="''"
+          :get-events="getUnreviewedEvents"
+          :hosted-events="true"
+        />
       </div>
       <div
         class="tab-pane fade"
@@ -87,7 +91,11 @@
         role="tabpanel"
         aria-labelledby="rejected-events-tab"
       >
-        <EventsList :title="''" :get-events="getRejectedEvents" />
+        <EventsList
+          :title="''"
+          :get-events="getRejectedEvents"
+          :hosted-events="true"
+        />
       </div>
       <div
         class="tab-pane fade"
@@ -95,7 +103,11 @@
         role="tabpanel"
         aria-labelledby="upcoming-events-tab"
       >
-        <EventsList :title="''" :get-events="getUpcomingEvents" />
+        <EventsList
+          :title="''"
+          :get-events="getUpcomingEvents"
+          :hosted-events="true"
+        />
       </div>
       <div
         class="tab-pane fade"
@@ -103,7 +115,11 @@
         role="tabpanel"
         aria-labelledby="past-events-tab"
       >
-        <EventsList :title="''" :get-events="getPastEvents" />
+        <EventsList
+          :title="''"
+          :get-events="getPastEvents"
+          :hosted-events="true"
+        />
       </div>
     </div>
   </div>
