@@ -200,7 +200,7 @@ export default {
         //the mapbox url uses {longitude, latitude} in that order
       });
       //take address from first result
-      this.eventAddress = results[0].label;
+      this.eventAddress = results[0].raw.text;
     },
   },
   computed: {
