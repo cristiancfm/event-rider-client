@@ -45,4 +45,15 @@ export default {
       return (await HTTP.post(`${resource}`, event)).data;
     }
   },
+  async saveEventImage(id, file) {
+    const formData = new FormData();
+    formData.append("file", file);
+    return (
+      await HTTP.post(`${resource}/${id}/image`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+    ).data;
+  },
 };

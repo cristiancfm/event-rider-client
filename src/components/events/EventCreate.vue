@@ -2,7 +2,7 @@
   <div class="m-auto" style="max-width: 720px">
     <div class="text-start p-2">
       <h2 class="m-2">Create Event</h2>
-      <form @submit.prevent="updateProfile()">
+      <form @submit.prevent="createEvent()">
         <div class="row p-2">
           <div class="col-6">
             <div class="mb-2">
@@ -54,7 +54,8 @@
                       class="form-check-input me-1"
                       id="existingCategory"
                       name="categoryType"
-                      v-model="existingCategory"
+                      v-model="eventForm.existingCategoryChecked"
+                      :value="true"
                     />
                     <label for="existingCategory" class="form-check-label">
                       Existing category
@@ -63,9 +64,9 @@
                   <select
                     class="form-control"
                     id="category"
-                    v-model="eventForm.category"
+                    v-model="eventForm.existingCategoryId"
+                    :disabled="!eventForm.existingCategoryChecked"
                     required
-                    :disabled="!existingCategory"
                   >
                     <option
                       v-for="eventCategory in eventCategories"
@@ -83,7 +84,8 @@
                       class="form-check-input me-1"
                       id="newCategory"
                       name="categoryType"
-                      v-model="existingCategory"
+                      v-model="eventForm.existingCategoryChecked"
+                      :value="false"
                     />
                     <label for="newCategory" class="form-check-label">
                       New category
@@ -93,7 +95,9 @@
                     type="text"
                     class="form-control"
                     id="categoryNew"
-                    :disabled="existingCategory"
+                    v-model="eventForm.newCategory"
+                    :disabled="eventForm.existingCategoryChecked"
+                    required
                   />
                 </div>
               </div>
@@ -122,6 +126,7 @@
                   v-model="locationInput"
                   list="locations-list"
                   @input="autocompleteLocation"
+                  required
                 />
                 <datalist id="locations-list" v-if="locationList.length > 0">
                   <option selected value="">(all)</option>
@@ -152,6 +157,7 @@
                 class="form-control"
                 id="description"
                 v-model="eventForm.description"
+                required
               />
             </div>
             <button
@@ -175,21 +181,24 @@
             <!-- **** -->
           </div>
           <div class="col-6">
-            <!--            <div>-->
-            <!--              <button-->
-            <!--                class="btn btn-secondary mt-3 mb-1"-->
-            <!--                @click.prevent="startFileUpload()"-->
-            <!--              >-->
-            <!--                Upload image...-->
-            <!--              </button>-->
-            <!--              <span v-if="image">{{ image }}</span>-->
-            <!--              <input-->
-            <!--                ref="hiddenInput"-->
-            <!--                type="file"-->
-            <!--                class="d-none"-->
-            <!--                @change="updateFileUpload()"-->
-            <!--              />-->
-            <!--            </div>-->
+            <div>
+              <button
+                class="btn btn-secondary mt-3 mb-1"
+                @click.prevent="startFileUpload()"
+              >
+                Upload images...
+              </button>
+              <p>(max. 10 images)</p>
+              <span v-if="imageMessage">{{ imageMessage }}</span>
+              <input
+                ref="hiddenInput"
+                type="file"
+                accept="image/*"
+                multiple
+                class="d-none"
+                @change="updateFileUpload()"
+              />
+            </div>
             <div
               class="mt-2"
               v-if="
@@ -240,6 +249,7 @@ import { getStore } from "@/common/store";
 import { MapBoxProvider } from "leaflet-geosearch";
 import EventMap from "@/components/events/EventMap.vue";
 import EventCategoriesRepository from "@/repositories/EventCategoryRepository";
+import EventRepository from "@/repositories/EventRepository";
 
 export default {
   name: "EventCreate",
@@ -248,18 +258,23 @@ export default {
       locationInput: "",
       locationList: [],
       eventCategories: [],
-      existingCategory: "",
       images: [],
+      imageMessage: "",
       eventForm: {
         title: "",
         startingDate: "",
         endingDate: "",
-        category: "",
+        existingCategoryChecked: true,
+        existingCategoryId: null,
+        newCategory: null,
         coordinateX: "",
         coordinateY: "",
         locationDetails: "",
         description: "",
         error: null,
+      },
+      newCreatedEvent: {
+        id: null,
       },
     };
   },
@@ -293,28 +308,34 @@ export default {
     popupClosed() {
       this.showInMapEvent = null;
     },
-    // async updateProfile() {
-    //   try {
-    //     if (this.$refs.hiddenInput.files.length > 0) {
-    //       await UserRepository.saveUserImage(
-    //         this.user.id,
-    //         this.$refs.hiddenInput.files[0]
-    //       );
-    //     }
-    //     await auth.update(this.profileForm);
-    //     this.$router.go(-1);
-    //   } catch (err) {
-    //     const response = JSON.parse(err.request.response);
-    //     this.profileForm.error = response.message;
-    //     console.error(err);
-    //   }
-    // },
-    // updateFileUpload() {
-    //   this.image = this.$refs.hiddenInput.files[0].name;
-    // },
-    // startFileUpload() {
-    //   this.$refs.hiddenInput.click();
-    // },
+    async createEvent() {
+      try {
+        await EventRepository.save(this.eventForm).then((response) => {
+          this.newCreatedEvent.id = response.id;
+        });
+        if (this.$refs.hiddenInput.files.length > 0) {
+          for (const file of this.$refs.hiddenInput.files) {
+            await EventRepository.saveEventImage(this.newCreatedEvent.id, file);
+          }
+        }
+        this.$router.go(-1);
+      } catch (err) {
+        const response = JSON.parse(err.request.response);
+        this.eventForm.error = response.message;
+        console.error(err);
+      }
+    },
+    updateFileUpload() {
+      const files = this.$refs.hiddenInput.files;
+      if (files.length > 10) {
+        alert("You can select a maximum of 10 images");
+        this.$refs.hiddenInput.value = ""; //empty file list
+      }
+      this.imageMessage = files.length + " image(s) selected";
+    },
+    startFileUpload() {
+      this.$refs.hiddenInput.click();
+    },
   },
   computed: {
     isLogged() {

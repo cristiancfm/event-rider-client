@@ -21,6 +21,9 @@
             </p>
             <p class="text-secondary">
               <i class="bi bi-geo-alt-fill"></i>
+              {{ eventAddress }}
+            </p>
+            <p class="text-secondary" v-if="event.locationDetails">
               {{ event.locationDetails }}
             </p>
           </div>
@@ -150,9 +153,10 @@
 </template>
 
 <script>
-import { BACKEND_URL } from "@/constants";
+import { BACKEND_URL, MAPBOX_TOKEN } from "@/constants";
 import { getStore } from "@/common/store";
 import UserRepository from "@/repositories/UserRepository";
+import { MapBoxProvider } from "leaflet-geosearch";
 
 export default {
   name: "EventDetails",
@@ -164,6 +168,7 @@ export default {
   },
   data() {
     return {
+      eventAddress: "",
       isSubscribed: false,
       isSaved: false,
     };
@@ -183,6 +188,19 @@ export default {
     },
     async saveEvent() {
       this.$emit("saves", this.event);
+    },
+    async coordinatesToLocation() {
+      const provider = new MapBoxProvider({
+        params: {
+          access_token: MAPBOX_TOKEN,
+        },
+      });
+      const results = await provider.search({
+        query: this.event.coordinateY + "," + this.event.coordinateX,
+        //the mapbox url uses {longitude, latitude} in that order
+      });
+      //take address from first result
+      this.eventAddress = results[0].label;
     },
   },
   computed: {
@@ -219,6 +237,9 @@ export default {
       immediate: true,
       deep: true,
     },
+  },
+  mounted() {
+    this.coordinatesToLocation();
   },
 };
 </script>
