@@ -7,6 +7,11 @@
 <script>
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import {
+  MAP_DEFAULT_LATITUDE,
+  MAP_DEFAULT_LONGITUDE,
+  MAPBOX_TOKEN,
+} from "@/constants";
 
 export default {
   name: "EventMap",
@@ -23,15 +28,15 @@ export default {
     },
     latitude: {
       type: Number,
-      required: true,
+      required: false,
     },
     longitude: {
       type: Number,
-      required: true,
+      required: false,
     },
     zoom: {
       type: Number,
-      required: true,
+      required: false,
     },
     showInMapEvent: {
       type: Object,
@@ -41,16 +46,44 @@ export default {
   methods: {
     createMap() {
       // Initialize the map
-      this.map = L.map(this.$refs.map).setView(
-        [this.latitude, this.longitude],
-        this.zoom
+      this.map = L.map(this.$refs.map);
+      if (this.latitude && this.longitude && this.zoom) {
+        this.map.setView([this.latitude, this.longitude], this.zoom);
+      } else if (this.events.length > 0) {
+        // Use first event of the list to set the view
+        this.map.setView(
+          [this.events[0].coordinateX, this.events[0].coordinateY],
+          13
+        );
+      } else {
+        // Set A Coruña as starting view
+        this.map.setView([MAP_DEFAULT_LATITUDE, MAP_DEFAULT_LONGITUDE], 13);
+      }
+      // Create base layer
+      const osmLayer = L.tileLayer(
+        "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+          maxZoom: 19,
+          attribution:
+            '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        }
+      ).addTo(this.map);
+      // Create satellite layer
+      let mapboxLayer = L.tileLayer(
+        "https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?access_token=" +
+          MAPBOX_TOKEN,
+        {
+          maxZoom: 20,
+          attribution:
+            '&copy; <a href="http://www.mapbox.com/about/maps">Mapbox</a>',
+        }
       );
-      // Add the tile layer
-      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        maxZoom: 19,
-        attribution:
-          '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      }).addTo(this.map);
+      // Add layers to the map
+      const baseLayers = {
+        Default: osmLayer,
+        Satellite: mapboxLayer,
+      };
+      L.control.layers(baseLayers).addTo(this.map);
       //Set URLs for Leaflet marker icons
       delete L.Icon.Default.prototype._getIconUrl;
       L.Icon.Default.mergeOptions({
@@ -62,13 +95,36 @@ export default {
     addMarkers() {
       this.events.map((e) => {
         let marker = L.marker([e.coordinateX, e.coordinateY]).addTo(this.map);
-        marker.bindPopup("<b>" + e.title + "</b><br>" + e.locationDetails);
+        marker.bindPopup(
+          "<b><a href='/events/" +
+            e.id +
+            "'>" +
+            e.title +
+            "</a></b><br>" +
+            e.locationDetails
+        );
         // Add popup close event
         marker.on("popupclose", () => {
           this.$emit("popup-closed");
         });
         this.markers.push(marker);
       });
+      // Set map view
+      if (this.latitude && this.longitude && this.zoom) {
+        this.map.setView([this.latitude, this.longitude], this.map.getZoom());
+      } else if (this.events.length > 0) {
+        // Use first event of the list to set the view
+        this.map.setView(
+          [this.events[0].coordinateX, this.events[0].coordinateY],
+          this.map.getZoom()
+        );
+      } else {
+        // Set default view
+        this.map.setView(
+          [MAP_DEFAULT_LATITUDE, MAP_DEFAULT_LONGITUDE],
+          this.map.getZoom()
+        );
+      }
     },
     removeMarkers() {
       this.markers.forEach((marker) => {
@@ -95,9 +151,13 @@ export default {
             marker.getLatLng().lng === this.showInMapEvent.coordinateY
           );
         });
-        // If found, open its popup
+        // If found, open its popup and center map view
         if (selectedMarker) {
           selectedMarker.openPopup();
+          this.map.setView(
+            [selectedMarker.getLatLng().lat, selectedMarker.getLatLng().lng],
+            this.map.getZoom()
+          );
         }
       }
     },

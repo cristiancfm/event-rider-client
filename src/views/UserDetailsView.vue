@@ -1,24 +1,24 @@
 <template>
-  <UserDetail
+  <UserDetails
     v-if="user"
     :user="user"
     @followers="updateFollowers"
-  ></UserDetail>
+  ></UserDetails>
 </template>
 
 <script>
-import UserDetail from "@/components/users/UserDetail";
+import UserDetails from "@/components/users/UserDetails.vue";
 import UserRepository from "@/repositories/UserRepository";
 import { updateFollowers } from "@/common/user";
 
 export default {
-  name: "UserDetailView",
+  name: "UserDetailsView",
   data() {
     return {
       user: null,
     };
   },
-  components: { UserDetail },
+  components: { UserDetails },
   mounted() {
     this.fetchData();
   },

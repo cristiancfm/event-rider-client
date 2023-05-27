@@ -21,23 +21,28 @@
             <label for="event-location" class="form-label m-0 mt-1">
               Location
             </label>
-            <input
-              type="search"
-              class="form-control form-control-sm"
-              v-model="locationInput"
-              list="locations-list"
-              @input="autocompleteLocation"
-            />
-            <datalist id="locations-list" v-if="locationList.length > 0">
-              <option selected value="">(all)</option>
-              <option
-                v-for="location in locationList"
-                :key="location"
-                :value="location.label"
-              >
-                {{ location.label }}
-              </option>
-            </datalist>
+            <div class="input-group input-group-sm">
+              <span class="input-group-text">
+                <i class="bi bi-search"></i>
+              </span>
+              <input
+                type="search"
+                class="form-control form-control-sm"
+                v-model="locationInput"
+                list="locations-list"
+                @input="autocompleteLocation"
+              />
+              <datalist id="locations-list" v-if="locationList.length > 0">
+                <option selected value="">(all)</option>
+                <option
+                  v-for="location in locationList"
+                  :key="location"
+                  :value="location.label"
+                >
+                  {{ location.label }}
+                </option>
+              </datalist>
+            </div>
           </div>
           <div class="col me-3" style="min-width: 150px">
             <label for="event-distance" class="form-label m-0 mt-1">
@@ -125,9 +130,6 @@ export default {
   methods: {
     emitFilters() {
       this.$emit("filters-applied", this.filters);
-      // if (this.$route.path === "/event-categories/" + this.categoryId) {
-      //   this.$router.push("/events"); // change URL back to /events when it is /event-categories/:id
-      // }
     },
     async autocompleteLocation() {
       if (this.locationInput !== "") {
@@ -161,6 +163,12 @@ export default {
     EventCategoriesRepository.findAll().then((response) => {
       this.eventCategories = response;
     });
+    // Set category if the URL is /event-categories/:id
+    if (this.$route.path.startsWith("/event-categories/")) {
+      if (this.$route.params.id) {
+        this.filters.category = this.$route.params.id;
+      }
+    }
   },
 };
 </script>

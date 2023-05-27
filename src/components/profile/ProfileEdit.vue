@@ -18,12 +18,13 @@
               class="btn btn-secondary mt-3 mb-1"
               @click.prevent="startFileUpload()"
             >
-              Change image
+              Change image...
             </button>
-            <span v-if="image">{{ image }}</span>
+            <span v-if="imageMessage">{{ imageMessage }}</span>
             <input
               ref="hiddenInput"
               type="file"
+              accept="image/*"
               class="d-none"
               @change="updateFileUpload()"
             />
@@ -105,7 +106,7 @@ export default {
   },
   data() {
     return {
-      image: null,
+      imageMessage: null,
       profileForm: {
         id: null,
         name: null,
@@ -142,7 +143,7 @@ export default {
       }
     },
     updateFileUpload() {
-      this.image = this.$refs.hiddenInput.files[0].name;
+      this.imageMessage = this.$refs.hiddenInput.files[0].name;
     },
     startFileUpload() {
       this.$refs.hiddenInput.click();

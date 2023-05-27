@@ -12,9 +12,9 @@ import auth from "@/common/auth";
 import { getStore } from "@/common/store";
 import SignupForm from "@/components/SignupForm";
 import EventsView from "@/views/EventsView";
-import EventDetailView from "@/views/EventDetailView";
+import EventDetailsView from "@/views/EventDetailsView.vue";
 import UsersView from "@/views/UsersView";
-import UserDetailView from "@/views/UserDetailView";
+import UserDetailsView from "@/views/UserDetailsView.vue";
 import EventCategoriesView from "@/views/EventCategoriesView";
 import ProfileView from "@/views/ProfileDetailView.vue";
 import ProfileHostedEvents from "@/components/profile/ProfileHostedEvents.vue";
@@ -22,6 +22,7 @@ import ProfileSavedEvents from "@/components/profile/ProfileSavedEvents.vue";
 import ProfileSubscribedEvents from "@/components/profile/ProfileSubscribedEvents.vue";
 import ProfileSubscribedCategories from "@/components/profile/ProfileSubscribedCategories.vue";
 import ProfileEditView from "@/views/ProfileEditView.vue";
+import EventCreate from "@/components/events/EventCreate.vue";
 
 const routes = [
   {
@@ -50,9 +51,15 @@ const routes = [
   },
   {
     path: "/events/:id",
-    name: "Event Detail",
-    component: EventDetailView,
+    name: "Event Details",
+    component: EventDetailsView,
     meta: { public: true },
+  },
+  {
+    path: "/events/create",
+    name: "Create Event",
+    component: EventCreate,
+    meta: { public: false },
   },
   {
     path: "/event-categories",
@@ -75,7 +82,7 @@ const routes = [
   {
     path: "/members/:id",
     name: "Member Detail",
-    component: UserDetailView,
+    component: UserDetailsView,
     meta: { public: true },
   },
   {
