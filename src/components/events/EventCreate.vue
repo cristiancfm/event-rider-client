@@ -181,24 +181,11 @@
             <!-- **** -->
           </div>
           <div class="col-6">
-            <div>
-              <button
-                class="btn btn-secondary mt-3 mb-1"
-                @click.prevent="startFileUpload()"
-              >
-                Upload images...
-              </button>
-              <p>(max. 10 images)</p>
-              <span v-if="imageMessage">{{ imageMessage }}</span>
-              <input
-                ref="hiddenInput"
-                type="file"
-                accept="image/*"
-                multiple
-                class="d-none"
-                @change="updateFileUpload()"
-              />
-            </div>
+            <image-selector
+              ref="imageSelector"
+              :maxFiles="10"
+              :maxFileSize="5 * 1024 * 1024"
+            />
             <div
               class="mt-2"
               v-if="
@@ -250,6 +237,7 @@ import { MapBoxProvider } from "leaflet-geosearch";
 import EventMap from "@/components/events/EventMap.vue";
 import EventCategoriesRepository from "@/repositories/EventCategoryRepository";
 import EventRepository from "@/repositories/EventRepository";
+import ImageSelector from "@/components/ImageSelector";
 
 export default {
   name: "EventCreate",
@@ -258,8 +246,6 @@ export default {
       locationInput: "",
       locationList: [],
       eventCategories: [],
-      images: [],
-      imageMessage: "",
       eventForm: {
         title: "",
         startingDate: "",
@@ -278,7 +264,7 @@ export default {
       },
     };
   },
-  components: { EventMap },
+  components: { ImageSelector, EventMap },
   methods: {
     async autocompleteLocation() {
       if (this.locationInput !== "") {
@@ -312,28 +298,17 @@ export default {
         await EventRepository.save(this.eventForm).then((response) => {
           this.newCreatedEvent.id = response.id;
         });
-        if (this.$refs.hiddenInput.files.length > 0) {
-          for (const file of this.$refs.hiddenInput.files) {
-            await EventRepository.saveEventImage(this.newCreatedEvent.id, file);
+        if (this.$refs.imageSelector.imagesToUpload.length > 0) {
+          for (const image of this.$refs.imageSelector.imagesToUpload) {
+            await EventRepository.saveEventImage(this.eventForm.id, image.file);
           }
         }
-        this.$router.go(-1);
+        this.$router.push("/profile/hosted-events");
       } catch (err) {
         const response = JSON.parse(err.request.response);
         this.eventForm.error = response.message;
         console.error(err);
       }
-    },
-    updateFileUpload() {
-      const files = this.$refs.hiddenInput.files;
-      if (files.length > 10) {
-        alert("You can select a maximum of 10 images");
-        this.$refs.hiddenInput.value = ""; //empty file list
-      }
-      this.imageMessage = files.length + " image(s) selected";
-    },
-    startFileUpload() {
-      this.$refs.hiddenInput.click();
     },
   },
   computed: {

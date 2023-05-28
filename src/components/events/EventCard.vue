@@ -11,6 +11,11 @@
             <img
               :src="getImageSrc(item - 1)"
               class="d-block w-100"
+              style="
+                object-fit: cover;
+                object-position: center;
+                aspect-ratio: 3/2;
+              "
               alt="Event image"
               @error="setPlaceholder"
             />
@@ -19,6 +24,11 @@
             <img
               :src="getImageSrc(item - 1)"
               class="d-block w-100"
+              style="
+                object-fit: cover;
+                object-position: center;
+                aspect-ratio: 3/2;
+              "
               alt="Event image"
               @error="setPlaceholder"
             />

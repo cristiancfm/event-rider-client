@@ -135,7 +135,7 @@ export default {
           );
         }
         await auth.update(this.profileForm);
-        this.$router.go(-1);
+        this.$router.push("/profile");
       } catch (err) {
         const response = JSON.parse(err.request.response);
         this.profileForm.error = response.message;

@@ -181,24 +181,12 @@
             <!-- **** -->
           </div>
           <div class="col-6">
-            <div>
-              <button
-                class="btn btn-secondary mt-3 mb-1"
-                @click.prevent="startFileUpload()"
-              >
-                Upload images...
-              </button>
-              <p>(max. 10 images)</p>
-              <span v-if="imageMessage">{{ imageMessage }}</span>
-              <input
-                ref="hiddenInput"
-                type="file"
-                accept="image/*"
-                multiple
-                class="d-none"
-                @change="updateFileUpload()"
-              />
-            </div>
+            <image-selector
+              ref="imageSelector"
+              :maxFiles="10"
+              :maxFileSize="5 * 1024 * 1024"
+              :serverImages="serverImages"
+            />
             <div
               class="mt-2"
               v-if="
@@ -244,12 +232,13 @@
 </template>
 
 <script>
-import { MAPBOX_TOKEN } from "@/constants";
+import { BACKEND_URL, MAPBOX_TOKEN } from "@/constants";
 import { getStore } from "@/common/store";
 import { MapBoxProvider } from "leaflet-geosearch";
 import EventMap from "@/components/events/EventMap.vue";
 import EventCategoriesRepository from "@/repositories/EventCategoryRepository";
 import EventRepository from "@/repositories/EventRepository";
+import ImageSelector from "@/components/ImageSelector";
 
 export default {
   name: "EventEdit",
@@ -264,8 +253,7 @@ export default {
       locationInput: "",
       locationList: [],
       eventCategories: [],
-      images: [],
-      imageMessage: "",
+      serverImages: [],
       eventForm: {
         id: null,
         title: "",
@@ -280,12 +268,9 @@ export default {
         description: "",
         error: null,
       },
-      newCreatedEvent: {
-        id: null,
-      },
     };
   },
-  components: { EventMap },
+  components: { ImageSelector, EventMap },
   methods: {
     async autocompleteLocation() {
       if (this.locationInput !== "") {
@@ -315,31 +300,25 @@ export default {
     },
     async updateEvent() {
       try {
-        await EventRepository.save(this.eventForm).then((response) => {
-          this.newCreatedEvent.id = response.id;
-        });
-        if (this.$refs.hiddenInput.files.length > 0) {
-          for (const file of this.$refs.hiddenInput.files) {
-            await EventRepository.saveEventImage(this.newCreatedEvent.id, file);
+        await EventRepository.save(this.eventForm);
+        if (this.$refs.imageSelector.imagesToDelete.length > 0) {
+          for (const file of this.$refs.imageSelector.imagesToDelete) {
+            const segments = file.url.split("/");
+            const idImage = segments.pop();
+            await EventRepository.deleteEventImage(this.eventForm.id, idImage);
           }
         }
-        this.$router.go(-1);
+        if (this.$refs.imageSelector.imagesToUpload.length > 0) {
+          for (const image of this.$refs.imageSelector.imagesToUpload) {
+            await EventRepository.saveEventImage(this.eventForm.id, image.file);
+          }
+        }
+        this.$router.push("/profile/hosted-events");
       } catch (err) {
         const response = JSON.parse(err.request.response);
         this.eventForm.error = response.message;
         console.error(err);
       }
-    },
-    updateFileUpload() {
-      const files = this.$refs.hiddenInput.files;
-      if (files.length > 10) {
-        alert("You can select a maximum of 10 images");
-        this.$refs.hiddenInput.value = ""; //empty file list
-      }
-      this.imageMessage = files.length + " image(s) selected";
-    },
-    startFileUpload() {
-      this.$refs.hiddenInput.click();
     },
     async coordinatesToAddress() {
       const provider = new MapBoxProvider({
@@ -378,6 +357,16 @@ export default {
     this.eventForm.locationDetails = this.event.locationDetails;
     this.eventForm.description = this.event.description;
     this.locationInput = await this.coordinatesToAddress();
+    // add images from server:
+    if (this.event.numImages > 0) {
+      for (let i = 0; i < this.event.numImages; i++) {
+        const image = {
+          url: `${BACKEND_URL}/events/${this.event.id}/image/${i}`,
+          name: "",
+        };
+        this.$refs.imageSelector.imagesList.push(image);
+      }
+    }
   },
 };
 </script>
