@@ -66,7 +66,7 @@ const routes = [
     path: "/events/:id/edit",
     name: "Edit Event",
     component: EventEditView,
-    meta: { public: true },
+    meta: { public: false },
   },
   {
     path: "/event-categories",

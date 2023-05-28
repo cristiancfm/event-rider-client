@@ -165,7 +165,7 @@
               class="btn btn-primary mt-2"
               @click="eventForm.error = null"
             >
-              Create Event
+              Update Event
             </button>
             <button class="btn btn-secondary mt-2 ms-2" @click="$router.go(-1)">
               Cancel
@@ -267,6 +267,7 @@ export default {
       images: [],
       imageMessage: "",
       eventForm: {
+        id: null,
         title: "",
         startingDate: "",
         endingDate: "",
@@ -363,17 +364,20 @@ export default {
     EventCategoriesRepository.findAll().then((response) => {
       this.eventCategories = response;
     });
+    this.eventForm.id = this.event.id;
     this.eventForm.title = this.event.title;
-    this.eventForm.startingDate = this.event.startingDate.toISOString();
-    this.eventForm.endingDate = this.event.endingDate.toISOString();
+    this.eventForm.startingDate = this.event.startingDate
+      .toISOString()
+      .slice(0, -8);
+    this.eventForm.endingDate = this.event.endingDate
+      .toISOString()
+      .slice(0, -8);
     this.eventForm.existingCategoryId = this.event.category.id;
     this.eventForm.coordinateX = this.event.coordinateX;
     this.eventForm.coordinateY = this.event.coordinateY;
     this.eventForm.locationDetails = this.event.locationDetails;
     this.eventForm.description = this.event.description;
     this.locationInput = await this.coordinatesToAddress();
-    console.log(this.event.startingDate);
-    console.log(this.eventForm.startingDate);
   },
 };
 </script>
