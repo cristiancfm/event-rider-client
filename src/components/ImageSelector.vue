@@ -2,7 +2,8 @@
   <div>
     <div class="mb-3">
       <label for="image-input" class="form-label">
-        Images (max. {{ this.maxFiles }} files)
+        Images (max. {{ this.maxFiles }} files) (max. file size:
+        {{ this.bytesToMB(this.maxFileSize) }} MB)
       </label>
       <input
         id="image-input"
@@ -10,6 +11,7 @@
         type="file"
         ref="fileInput"
         @change="handleImageUpload"
+        accept="image/*"
         multiple
       />
     </div>
@@ -73,19 +75,30 @@ export default {
     };
   },
   methods: {
+    bytesToMB(bytes) {
+      return bytes / (1024 * 1024);
+    },
     handleImageUpload(event) {
       const files = event.target.files;
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
+        if (!file.type.startsWith("image/")) {
+          alert("File is not an image");
+          return;
+        }
         if (
           this.imagesList.length + this.imagesToUpload.length >=
           this.maxFiles
         ) {
-          alert("Maximum number of files reached");
+          alert(`Maximum number of files reached (${this.maxFiles} files)`);
           return;
         }
         if (file.size > this.maxFileSize) {
-          alert("File size exceeds the maximum limit");
+          alert(
+            `File size exceeds the maximum limit (${this.bytesToMB(
+              this.maxFileSize
+            )} MB)`
+          );
           return;
         }
         const reader = new FileReader();
