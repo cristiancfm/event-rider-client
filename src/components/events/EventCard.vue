@@ -34,6 +34,20 @@
             />
           </div>
         </template>
+        <template v-if="event.numImages === 0">
+          <div class="carousel-item active">
+            <img
+              src="/placeholder.png"
+              class="d-block w-100"
+              style="
+                object-fit: cover;
+                object-position: center;
+                aspect-ratio: 3/2;
+              "
+              alt="Event image"
+            />
+          </div>
+        </template>
       </div>
       <div v-if="event.numImages > 1">
         <button

@@ -300,7 +300,10 @@ export default {
         });
         if (this.$refs.imageSelector.imagesToUpload.length > 0) {
           for (const image of this.$refs.imageSelector.imagesToUpload) {
-            await EventRepository.saveEventImage(this.eventForm.id, image.file);
+            await EventRepository.saveEventImage(
+              this.newCreatedEvent.id,
+              image.file
+            );
           }
         }
         this.$router.push("/profile/hosted-events");
