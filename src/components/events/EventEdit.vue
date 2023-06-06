@@ -239,6 +239,7 @@ import EventMap from "@/components/events/EventMap.vue";
 import EventCategoriesRepository from "@/repositories/EventCategoryRepository";
 import EventRepository from "@/repositories/EventRepository";
 import ImageSelector from "@/components/ImageSelector";
+import { dateToISOLikeButLocal } from "@/common/event";
 
 export default {
   name: "EventEdit",
@@ -345,12 +346,10 @@ export default {
     });
     this.eventForm.id = this.event.id;
     this.eventForm.title = this.event.title;
-    this.eventForm.startingDate = this.event.startingDate
-      .toISOString()
-      .slice(0, -8);
-    this.eventForm.endingDate = this.event.endingDate
-      .toISOString()
-      .slice(0, -8);
+    this.eventForm.startingDate = dateToISOLikeButLocal(
+      this.event.startingDate
+    );
+    this.eventForm.endingDate = dateToISOLikeButLocal(this.event.endingDate);
     this.eventForm.existingCategoryId = this.event.category.id;
     this.eventForm.coordinateX = this.event.coordinateX;
     this.eventForm.coordinateY = this.event.coordinateY;
