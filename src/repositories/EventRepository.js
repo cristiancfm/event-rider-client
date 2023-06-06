@@ -56,4 +56,7 @@ export default {
       })
     ).data;
   },
+  async deleteEventImage(idEvent, idImage) {
+    return (await HTTP.delete(`${resource}/${idEvent}/image/${idImage}`)).data;
+  },
 };

@@ -70,7 +70,6 @@
                 <router-link
                   class="btn btn-secondary me-2 mb-2"
                   to="/profile/hosted-events"
-                  aria-current="page"
                   active-class="active"
                 >
                   Hosted Events

@@ -12,6 +12,7 @@
           >
             <EventCard
               :event="event"
+              :hosted-events="hostedEvents"
               @subscribers="updateSubscribers"
               @saves="updateSaves"
               @show-in-map="showEventInMap"
@@ -60,6 +61,11 @@ export default {
       // the function to retrieve the events
       type: Function,
       required: true,
+    },
+    hostedEvents: {
+      // whether the events are hosted by the user or not
+      type: Boolean,
+      required: false,
     },
   },
   data() {

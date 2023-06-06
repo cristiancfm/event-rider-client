@@ -66,9 +66,9 @@
             >
               Update Profile
             </button>
-            <router-link class="btn btn-secondary mt-2 ms-2" to="/profile">
+            <button class="btn btn-secondary mt-2 ms-2" @click="$router.go(-1)">
               Cancel
-            </router-link>
+            </button>
             <div
               class="alert alert-danger alert-dismissible fade show mt-3"
               role="alert"
@@ -135,7 +135,7 @@ export default {
           );
         }
         await auth.update(this.profileForm);
-        this.$router.go(-1);
+        this.$router.push("/profile");
       } catch (err) {
         const response = JSON.parse(err.request.response);
         this.profileForm.error = response.message;

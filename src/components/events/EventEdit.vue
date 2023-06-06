@@ -1,8 +1,8 @@
 <template>
   <div class="m-auto" style="max-width: 720px">
     <div class="text-start p-2">
-      <h2 class="m-2">Create Event</h2>
-      <form @submit.prevent="createEvent()">
+      <h2 class="m-2">Edit Event</h2>
+      <form @submit.prevent="updateEvent()">
         <div class="row p-2">
           <div class="col-6">
             <div class="mb-2">
@@ -165,7 +165,7 @@
               class="btn btn-primary mt-2"
               @click="eventForm.error = null"
             >
-              Create Event
+              Update Event
             </button>
             <button class="btn btn-secondary mt-2 ms-2" @click="$router.go(-1)">
               Cancel
@@ -185,6 +185,7 @@
               ref="imageSelector"
               :maxFiles="10"
               :maxFileSize="5 * 1024 * 1024"
+              :serverImages="serverImages"
             />
             <div
               class="mt-2"
@@ -231,7 +232,7 @@
 </template>
 
 <script>
-import { MAPBOX_TOKEN } from "@/constants";
+import { BACKEND_URL, MAPBOX_TOKEN } from "@/constants";
 import { getStore } from "@/common/store";
 import { MapBoxProvider } from "leaflet-geosearch";
 import EventMap from "@/components/events/EventMap.vue";
@@ -240,13 +241,21 @@ import EventRepository from "@/repositories/EventRepository";
 import ImageSelector from "@/components/ImageSelector";
 
 export default {
-  name: "EventCreate",
+  name: "EventEdit",
+  props: {
+    event: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       locationInput: "",
       locationList: [],
       eventCategories: [],
+      serverImages: [],
       eventForm: {
+        id: null,
         title: "",
         startingDate: "",
         endingDate: "",
@@ -258,9 +267,6 @@ export default {
         locationDetails: "",
         description: "",
         error: null,
-      },
-      newCreatedEvent: {
-        id: null,
       },
     };
   },
@@ -281,7 +287,6 @@ export default {
         // - coordinateY is the longitude
         this.eventForm.coordinateX = results[0].y;
         this.eventForm.coordinateY = results[0].x;
-        console.log(this.eventForm.startingDate);
       } else {
         this.eventForm.coordinateX = "";
         this.eventForm.coordinateY = "";
@@ -293,17 +298,19 @@ export default {
     popupClosed() {
       this.showInMapEvent = null;
     },
-    async createEvent() {
+    async updateEvent() {
       try {
-        await EventRepository.save(this.eventForm).then((response) => {
-          this.newCreatedEvent.id = response.id;
-        });
+        await EventRepository.save(this.eventForm);
+        if (this.$refs.imageSelector.imagesToDelete.length > 0) {
+          for (const file of this.$refs.imageSelector.imagesToDelete) {
+            const segments = file.url.split("/");
+            const idImage = segments.pop();
+            await EventRepository.deleteEventImage(this.eventForm.id, idImage);
+          }
+        }
         if (this.$refs.imageSelector.imagesToUpload.length > 0) {
           for (const image of this.$refs.imageSelector.imagesToUpload) {
-            await EventRepository.saveEventImage(
-              this.newCreatedEvent.id,
-              image.file
-            );
+            await EventRepository.saveEventImage(this.eventForm.id, image.file);
           }
         }
         this.$router.push("/profile/hosted-events");
@@ -313,16 +320,53 @@ export default {
         console.error(err);
       }
     },
+    async coordinatesToAddress() {
+      const provider = new MapBoxProvider({
+        params: {
+          access_token: MAPBOX_TOKEN,
+        },
+      });
+      const results = await provider.search({
+        query: this.event.coordinateY + "," + this.event.coordinateX,
+        //the mapbox url uses {longitude, latitude} in that order
+      });
+      //take address from first result
+      return results[0].label;
+    },
   },
   computed: {
     isLogged() {
       return getStore().state.user.logged;
     },
   },
-  mounted() {
+  async mounted() {
     EventCategoriesRepository.findAll().then((response) => {
       this.eventCategories = response;
     });
+    this.eventForm.id = this.event.id;
+    this.eventForm.title = this.event.title;
+    this.eventForm.startingDate = this.event.startingDate
+      .toISOString()
+      .slice(0, -8);
+    this.eventForm.endingDate = this.event.endingDate
+      .toISOString()
+      .slice(0, -8);
+    this.eventForm.existingCategoryId = this.event.category.id;
+    this.eventForm.coordinateX = this.event.coordinateX;
+    this.eventForm.coordinateY = this.event.coordinateY;
+    this.eventForm.locationDetails = this.event.locationDetails;
+    this.eventForm.description = this.event.description;
+    this.locationInput = await this.coordinatesToAddress();
+    // add images from server:
+    if (this.event.numImages > 0) {
+      for (let i = 0; i < this.event.numImages; i++) {
+        const image = {
+          url: `${BACKEND_URL}/events/${this.event.id}/image/${i}`,
+          name: "",
+        };
+        this.$refs.imageSelector.imagesList.push(image);
+      }
+    }
   },
 };
 </script>
