@@ -74,6 +74,12 @@ export default {
   async findUserSubscribedCategories(id, query, sort) {
     return find(`${resource}/${id}/categories/subscribed`, query, sort);
   },
+  async findUserFollowers(id, query, sort) {
+    return find(`${resource}/${id}/followers`, query, sort);
+  },
+  async findUserFollowing(id, query, sort) {
+    return find(`${resource}/${id}/following`, query, sort);
+  },
   async save(user) {
     if (user.id) {
       return (await HTTP.put(`${resource}/${user.id}`, user)).data;
