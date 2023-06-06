@@ -38,11 +38,17 @@
           <span v-else>hosted events</span>
         </p>
         <p>
-          {{ user.followers.length }}
-          <span v-if="user.followers.length === 1">follower</span>
-          <span v-else>followers</span>
+          <router-link class="link-primary" to="/profile/followers">
+            {{ user.followers.length }}
+            <span v-if="user.followers.length === 1">follower</span>
+            <span v-else>followers</span>
+          </router-link>
         </p>
-        <p>{{ user.following.length }} following</p>
+        <p>
+          <router-link class="link-primary" to="/profile/following">
+            {{ user.following.length }} following
+          </router-link>
+        </p>
       </div>
       <div class="col-sm-6"></div>
     </div>
