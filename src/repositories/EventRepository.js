@@ -2,21 +2,6 @@ import HTTP from "@/common/http";
 
 const resource = "events";
 
-function applyDate(event) {
-  event.startingDate = dateToISOLikeButLocal(new Date(event.startingDate));
-  event.endingDate = dateToISOLikeButLocal(new Date(event.endingDate));
-  return event;
-}
-
-function dateToISOLikeButLocal(date) {
-  const offsetMs = date.getTimezoneOffset() * 60 * 1000;
-  const msLocal = date.getTime() - offsetMs;
-  const dateLocal = new Date(msLocal);
-  const iso = dateLocal.toISOString();
-  const isoLocal = iso.slice(0, 19);
-  return isoLocal;
-}
-
 function createParams(query, sort) {
   const params = new URLSearchParams();
   if (query) {
@@ -28,11 +13,10 @@ function createParams(query, sort) {
   return params.toString();
 }
 
-export async function find(url, query, sort) {
+async function find(url, query, sort) {
   const paramsStr = createParams(query, sort);
   if (paramsStr) url += "?" + paramsStr;
   const response = await HTTP.get(url);
-  response.data.forEach(applyDate);
   return response.data;
 }
 
@@ -45,7 +29,7 @@ export default {
   },
   async findOne(id) {
     const event = (await HTTP.get(`${resource}/${id}`)).data;
-    return applyDate(event);
+    return event;
   },
   async save(event) {
     if (event.id) {
