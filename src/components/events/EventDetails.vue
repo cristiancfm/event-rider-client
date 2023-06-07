@@ -11,9 +11,9 @@
             </p>
             <p class="text-secondary">
               <i class="bi bi-calendar-week-fill"></i>
-              {{ event.startingDate.toLocaleString() }}
+              {{ new Date(event.startingDate).toLocaleString() }}
               -
-              {{ event.endingDate.toLocaleString() }}
+              {{ new Date(event.endingDate).toLocaleString() }}
             </p>
             <p class="text-secondary">
               <i class="bi bi-ticket-perforated-fill"></i>

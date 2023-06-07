@@ -86,9 +86,9 @@
       <div class="col">
         <p>{{ event.host.name }} {{ event.host.surname }}</p>
         <p class="text-secondary">
-          {{ event.startingDate.toLocaleString() }}
+          {{ new Date(event.startingDate).toLocaleString() }}
           -
-          {{ event.endingDate.toLocaleString() }}
+          {{ new Date(event.endingDate).toLocaleString() }}
         </p>
         <p class="text-secondary">{{ event.category.name }}</p>
         <p class="text-secondary">{{ eventAddress }}</p>
