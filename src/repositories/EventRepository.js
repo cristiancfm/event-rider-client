@@ -3,9 +3,18 @@ import HTTP from "@/common/http";
 const resource = "events";
 
 function applyDate(event) {
-  event.startingDate = new Date(event.startingDate);
-  event.endingDate = new Date(event.endingDate);
+  event.startingDate = dateToISOLikeButLocal(new Date(event.startingDate));
+  event.endingDate = dateToISOLikeButLocal(new Date(event.endingDate));
   return event;
+}
+
+function dateToISOLikeButLocal(date) {
+  const offsetMs = date.getTimezoneOffset() * 60 * 1000;
+  const msLocal = date.getTime() - offsetMs;
+  const dateLocal = new Date(msLocal);
+  const iso = dateLocal.toISOString();
+  const isoLocal = iso.slice(0, 19);
+  return isoLocal;
 }
 
 function createParams(query, sort) {

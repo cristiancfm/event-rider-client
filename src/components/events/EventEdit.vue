@@ -345,12 +345,8 @@ export default {
     });
     this.eventForm.id = this.event.id;
     this.eventForm.title = this.event.title;
-    this.eventForm.startingDate = this.event.startingDate
-      .toISOString()
-      .slice(0, -8);
-    this.eventForm.endingDate = this.event.endingDate
-      .toISOString()
-      .slice(0, -8);
+    this.eventForm.startingDate = this.event.startingDate;
+    this.eventForm.endingDate = this.event.endingDate;
     this.eventForm.existingCategoryId = this.event.category.id;
     this.eventForm.coordinateX = this.event.coordinateX;
     this.eventForm.coordinateY = this.event.coordinateY;
