@@ -1,35 +1,32 @@
 import HTTP from "@/common/http";
-import { find } from "@/repositories/EventRepository";
 
 const resource = "users";
 
-function applyDate(event) {
-  event.startingDate = new Date(event.startingDate);
-  event.endingDate = new Date(event.endingDate);
-  return event;
+function createParams(query, sort) {
+  const params = new URLSearchParams();
+  if (query) {
+    for (let i = 0; i < query.length; i++) {
+      params.append(query[i].name, query[i].value);
+    }
+  }
+  if (sort) params.append("sort", sort);
+  return params.toString();
+}
+
+async function find(url, query, sort) {
+  const paramsStr = createParams(query, sort);
+  if (paramsStr) url += "?" + paramsStr;
+  const response = await HTTP.get(url);
+  return response.data;
 }
 
 export default {
   async findAll() {
     const response = await HTTP.get(`${resource}`);
-    response.data.forEach(function (user) {
-      user.hostedEvents.forEach(applyDate);
-      user.upcomingHostedEvents.forEach(applyDate);
-      user.pastHostedEvents.forEach(applyDate);
-    });
     return response.data;
   },
   async findOne(id) {
     const response = await HTTP.get(`${resource}/${id}`);
-    if (response.data.hostedEvents) {
-      response.data.hostedEvents.forEach(applyDate);
-    }
-    if (response.data.upcomingHostedEvents) {
-      response.data.upcomingHostedEvents.forEach(applyDate);
-    }
-    if (response.data.pastHostedEvents) {
-      response.data.pastHostedEvents.forEach(applyDate);
-    }
     return response.data;
   },
   async findOneBase(id) {
