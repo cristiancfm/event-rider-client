@@ -26,6 +26,7 @@ import EventCreate from "@/components/events/EventCreate.vue";
 import EventEditView from "@/views/EventEditView";
 import ProfileFollowers from "@/components/profile/ProfileFollowers";
 import ProfileFollowing from "@/components/profile/ProfileFollowing";
+import AdminView from "@/views/AdminView";
 
 const routes = [
   {
@@ -119,6 +120,12 @@ const routes = [
     name: "Edit Profile",
     component: ProfileEditView,
     meta: { public: false },
+  },
+  {
+    path: "/admin",
+    name: "Administration",
+    component: AdminView,
+    meta: { public: false, authority: "ADMIN" },
   },
   {
     path: "/posts",
