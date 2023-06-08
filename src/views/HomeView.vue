@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h1>Where next?</h1>
+    <h1>Where <span style="font-family: 'Arial Black', serif">next?</span></h1>
     <p>Event Rider is the place for discovering your next event!</p>
     <img
       alt="Landing pictures"

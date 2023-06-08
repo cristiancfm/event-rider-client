@@ -2,7 +2,8 @@
   <div class="row">
     <h2>
       <i class="bi bi-bookmark-fill"></i>
-      Saved Events
+      Saved
+      <span style="font-family: Arial Black, serif">Events</span>
     </h2>
   </div>
   <div class="row">

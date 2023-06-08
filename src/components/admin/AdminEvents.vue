@@ -1,10 +1,11 @@
 <template>
   <div class="row">
     <h2>
-      All Events
+      All <span style="font-family: Arial Black, serif">Events</span>
       <!-- Create event button -->
       <router-link
-        class="btn btn-secondary"
+        class="btn btn-secondary ms-2"
+        style="text-transform: none"
         to="/events/create"
         v-if="isLogged"
       >

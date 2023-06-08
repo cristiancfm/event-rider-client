@@ -72,7 +72,7 @@
     </div>
     <div class="row p-3 pb-0">
       <div class="col-12">
-        <h3>
+        <h3 style="text-transform: none">
           <router-link :to="'/events/' + event.id">
             <span v-if="event.status === 'CANCELLED'"
               ><s>{{ event.title }}</s></span

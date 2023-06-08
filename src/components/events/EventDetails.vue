@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-sm-6">
         <div class="row">
-          <h3>{{ event.title }}</h3>
+          <h3 style="text-transform: none">{{ event.title }}</h3>
           <div class="col">
             <p class="text-secondary">
               <i class="bi bi-person-fill"></i> {{ event.host.name }}
