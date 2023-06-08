@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <h2>
-      Events
+      All Events
       <!-- Create event button -->
       <router-link
         class="btn btn-secondary"

@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid text-start p-4">
     <div class="row mb-2">
-      <div class="col">
+      <div class="col admin-title">
         <h2>
           <i class="bi bi-wrench-adjustable"></i>
           Administration
@@ -67,4 +67,10 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.admin-title {
+  background: url("/public/admin-bg.png");
+  background-repeat: no-repeat;
+  background-position: right;
+}
+</style>
