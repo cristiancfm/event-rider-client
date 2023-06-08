@@ -105,6 +105,18 @@
               Sign Up
             </router-link>
           </div>
+          <div class="nav-item" v-if="isLogged && isAdmin">
+            <p class="text-secondary m-2 p-1">Admin Mode</p>
+          </div>
+          <div class="nav-item" v-if="isLogged && isAdmin">
+            <router-link
+              class="btn btn-primary m-2"
+              to="/admin"
+              active-class="active"
+            >
+              Administration
+            </router-link>
+          </div>
           <div class="nav-item" v-if="isLogged">
             <router-link
               class="btn btn-primary m-2"
@@ -137,6 +149,9 @@ export default {
   computed: {
     isLogged() {
       return this.store.state.user.logged;
+    },
+    isAdmin() {
+      return this.store.state.user.authority === "ADMIN";
     },
   },
   methods: {
