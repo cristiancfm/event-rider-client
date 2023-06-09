@@ -1,7 +1,9 @@
 <template>
   <div class="m-auto" style="max-width: 720px">
     <div class="text-start p-2">
-      <h2 class="m-2">Edit Event</h2>
+      <h2 class="m-2">
+        Edit <span style="font-family: 'Arial Black', serif">Event</span>
+      </h2>
       <form @submit.prevent="updateEvent()">
         <div class="row p-2">
           <div class="col-6">

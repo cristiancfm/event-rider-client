@@ -13,7 +13,7 @@
         </div>
       </div>
       <div class="col-sm-9">
-        <h3>
+        <h3 style="text-transform: none">
           {{ user.name }} {{ user.surname }}
           <!-- Edit profile button -->
           <router-link
