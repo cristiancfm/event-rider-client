@@ -159,6 +159,7 @@
                 class="form-control"
                 id="description"
                 v-model="eventForm.description"
+                rows="4"
                 required
               />
             </div>
@@ -169,7 +170,10 @@
             >
               Create Event
             </button>
-            <button class="btn btn-secondary mt-2 ms-2" @click="$router.go(-1)">
+            <button
+              class="btn btn-secondary mt-2 ms-2"
+              @click.prevent="$router.go(-1)"
+            >
               Cancel
             </button>
             <!-- Info card -->
@@ -308,7 +312,7 @@ export default {
             );
           }
         }
-        this.$router.push("/profile/hosted-events");
+        this.$router.go(-1);
       } catch (err) {
         const response = JSON.parse(err.request.response);
         this.eventForm.error = response.message;

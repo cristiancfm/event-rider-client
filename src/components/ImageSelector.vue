@@ -3,7 +3,7 @@
     <div class="mb-3">
       <label for="image-input" class="form-label">
         Images (max. {{ this.maxFiles }} files) (max. file size:
-        {{ this.bytesToMB(this.maxFileSize) }} MB)
+        {{ this.bytesToMB(this.maxFileSize) }} MB) (optional)
       </label>
       <input
         id="image-input"

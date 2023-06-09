@@ -104,11 +104,17 @@
                 </div>
               </div>
               <!-- Info card -->
-              <div class="row p-1 m-1 mt-2 bg-info" style="border-radius: 5px">
-                <p class="mt-1">
-                  <i class="bi bi-info-circle-fill"></i> New categories will be
-                  reviewed by administrators before they become available
-                </p>
+              <div v-if="!isAdmin">
+                <div
+                  class="row p-1 m-1 mt-2 bg-info"
+                  style="border-radius: 5px"
+                >
+                  <p class="mt-1">
+                    <i class="bi bi-info-circle-fill"></i> New categories will
+                    be be reviewed by administrators before they become
+                    available
+                  </p>
+                </div>
               </div>
               <!-- **** -->
             </div>
@@ -159,21 +165,109 @@
                 class="form-control"
                 id="description"
                 v-model="eventForm.description"
+                rows="4"
                 required
               />
             </div>
+            <!-- Administration fields -->
+            <div v-if="isAdmin" class="mb-2">
+              <label for="status" class="form-label"> Event Status </label>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="status-radio"
+                  id="unreviewed-radio"
+                  value="UNREVIEWED"
+                  v-model="eventForm.status"
+                />
+                <label class="form-check-label" for="unreviewed-radio">
+                  Unreviewed
+                </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="status-radio"
+                  id="published-radio"
+                  value="PUBLISHED"
+                  v-model="eventForm.status"
+                />
+                <label class="form-check-label" for="published-radio">
+                  Published
+                </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="status-radio"
+                  id="rejected-radio"
+                  value="REJECTED"
+                  v-model="eventForm.status"
+                />
+                <label class="form-check-label" for="rejected-radio">
+                  Rejected
+                </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="status-radio"
+                  id="cancelled-radio"
+                  value="CANCELLED"
+                  v-model="eventForm.status"
+                />
+                <label class="form-check-label" for="cancelled-radio">
+                  Cancelled
+                </label>
+              </div>
+            </div>
+            <div v-if="isAdmin" class="mb-2">
+              <label for="admin-comments" class="form-label">
+                <i class="bi bi-chat-text-fill"></i>
+                Administrator Comments (optional)
+              </label>
+              <textarea
+                class="form-control"
+                id="admin-comments"
+                v-model="eventForm.adminComments"
+              />
+            </div>
+            <div v-if="isAdmin" class="mb-2">
+              <label for="cancellation-reason" class="form-label">
+                <i class="bi bi-calendar-x-fill"></i>
+                Cancellation Reason (optional)
+              </label>
+              <textarea
+                class="form-control"
+                id="cancellation-reason"
+                v-model="eventForm.cancellationReason"
+                :disabled="eventForm.status !== 'CANCELLED'"
+              />
+            </div>
+            <!-- **** -->
             <button
               type="submit"
-              class="btn btn-primary mt-2"
+              class="btn btn-primary mt-2 me-2"
               @click="eventForm.error = null"
             >
               Update Event
             </button>
-            <button class="btn btn-secondary mt-2 ms-2" @click="$router.go(-1)">
+            <button
+              class="btn btn-secondary mt-2"
+              @click.prevent="$router.go(-1)"
+            >
               Cancel
             </button>
             <!-- Info card -->
-            <div class="row p-1 m-1 mt-3 bg-info" style="border-radius: 5px">
+            <div
+              v-if="!isAdmin"
+              class="row p-1 m-1 mt-3 bg-info"
+              style="border-radius: 5px"
+            >
               <p class="mt-1">
                 <i class="bi bi-info-circle-fill"></i> Since you are an
                 unverified user, this event will be reviewed by administrators
@@ -181,6 +275,25 @@
               </p>
             </div>
             <!-- **** -->
+            <hr />
+            <span v-if="event.status === 'PUBLISHED' && !isAdmin">
+              <button
+                class="btn btn-warning me-2"
+                @click.prevent
+                data-bs-toggle="modal"
+                data-bs-target="#cancelEventModal"
+              >
+                Cancel Event...
+              </button>
+            </span>
+            <button
+              class="btn btn-danger"
+              @click.prevent
+              data-bs-toggle="modal"
+              data-bs-target="#deleteEventModal"
+            >
+              Delete Event...
+            </button>
           </div>
           <div class="col-6">
             <image-selector
@@ -231,6 +344,111 @@
       </form>
     </div>
   </div>
+  <!-- Delete Event modal -->
+  <div
+    class="modal fade"
+    id="deleteEventModal"
+    tabindex="-1"
+    aria-labelledby="deleteEventModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteEventModalLabel">Delete Event</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body text-start">
+          <p>
+            Are you sure you want to delete the event
+            <b>{{ eventForm.title }}</b>
+            ? This cannot be undone.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            class="btn btn-danger"
+            data-bs-dismiss="modal"
+            @click="deleteEvent"
+          >
+            Delete Event
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- **** -->
+  <!-- Cancel Event modal -->
+  <div
+    class="modal fade"
+    id="cancelEventModal"
+    tabindex="-1"
+    aria-labelledby="cancelEventModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="cancelEventModalLabel">Cancel Event</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body text-start">
+          <p>
+            Are you sure you want to cancel the event
+            <b>{{ eventForm.title }}</b>
+            ? Subscribed members will be notified.
+          </p>
+          <div class="mb-2">
+            <label for="admin-comments" class="form-label">
+              <i class="bi bi-calendar-x-fill"></i>
+              Cancellation Reason (optional)
+            </label>
+            <textarea
+              class="form-control"
+              id="admin-comments"
+              v-model="eventForm.cancellationReason"
+            />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            class="btn btn-danger"
+            data-bs-dismiss="modal"
+            @click="cancelEvent"
+          >
+            Cancel Event
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- **** -->
 </template>
 
 <script>
@@ -268,6 +486,9 @@ export default {
         coordinateY: "",
         locationDetails: "",
         description: "",
+        status: "",
+        adminComments: "",
+        cancellationReason: "",
         error: null,
       },
     };
@@ -315,12 +536,26 @@ export default {
             await EventRepository.saveEventImage(this.eventForm.id, image.file);
           }
         }
-        this.$router.push("/profile/hosted-events");
+        this.$router.go(-1);
       } catch (err) {
         const response = JSON.parse(err.request.response);
         this.eventForm.error = response.message;
         console.error(err);
       }
+    },
+    async deleteEvent() {
+      try {
+        await EventRepository.delete(this.event.id);
+        this.$router.go(-1);
+      } catch (err) {
+        const response = JSON.parse(err.request.response);
+        this.eventForm.error = response.message;
+        console.error(err);
+      }
+    },
+    async cancelEvent() {
+      this.eventForm.status = "CANCELLED";
+      await this.updateEvent();
     },
     async coordinatesToAddress() {
       const provider = new MapBoxProvider({
@@ -340,6 +575,9 @@ export default {
     isLogged() {
       return getStore().state.user.logged;
     },
+    isAdmin() {
+      return getStore().state.user.authority === "ADMIN";
+    },
   },
   async mounted() {
     EventCategoriesRepository.findAll().then((response) => {
@@ -354,6 +592,9 @@ export default {
     this.eventForm.coordinateY = this.event.coordinateY;
     this.eventForm.locationDetails = this.event.locationDetails;
     this.eventForm.description = this.event.description;
+    this.eventForm.status = this.event.status;
+    this.eventForm.adminComments = this.event.adminComments;
+    this.eventForm.cancellationReason = this.event.cancellationReason;
     this.locationInput = await this.coordinatesToAddress();
     // add images from server:
     if (this.event.numImages > 0) {

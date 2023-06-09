@@ -47,6 +47,9 @@ export default {
       return (await HTTP.post(`${resource}`, event)).data;
     }
   },
+  async delete(id) {
+    return (await HTTP.delete(`${resource}/${id}`)).data;
+  },
   async saveEventImage(id, file) {
     const formData = new FormData();
     formData.append("file", file);

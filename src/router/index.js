@@ -29,6 +29,8 @@ import ProfileFollowing from "@/components/profile/ProfileFollowing";
 import AdminView from "@/views/AdminView";
 import AdminEvents from "@/components/admin/AdminEvents";
 import UserRepository from "@/repositories/UserRepository";
+import AdminCategories from "@/components/admin/AdminCategories";
+import AdminUsers from "@/components/admin/AdminUsers";
 
 const routes = [
   {
@@ -153,8 +155,8 @@ const routes = [
     component: AdminView,
     children: [
       { path: "events", component: AdminEvents },
-      { path: "categories", component: AdminEvents },
-      { path: "members", component: AdminEvents },
+      { path: "categories", component: AdminCategories },
+      { path: "members", component: AdminUsers },
     ],
     meta: { public: false, authority: "ADMIN" },
   },
