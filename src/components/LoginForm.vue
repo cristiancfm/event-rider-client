@@ -1,5 +1,7 @@
 <template>
-  <h1 class="mt-3">Log In</h1>
+  <h1 class="mt-3">
+    Log <span style="font-family: 'Arial Black', serif">In</span>
+  </h1>
   <form class="m-auto mt-2" style="max-width: 400px" @submit.prevent="login()">
     <div class="mb-2 text-start">
       <label for="email" class="form-label">Email Address</label>

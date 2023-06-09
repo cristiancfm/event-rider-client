@@ -1,18 +1,6 @@
 <template>
   <div class="row">
-    <h2>
-      Hosted <span style="font-family: Arial Black, serif">Events</span>
-      <!-- Create event button -->
-      <router-link
-        class="btn btn-secondary ms-2"
-        style="text-transform: none"
-        to="/events/create"
-        v-if="isLogged"
-      >
-        <i class="bi bi-plus-circle-fill"></i> Create event
-      </router-link>
-      <!-- **** -->
-    </h2>
+    <h2>All <span style="font-family: Arial Black, serif">Events</span></h2>
   </div>
   <div class="row">
     <ul class="nav nav-tabs" id="events-nav" role="tablist">
@@ -128,46 +116,24 @@
 
 <script>
 import EventsList from "@/components/events/EventsList.vue";
-import UserRepository from "@/repositories/UserRepository";
 import { getStore } from "@/common/store";
+import EventRepository from "@/repositories/EventRepository";
 
 export default {
-  name: "ProfileHostedEvents",
+  name: "AdminEvents",
   components: { EventsList },
-  props: {
-    user: {
-      type: Object,
-      required: true,
-    },
-  },
   methods: {
     async getUpcomingEvents(query) {
-      return await UserRepository.findUserUpcomingEvents(
-        getStore().state.user.id,
-        query,
-        null
-      );
+      return await EventRepository.findPublishedUpcoming(query, null);
     },
     async getPastEvents(query) {
-      return await UserRepository.findUserPastEvents(
-        getStore().state.user.id,
-        query,
-        null
-      );
+      return await EventRepository.findPublishedPast(query, null);
     },
     async getUnreviewedEvents(query) {
-      return await UserRepository.findUserUnreviewedEvents(
-        getStore().state.user.id,
-        query,
-        null
-      );
+      return await EventRepository.findUnreviewed(query, null);
     },
     async getRejectedEvents(query) {
-      return await UserRepository.findUserRejectedEvents(
-        getStore().state.user.id,
-        query,
-        null
-      );
+      return await EventRepository.findRejected(query, null);
     },
     handleTabChange() {
       // Leaflet will not render correctly when the user changes between tabs

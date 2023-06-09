@@ -1,6 +1,6 @@
 <template>
   <div class="text-start p-2">
-    <h2 class="m-2">{{ title }}</h2>
+    <h2 class="m-2" v-html="title"></h2>
     <div class="d-flex flex-wrap justify-content-start">
       <div v-for="category in categories" :key="category.id">
         <EventCategoryCard

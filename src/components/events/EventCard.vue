@@ -72,7 +72,7 @@
     </div>
     <div class="row p-3 pb-0">
       <div class="col-12">
-        <h3>
+        <h3 style="text-transform: none">
           <router-link :to="'/events/' + event.id">
             <span v-if="event.status === 'CANCELLED'"
               ><s>{{ event.title }}</s></span
@@ -160,28 +160,30 @@
     </div>
     <!-- Rejected info card -->
     <div
-      class="row p-1 m-3 bg-warning"
+      class="row pt-2 m-3 bg-warning"
       style="border-radius: 5px"
       v-if="event.status === 'REJECTED'"
     >
-      <p class="mt-1">
-        <i class="bi bi-slash-circle-fill"></i> <b>Rejected</b>
-      </p>
-      <p v-if="event.adminComments !== null">
-        Admin comments: {{ event.adminComments }}
-      </p>
+      <p><i class="bi bi-slash-circle-fill"></i> <b>Rejected</b></p>
+      <template v-if="event.adminComments !== null">
+        <template v-if="event.adminComments.length !== 0">
+          <p>{{ event.adminComments }}</p>
+        </template>
+      </template>
     </div>
     <!-- **** -->
     <!-- Cancelled info card -->
     <div
-      class="row p-1 m-3 bg-danger"
+      class="row pt-2 m-3 bg-danger"
       style="border-radius: 5px"
       v-if="event.status === 'CANCELLED'"
     >
-      <p class="mt-1"><i class="bi bi-calendar-x-fill"></i> <b>Cancelled</b></p>
-      <p v-if="event.cancellationReason !== null">
-        Cancellation reason: {{ event.cancellationReason }}
-      </p>
+      <p><i class="bi bi-calendar-x-fill"></i> <b>Cancelled</b></p>
+      <template v-if="event.cancellationReason !== null">
+        <template v-if="event.cancellationReason.length !== 0">
+          <p>{{ event.cancellationReason }}</p>
+        </template>
+      </template>
     </div>
     <!-- **** -->
   </div>

@@ -1,5 +1,8 @@
 <template>
-  <EventsList :title="'Upcoming Events'" :get-events="getEvents" />
+  <EventsList
+    :title="`Upcoming <span style='font-family: Arial Black, serif'>Events</span>`"
+    :get-events="getEvents"
+  />
 </template>
 
 <script>

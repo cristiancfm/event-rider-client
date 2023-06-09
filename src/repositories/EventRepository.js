@@ -27,6 +27,15 @@ export default {
   async findPublishedUpcoming(query, sort) {
     return find(`${resource}/upcoming`, query, sort);
   },
+  async findPublishedPast(query, sort) {
+    return find(`${resource}/past`, query, sort);
+  },
+  async findUnreviewed(query, sort) {
+    return find(`${resource}/unreviewed`, query, sort);
+  },
+  async findRejected(query, sort) {
+    return find(`${resource}/rejected`, query, sort);
+  },
   async findOne(id) {
     const event = (await HTTP.get(`${resource}/${id}`)).data;
     return event;
@@ -37,6 +46,9 @@ export default {
     } else {
       return (await HTTP.post(`${resource}`, event)).data;
     }
+  },
+  async delete(id) {
+    return (await HTTP.delete(`${resource}/${id}`)).data;
   },
   async saveEventImage(id, file) {
     const formData = new FormData();

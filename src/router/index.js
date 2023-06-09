@@ -27,6 +27,10 @@ import EventEditView from "@/views/EventEditView";
 import ProfileFollowers from "@/components/profile/ProfileFollowers";
 import ProfileFollowing from "@/components/profile/ProfileFollowing";
 import AdminView from "@/views/AdminView";
+import AdminEvents from "@/components/admin/AdminEvents";
+import UserRepository from "@/repositories/UserRepository";
+import AdminCategories from "@/components/admin/AdminCategories";
+import AdminUsers from "@/components/admin/AdminUsers";
 
 const routes = [
   {
@@ -70,6 +74,30 @@ const routes = [
     name: "Edit Event",
     component: EventEditView,
     meta: { public: false },
+    beforeEnter: async (to, from, next) => {
+      // Verify if the user trying to access is the event host
+      const eventId = to.params.id;
+
+      // Verificar si el evento pertenece al usuario actual
+      const events = await UserRepository.findUserEvents(
+        getStore().state.user.id,
+        null,
+        null
+      );
+
+      const isEventOwner = !!events.find(
+        (event) => event.id.toString() === eventId
+      );
+
+      if (isEventOwner || getStore().state.user.authority === "ADMIN") {
+        // El evento pertenece al usuario o el usuario es admin, permite el acceso a la ruta
+        next();
+      } else {
+        // El evento no pertenece al usuario, mostrar un mensaje de error
+        alert("Acceso prohibido para el usuario actual");
+        next("/profile");
+      }
+    },
   },
   {
     path: "/event-categories",
@@ -125,6 +153,11 @@ const routes = [
     path: "/admin",
     name: "Administration",
     component: AdminView,
+    children: [
+      { path: "events", component: AdminEvents },
+      { path: "categories", component: AdminCategories },
+      { path: "members", component: AdminUsers },
+    ],
     meta: { public: false, authority: "ADMIN" },
   },
   {

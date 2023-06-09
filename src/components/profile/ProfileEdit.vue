@@ -1,7 +1,9 @@
 <template>
   <div class="m-auto" style="max-width: 720px">
     <div class="text-start p-2">
-      <h2 class="m-2">Edit Profile</h2>
+      <h2 class="m-2">
+        Edit <span style="font-family: 'Arial Black', serif">Profile</span>
+      </h2>
       <div class="row p-2">
         <div class="col-3">
           <div style="aspect-ratio: 1/1">

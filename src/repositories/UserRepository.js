@@ -44,6 +44,9 @@ export default {
       })
     ).data;
   },
+  async findUserEvents(id, query, sort) {
+    return find(`${resource}/${id}/events`, query, sort);
+  },
   async findUserUpcomingEvents(id, query, sort) {
     return find(`${resource}/${id}/events/upcoming`, query, sort);
   },

@@ -1,7 +1,9 @@
 <template>
   <div class="m-auto" style="max-width: 720px">
     <div class="text-start p-2">
-      <h2 class="m-2">Create Event</h2>
+      <h2 class="m-2">
+        Create <span style="font-family: 'Arial Black', serif">Event</span>
+      </h2>
       <form @submit.prevent="createEvent()">
         <div class="row p-2">
           <div class="col-6">
@@ -157,6 +159,7 @@
                 class="form-control"
                 id="description"
                 v-model="eventForm.description"
+                rows="4"
                 required
               />
             </div>
@@ -167,7 +170,10 @@
             >
               Create Event
             </button>
-            <button class="btn btn-secondary mt-2 ms-2" @click="$router.go(-1)">
+            <button
+              class="btn btn-secondary mt-2 ms-2"
+              @click.prevent="$router.go(-1)"
+            >
               Cancel
             </button>
             <!-- Info card -->
@@ -306,7 +312,7 @@ export default {
             );
           }
         }
-        this.$router.push("/profile/hosted-events");
+        this.$router.go(-1);
       } catch (err) {
         const response = JSON.parse(err.request.response);
         this.eventForm.error = response.message;
