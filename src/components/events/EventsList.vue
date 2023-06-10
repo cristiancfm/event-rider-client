@@ -1,6 +1,6 @@
 <template>
   <div class="text-start p-2">
-    <h2 class="m-2" v-html="title"></h2>
+    <h2 class="m-2" v-if="this.title" v-html="title"></h2>
     <EventFilters ref="eventFilters" @filters-applied="applyFilters" />
     <div class="row">
       <div class="col-md-8 pe-md-1">
