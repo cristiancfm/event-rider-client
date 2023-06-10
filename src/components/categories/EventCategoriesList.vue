@@ -16,6 +16,7 @@
         alt=""
       />
       <h2>No Categories</h2>
+      <br />
     </div>
   </div>
 </template>

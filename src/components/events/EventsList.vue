@@ -3,10 +3,10 @@
     <h2 class="m-2" v-html="title"></h2>
     <EventFilters ref="eventFilters" @filters-applied="applyFilters" />
     <div class="row">
-      <div class="col-sm-12 col-md-8">
+      <div class="col-md-8 pe-md-1">
         <div class="d-flex flex-wrap justify-content-start">
           <div
-            class="col-sm-12 col-md-6 col-xxl-4"
+            class="col-sm-12 col-md-6"
             v-for="event in events"
             :key="event.id"
           >
@@ -20,7 +20,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4 ps-md-0">
         <EventMap
           v-if="events.length > 0"
           :events="events"
@@ -39,6 +39,7 @@
         alt=""
       />
       <h2>No Events</h2>
+      <br />
     </div>
   </div>
 </template>
