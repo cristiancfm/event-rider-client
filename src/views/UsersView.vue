@@ -4,7 +4,11 @@
       Member <span style="font-family: Arial Black, serif">Profiles</span>
     </h2>
     <div class="d-flex flex-wrap justify-content-start">
-      <div v-for="user in users" :key="user.id">
+      <div
+        class="col-sm-12 col-md-6 col-xl-4"
+        v-for="user in users"
+        :key="user.id"
+      >
         <UserCard :user="user" @followers="updateFollowers"></UserCard>
       </div>
     </div>
