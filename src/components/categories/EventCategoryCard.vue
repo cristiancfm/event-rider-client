@@ -1,19 +1,19 @@
 <template>
-  <div class="card m-2" style="min-width: 250px; max-width: 450px">
+  <div class="card m-2">
     <div class="row p-3">
-      <div class="col">
+      <div class="col-9">
         <p>
           <router-link :to="'/event-categories/' + eventCategory.id">
             {{ eventCategory.name }}
           </router-link>
         </p>
         <p class="text-secondary">
-          {{ eventCategory.upcomingEvents }}
+          {{ eventCategory.upcomingEvents }} upcoming
           <span v-if="eventCategory.upcomingEvents.length === 1">event</span>
           <span v-else>events</span>
         </p>
       </div>
-      <div class="col text-end">
+      <div class="col-3 text-end">
         <!-- Subscribe button -->
         <button
           class="btn btn-secondary m-1"
