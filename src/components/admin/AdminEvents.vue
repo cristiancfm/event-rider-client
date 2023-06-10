@@ -1,6 +1,17 @@
 <template>
   <div class="row">
-    <h2>All <span style="font-family: Arial Black, serif">Events</span></h2>
+    <h2>
+      All <span style="font-family: Arial Black, serif">Events</span>
+      <!-- Create event button -->
+      <router-link
+        class="btn btn-secondary ms-2"
+        style="text-transform: none"
+        to="/events/create"
+      >
+        <i class="bi bi-plus-circle-fill"></i> Create event
+      </router-link>
+      <!-- **** -->
+    </h2>
   </div>
   <div class="row ps-3 pe-3">
     <ul class="nav nav-tabs" id="events-nav" role="tablist">
