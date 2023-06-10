@@ -12,7 +12,7 @@
           />
         </div>
       </div>
-      <div class="col">
+      <div class="col-5">
         <p>
           <router-link :to="'/members/' + user.id">
             {{ user.name }} {{ user.surname }}
@@ -31,7 +31,7 @@
           <span v-else>total events</span>
         </p>
       </div>
-      <div class="col text-end">
+      <div class="col-4 text-end">
         <!-- Follow button -->
         <button
           class="btn btn-secondary m-1"
