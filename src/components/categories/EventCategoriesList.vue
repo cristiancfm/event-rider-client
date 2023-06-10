@@ -1,8 +1,12 @@
 <template>
   <div class="text-start p-2">
-    <h2 class="m-2" v-html="title"></h2>
+    <h2 class="m-2" v-if="this.title" v-html="title"></h2>
     <div class="d-flex flex-wrap justify-content-start">
-      <div v-for="category in categories" :key="category.id">
+      <div
+        class="col-12 col-md-4 col-xl-3"
+        v-for="category in categories"
+        :key="category.id"
+      >
         <EventCategoryCard
           :eventCategory="category"
           @subscribers="updateSubscribers"
@@ -16,6 +20,7 @@
         alt=""
       />
       <h2>No Categories</h2>
+      <br />
     </div>
   </div>
 </template>

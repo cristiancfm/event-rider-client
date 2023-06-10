@@ -31,6 +31,7 @@ import AdminEvents from "@/components/admin/AdminEvents";
 import UserRepository from "@/repositories/UserRepository";
 import AdminCategories from "@/components/admin/AdminCategories";
 import AdminUsers from "@/components/admin/AdminUsers";
+import EventCategoryCreate from "@/components/categories/EventCategoryCreate";
 
 const routes = [
   {
@@ -110,6 +111,12 @@ const routes = [
     name: "Event Category Detail",
     component: EventsView,
     meta: { public: true },
+  },
+  {
+    path: "/event-categories/create",
+    name: "Event Categories Create",
+    component: EventCategoryCreate,
+    meta: { public: false, authority: "ADMIN" },
   },
   {
     path: "/members",

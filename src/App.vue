@@ -1,8 +1,10 @@
 <template>
   <AppNavbar></AppNavbar>
-  <!--  With the key, any change to the path will trigger a reload of the component,
+  <div style="max-width: 1280px; margin: auto">
+    <!--  With the key, any change to the path will trigger a reload of the component,
    event if it is the same component being loaded -->
-  <router-view :key="$route.fullPath" />
+    <router-view :key="$route.fullPath" />
+  </div>
 </template>
 
 <script>

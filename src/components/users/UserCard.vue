@@ -1,5 +1,5 @@
 <template>
-  <div class="card m-2" style="min-width: 250px; max-width: 450px">
+  <div class="card m-2">
     <div class="row p-3">
       <div class="col-3">
         <div style="aspect-ratio: 1/1">
@@ -12,7 +12,7 @@
           />
         </div>
       </div>
-      <div class="col">
+      <div class="col-5">
         <p>
           <router-link :to="'/members/' + user.id">
             {{ user.name }} {{ user.surname }}
@@ -31,7 +31,7 @@
           <span v-else>total events</span>
         </p>
       </div>
-      <div class="col text-end">
+      <div class="col-4 text-end">
         <!-- Follow button -->
         <button
           class="btn btn-secondary m-1"

@@ -7,6 +7,18 @@ export default {
     const response = await HTTP.get(resource);
     return response.data;
   },
+  async findPublished() {
+    const response = await HTTP.get(`${resource}/published`);
+    return response.data;
+  },
+  async findUnreviewed() {
+    const response = await HTTP.get(`${resource}/unreviewed`);
+    return response.data;
+  },
+  async findRejected() {
+    const response = await HTTP.get(`${resource}/rejected`);
+    return response.data;
+  },
   async findOne(id) {
     const response = await HTTP.get(`${resource}/${id}`);
     return response.data;

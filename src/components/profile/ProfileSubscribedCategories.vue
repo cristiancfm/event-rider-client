@@ -6,11 +6,13 @@
       <span style="font-family: Arial Black, serif">Categories</span>
     </h2>
   </div>
-  <div class="row" style="border-top: 1px solid gainsboro">
-    <EventCategoriesList
-      :title="''"
-      :get-categories="getSubscribedCategories"
-    />
+  <div class="row ps-3 pe-3">
+    <div class="border" style="border-radius: 0 0 5px 5px">
+      <EventCategoriesList
+        :title="''"
+        :get-categories="getSubscribedCategories"
+      />
+    </div>
   </div>
 </template>
 
