@@ -1,37 +1,38 @@
 <template>
-  <div class="text-start p-2">
-    <h2 class="m-2">Follower Members</h2>
-    <div class="d-flex flex-wrap justify-content-start">
-      <div v-for="user in users" :key="user.id">
-        <UserCard :user="user" @followers="updateFollowers"></UserCard>
-      </div>
+  <div class="row">
+    <h2>
+      Follower <span style="font-family: Arial Black, serif">Members</span>
+    </h2>
+  </div>
+  <div class="row ps-3 pe-3">
+    <div class="border" style="border-radius: 0 0 5px 5px">
+      <UsersList :title="''" :get-users="getUserFollowers" />
     </div>
   </div>
 </template>
 
 <script>
 import UserRepository from "@/repositories/UserRepository";
-import UserCard from "@/components/users/UserCard";
-import { updateFollowers } from "@/common/user";
 import { getStore } from "@/common/store";
+import UsersList from "@/components/users/UsersList";
 
 export default {
   name: "ProfileFollowers",
-  data() {
-    return {
-      users: [],
-    };
+  components: { UsersList },
+  props: {
+    user: {
+      type: Object,
+      required: true,
+    },
   },
-  components: { UserCard },
   methods: {
-    updateFollowers,
-  },
-  mounted() {
-    UserRepository.findUserFollowers(getStore().state.user.id, null, null).then(
-      (response) => {
-        this.users = response;
-      }
-    );
+    async getUserFollowers() {
+      return await UserRepository.findUserFollowers(
+        getStore().state.user.id,
+        null,
+        null
+      );
+    },
   },
 };
 </script>

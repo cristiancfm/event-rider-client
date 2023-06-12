@@ -2,8 +2,7 @@
   <div class="row">
     <h2>
       <i class="bi bi-star-fill"></i>
-      Subscribed
-      <span style="font-family: Arial Black, serif">Categories</span>
+      Subscribed <span style="font-family: Arial Black, serif">Categories</span>
     </h2>
   </div>
   <div class="row ps-3 pe-3">
