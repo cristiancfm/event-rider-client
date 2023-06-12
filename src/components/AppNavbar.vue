@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-md bg-light p-0">
+  <nav class="navbar navbar-expand-lg bg-light p-0" style="min-height: 50px">
     <div class="container-fluid">
       <router-link class="navbar-brand" to="/">
         <img

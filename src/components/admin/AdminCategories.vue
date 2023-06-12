@@ -72,6 +72,7 @@
         <EventCategoriesList
           :title="''"
           :get-categories="getUnreviewedCategories"
+          :edit-categories="true"
         />
       </div>
       <div
@@ -83,6 +84,7 @@
         <EventCategoriesList
           :title="''"
           :get-categories="getRejectedCategories"
+          :edit-categories="true"
         />
       </div>
       <div
@@ -94,6 +96,7 @@
         <EventCategoriesList
           :title="''"
           :get-categories="getPublishedCategories"
+          :edit-categories="true"
         />
       </div>
     </div>

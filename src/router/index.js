@@ -32,6 +32,7 @@ import UserRepository from "@/repositories/UserRepository";
 import AdminCategories from "@/components/admin/AdminCategories";
 import AdminUsers from "@/components/admin/AdminUsers";
 import EventCategoryCreate from "@/components/categories/EventCategoryCreate";
+import EventCategoryEditView from "@/views/EventCategoryEditView";
 
 const routes = [
   {
@@ -114,8 +115,14 @@ const routes = [
   },
   {
     path: "/event-categories/create",
-    name: "Event Categories Create",
+    name: "Create Event Category",
     component: EventCategoryCreate,
+    meta: { public: false, authority: "ADMIN" },
+  },
+  {
+    path: "/event-categories/:id/edit",
+    name: "Edit Event Category",
+    component: EventCategoryEditView,
     meta: { public: false, authority: "ADMIN" },
   },
   {

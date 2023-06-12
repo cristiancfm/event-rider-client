@@ -12,7 +12,7 @@
           >
             <EventCard
               :event="event"
-              :hosted-events="hostedEvents"
+              :edit-events="editEvents"
               @subscribers="updateSubscribers"
               @saves="updateSaves"
               @show-in-map="showEventInMap"
@@ -63,8 +63,8 @@ export default {
       type: Function,
       required: true,
     },
-    hostedEvents: {
-      // whether the events are hosted by the user or not
+    editEvents: {
+      // whether to show edit button or not
       type: Boolean,
       required: false,
     },

@@ -13,32 +13,35 @@
                 type="text"
                 class="form-control"
                 id="name"
-                v-model="categoryForm.name"
+                v-model="eventCategoryForm.name"
                 required
               />
             </div>
             <button
               type="submit"
               class="btn btn-primary mt-2"
-              @click="categoryForm.error = null"
+              @click="eventCategoryForm.error = null"
             >
               Create Category
             </button>
-            <button class="btn btn-secondary mt-2 ms-2" @click="$router.go(-1)">
+            <button
+              class="btn btn-secondary mt-2 ms-2"
+              @click.prevent="$router.go(-1)"
+            >
               Cancel
             </button>
             <div
               class="alert alert-danger alert-dismissible fade show mt-3"
               role="alert"
-              v-if="categoryForm.error"
+              v-if="eventCategoryForm.error"
             >
-              <strong>Error:</strong> {{ categoryForm.error }}
+              <strong>Error:</strong> {{ eventCategoryForm.error }}
               <button
                 type="button"
                 class="btn-close"
                 data-bs-dismiss="alert"
                 aria-label="Close"
-                @click="categoryForm.error = null"
+                @click="eventCategoryForm.error = null"
               ></button>
             </div>
           </form>
@@ -55,8 +58,7 @@ export default {
   name: "EventCategoryCreate",
   data() {
     return {
-      eventCategories: null,
-      categoryForm: {
+      eventCategoryForm: {
         name: null,
         error: null,
       },
@@ -65,19 +67,14 @@ export default {
   methods: {
     async createCategory() {
       try {
-        await EventCategoriesRepository.save(this.categoryForm);
+        await EventCategoriesRepository.save(this.eventCategoryForm);
         this.$router.go(-1);
       } catch (err) {
         const response = JSON.parse(err.request.response);
-        this.categoryForm.error = response.message;
+        this.eventCategoryForm.error = response.message;
         console.error(err);
       }
     },
-  },
-  mounted() {
-    EventCategoriesRepository.findAll().then((response) => {
-      this.eventCategories = response;
-    });
   },
 };
 </script>

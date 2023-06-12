@@ -31,4 +31,7 @@ export default {
       return (await HTTP.post(`${resource}`, eventCategory)).data;
     }
   },
+  async delete(id) {
+    return (await HTTP.delete(`${resource}/${id}`)).data;
+  },
 };

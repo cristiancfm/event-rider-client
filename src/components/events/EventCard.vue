@@ -102,14 +102,14 @@
         <button
           class="btn btn-secondary m-1"
           @click="saveEvent"
-          v-if="isLogged && !isSaved && !hostedEvents"
+          v-if="isLogged && !isSaved && !editEvents"
         >
           <i class="bi bi-bookmark"></i> Save
         </button>
         <button
           class="btn btn-secondary m-1"
           @click="saveEvent"
-          v-if="isLogged && isSaved && !hostedEvents"
+          v-if="isLogged && isSaved && !editEvents"
         >
           <i class="bi bi-bookmark-fill"></i> Saved
         </button>
@@ -117,7 +117,7 @@
           class="btn btn-secondary m-1"
           to="/login"
           active-class="active"
-          v-if="!isLogged && !hostedEvents"
+          v-if="!isLogged && !editEvents"
         >
           <i class="bi bi-bookmark"></i> Save
         </router-link>
@@ -126,14 +126,14 @@
         <button
           class="btn btn-secondary m-1"
           @click="subscribeToEvent"
-          v-if="isLogged && !isSubscribed && !hostedEvents"
+          v-if="isLogged && !isSubscribed && !editEvents"
         >
           <i class="bi bi-star"></i> Subscribe
         </button>
         <button
           class="btn btn-secondary m-1"
           @click="subscribeToEvent"
-          v-if="isLogged && isSubscribed && !hostedEvents"
+          v-if="isLogged && isSubscribed && !editEvents"
         >
           <i class="bi bi-star-fill"></i> Subscribed
         </button>
@@ -141,7 +141,7 @@
           class="btn btn-secondary m-1"
           to="/login"
           active-class="active"
-          v-if="!isLogged && !hostedEvents"
+          v-if="!isLogged"
         >
           <i class="bi bi-star"></i> Subscribe
         </router-link>
@@ -151,7 +151,7 @@
           class="btn btn-secondary m-1"
           :to="`/events/${this.event.id}/edit`"
           active-class="active"
-          v-if="isLogged && hostedEvents"
+          v-if="isLogged && editEvents"
         >
           <i class="bi bi-pencil-fill"></i> Edit...
         </router-link>
@@ -202,8 +202,8 @@ export default {
       type: Object,
       required: true,
     },
-    hostedEvents: {
-      // whether the events are hosted by the user or not
+    editEvents: {
+      // whether to show edit button or not
       type: Boolean,
       required: false,
     },

@@ -86,7 +86,7 @@
         <EventsList
           :title="''"
           :get-events="getUnreviewedEvents"
-          :hosted-events="true"
+          :edit-events="true"
         />
       </div>
       <div
@@ -98,7 +98,7 @@
         <EventsList
           :title="''"
           :get-events="getRejectedEvents"
-          :hosted-events="true"
+          :edit-events="true"
         />
       </div>
       <div
@@ -110,7 +110,7 @@
         <EventsList
           :title="''"
           :get-events="getUpcomingEvents"
-          :hosted-events="true"
+          :edit-events="true"
         />
       </div>
       <div
@@ -122,7 +122,7 @@
         <EventsList
           :title="''"
           :get-events="getPastEvents"
-          :hosted-events="true"
+          :edit-events="true"
         />
       </div>
     </div>

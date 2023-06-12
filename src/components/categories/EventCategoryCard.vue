@@ -18,14 +18,14 @@
         <button
           class="btn btn-secondary m-1"
           @click="subscribeToEventCategory"
-          v-if="isLogged && !isSubscribed"
+          v-if="isLogged && !isSubscribed && !editCategories"
         >
           <i class="bi bi-star"></i>
         </button>
         <button
           class="btn btn-secondary m-1"
           @click="subscribeToEventCategory"
-          v-if="isLogged && isSubscribed"
+          v-if="isLogged && isSubscribed && !editCategories"
         >
           <i class="bi bi-star-fill"></i>
         </button>
@@ -36,6 +36,16 @@
           v-if="!isLogged"
         >
           <i class="bi bi-star"></i>
+        </router-link>
+        <!-- **** -->
+        <!-- Edit button -->
+        <router-link
+          class="btn btn-secondary m-1"
+          :to="`/event-categories/${this.eventCategory.id}/edit`"
+          active-class="active"
+          v-if="isLogged && editCategories"
+        >
+          <i class="bi bi-pencil-fill"></i>
         </router-link>
         <!-- **** -->
       </div>
@@ -53,6 +63,11 @@ export default {
     eventCategory: {
       type: Object,
       required: true,
+    },
+    editCategories: {
+      // whether to show edit button or not
+      type: Boolean,
+      required: false,
     },
   },
   data() {
