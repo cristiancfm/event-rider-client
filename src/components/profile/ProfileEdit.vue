@@ -68,7 +68,10 @@
             >
               Update Profile
             </button>
-            <button class="btn btn-secondary mt-2 ms-2" @click="$router.go(-1)">
+            <button
+              class="btn btn-secondary mt-2 ms-2"
+              @click.prevent="$router.go(-1)"
+            >
               Cancel
             </button>
             <div

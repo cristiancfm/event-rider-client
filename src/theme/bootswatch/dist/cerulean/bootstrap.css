@@ -10909,6 +10909,7 @@ textarea.form-control-lg {
 }
 .navbar.bg-light {
   background-image: linear-gradient(#f9fafb, #f8f9fa 60%, #f0f2f5);
+  border-top: 1px solid lightgray;
   border-bottom: 1px solid lightgray;
 }
 .navbar.bg-dark {
@@ -10993,7 +10994,7 @@ textarea.form-control-lg {
 }
 
 .text-secondary {
-  color: #adb5bd !important;
+  color: #adb3b9 !important;
 }
 
 .bg-primary h1, .bg-primary .h1,

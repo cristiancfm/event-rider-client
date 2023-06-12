@@ -9,6 +9,7 @@
       >
         <EventCategoryCard
           :eventCategory="category"
+          :edit-categories="editCategories"
           @subscribers="updateSubscribers"
         ></EventCategoryCard>
       </div>
@@ -41,6 +42,11 @@ export default {
       // the function to retrieve the categories
       type: Function,
       required: true,
+    },
+    editCategories: {
+      // whether to show edit button or not
+      type: Boolean,
+      required: false,
     },
   },
   data() {

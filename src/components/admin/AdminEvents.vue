@@ -71,6 +71,20 @@
           Past
         </button>
       </li>
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link"
+          id="all-events-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#all-events"
+          type="button"
+          role="tab"
+          aria-controls="all events"
+          aria-selected="false"
+        >
+          All
+        </button>
+      </li>
     </ul>
     <div
       class="tab-content p-0 border-start border-end border-bottom"
@@ -86,7 +100,7 @@
         <EventsList
           :title="''"
           :get-events="getUnreviewedEvents"
-          :hosted-events="true"
+          :edit-events="true"
         />
       </div>
       <div
@@ -98,7 +112,7 @@
         <EventsList
           :title="''"
           :get-events="getRejectedEvents"
-          :hosted-events="true"
+          :edit-events="true"
         />
       </div>
       <div
@@ -110,7 +124,7 @@
         <EventsList
           :title="''"
           :get-events="getUpcomingEvents"
-          :hosted-events="true"
+          :edit-events="true"
         />
       </div>
       <div
@@ -122,7 +136,19 @@
         <EventsList
           :title="''"
           :get-events="getPastEvents"
-          :hosted-events="true"
+          :edit-events="true"
+        />
+      </div>
+      <div
+        class="tab-pane fade"
+        id="all-events"
+        role="tabpanel"
+        aria-labelledby="all-events-tab"
+      >
+        <EventsList
+          :title="''"
+          :get-events="getAllEvents"
+          :edit-events="true"
         />
       </div>
     </div>
@@ -149,6 +175,9 @@ export default {
     },
     async getRejectedEvents(query) {
       return await EventRepository.findRejected(query, null);
+    },
+    async getAllEvents(query) {
+      return await EventRepository.findAll(query, null);
     },
     handleTabChange() {
       // Leaflet will not render correctly when the user changes between tabs
