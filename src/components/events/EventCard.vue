@@ -158,6 +158,20 @@
         <!-- **** -->
       </div>
     </div>
+    <!-- Unreviewed info card -->
+    <div
+      class="row pt-2 m-3 bg-info"
+      style="border-radius: 5px"
+      v-if="event.status === 'UNREVIEWED'"
+    >
+      <p><i class="bi bi-eye-slash-fill"></i> <b>Unreviewed</b></p>
+      <template v-if="event.adminComments !== null">
+        <template v-if="event.adminComments.length !== 0">
+          <p>{{ event.adminComments }}</p>
+        </template>
+      </template>
+    </div>
+    <!-- **** -->
     <!-- Rejected info card -->
     <div
       class="row pt-2 m-3 bg-warning"

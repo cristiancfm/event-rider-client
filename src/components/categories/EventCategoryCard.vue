@@ -1,6 +1,6 @@
 <template>
-  <div class="card m-2">
-    <div class="row p-3">
+  <div class="card m-2 p-3">
+    <div class="row">
       <div class="col-9">
         <p>
           <router-link :to="'/event-categories/' + eventCategory.id">
@@ -50,6 +50,24 @@
         <!-- **** -->
       </div>
     </div>
+    <!-- Unreviewed info card -->
+    <div
+      class="row pt-2 m-0 bg-info"
+      style="border-radius: 5px"
+      v-if="eventCategory.status === 'UNREVIEWED'"
+    >
+      <p><i class="bi bi-eye-slash-fill"></i> <b>Unreviewed</b></p>
+    </div>
+    <!-- **** -->
+    <!-- Rejected info card -->
+    <div
+      class="row pt-2 m-0 bg-warning"
+      style="border-radius: 5px"
+      v-if="eventCategory.status === 'REJECTED'"
+    >
+      <p><i class="bi bi-slash-circle-fill"></i> <b>Rejected</b></p>
+    </div>
+    <!-- **** -->
   </div>
 </template>
 

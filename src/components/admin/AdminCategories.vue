@@ -57,6 +57,20 @@
           Published
         </button>
       </li>
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link"
+          id="all-categories-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#all-categories"
+          type="button"
+          role="tab"
+          aria-controls="all categories"
+          aria-selected="false"
+        >
+          All
+        </button>
+      </li>
     </ul>
     <div
       class="tab-content p-0 border-start border-end border-bottom"
@@ -99,6 +113,18 @@
           :edit-categories="true"
         />
       </div>
+      <div
+        class="tab-pane fade"
+        id="all-categories"
+        role="tabpanel"
+        aria-labelledby="all-categories-tab"
+      >
+        <EventCategoriesList
+          :title="''"
+          :get-categories="getAllCategories"
+          :edit-categories="true"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -120,6 +146,9 @@ export default {
     },
     async getRejectedCategories() {
       return await EventCategoryRepository.findRejected();
+    },
+    async getAllCategories() {
+      return await EventCategoryRepository.findAll();
     },
   },
   computed: {
