@@ -92,8 +92,8 @@ const routes = [
         (event) => event.id.toString() === eventId
       );
 
-      if (isEventOwner) {
-        // El evento pertenece al usuario, permite el acceso a la ruta
+      if (isEventOwner || getStore().state.user.authority === "ADMIN") {
+        // El evento pertenece al usuario o el usuario es administrador, permite el acceso a la ruta
         next();
       } else {
         // El evento no pertenece al usuario, mostrar un mensaje de error
