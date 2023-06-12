@@ -1,40 +1,21 @@
 <template>
-  <div class="text-start p-2">
-    <h2 class="m-2">
-      Member <span style="font-family: Arial Black, serif">Profiles</span>
-    </h2>
-    <div class="d-flex flex-wrap justify-content-start">
-      <div
-        class="col-sm-12 col-md-6 col-xl-4"
-        v-for="user in users"
-        :key="user.id"
-      >
-        <UserCard :user="user" @followers="updateFollowers"></UserCard>
-      </div>
-    </div>
-  </div>
+  <UsersList
+    :title="`Member <span style='font-family: Arial Black, serif'>Profiles</span>`"
+    :get-users="getUsers"
+  />
 </template>
 
 <script>
 import UserRepository from "@/repositories/UserRepository";
-import UserCard from "@/components/users/UserCard";
-import { updateFollowers } from "@/common/user";
+import UsersList from "@/components/users/UsersList";
 
 export default {
   name: "UsersView.vue",
-  data() {
-    return {
-      users: [],
-    };
-  },
-  components: { UserCard },
+  components: { UsersList },
   methods: {
-    updateFollowers,
-  },
-  mounted() {
-    UserRepository.findAll().then((response) => {
-      this.users = response;
-    });
+    async getUsers() {
+      return await UserRepository.findActive();
+    },
   },
 };
 </script>

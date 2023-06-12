@@ -25,6 +25,27 @@ export default {
     const response = await HTTP.get(`${resource}`);
     return response.data;
   },
+  async findActive() {
+    //active users include unverified, verified and admin users
+    const response = await HTTP.get(`${resource}/active`);
+    return response.data;
+  },
+  async findUnverified() {
+    const response = await HTTP.get(`${resource}/unverified`);
+    return response.data;
+  },
+  async findSuspended() {
+    const response = await HTTP.get(`${resource}/suspended`);
+    return response.data;
+  },
+  async findVerified() {
+    const response = await HTTP.get(`${resource}/verified`);
+    return response.data;
+  },
+  async findAdmin() {
+    const response = await HTTP.get(`${resource}/admin`);
+    return response.data;
+  },
   async findOne(id) {
     const response = await HTTP.get(`${resource}/${id}`);
     return response.data;
@@ -86,5 +107,8 @@ export default {
     } else {
       return (await HTTP.post(`${resource}`, user)).data;
     }
+  },
+  async saveAuthority(user) {
+    return (await HTTP.put(`${resource}/${user.id}/authority`, user)).data;
   },
 };

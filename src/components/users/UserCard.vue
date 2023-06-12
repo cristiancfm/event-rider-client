@@ -1,6 +1,6 @@
 <template>
-  <div class="card m-2">
-    <div class="row p-3">
+  <div class="card m-2 p-3">
+    <div class="row">
       <div class="col-3">
         <div style="aspect-ratio: 1/1">
           <img
@@ -15,8 +15,14 @@
       <div class="col-5">
         <p>
           <router-link :to="'/members/' + user.id">
-            {{ user.name }} {{ user.surname }}
+            {{ user.name }}{{ user.surname ? " " + user.surname : "" }}
           </router-link>
+          <span class="ms-2" v-if="user.authority === 'USER_VERIFIED'">
+            <i class="bi bi-patch-check-fill"></i>
+          </span>
+          <span class="ms-2" v-if="user.authority === 'ADMIN'">
+            <i class="bi bi-person-badge-fill"></i>
+          </span>
         </p>
         <p class="text-secondary">
           {{ user.upcomingHostedEvents.length }}
@@ -36,14 +42,14 @@
         <button
           class="btn btn-secondary m-1"
           @click="followUser"
-          v-if="isLogged && !isFollowed"
+          v-if="isLogged && !isFollowed && !editUsers"
         >
           <i class="bi bi-person-plus"></i> Follow
         </button>
         <button
           class="btn btn-secondary m-1"
           @click="followUser"
-          v-if="isLogged && isFollowed"
+          v-if="isLogged && isFollowed && !editUsers"
         >
           <i class="bi bi-person-plus-fill"></i> Followed
         </button>
@@ -56,8 +62,27 @@
           <i class="bi bi-person-plus"></i> Follow
         </router-link>
         <!-- **** -->
+        <!-- Edit button -->
+        <router-link
+          class="btn btn-secondary m-1"
+          :to="`/members/${this.user.id}/edit`"
+          active-class="active"
+          v-if="isLogged && editUsers"
+        >
+          <i class="bi bi-pencil-fill"></i> Edit...
+        </router-link>
+        <!-- **** -->
       </div>
     </div>
+    <!-- Suspended info card -->
+    <div
+      class="row pt-2 m-0 bg-danger"
+      style="border-radius: 5px"
+      v-if="user.authority === 'USER_SUSPENDED'"
+    >
+      <p><i class="bi bi-slash-circle-fill"></i> <b>Suspended</b></p>
+    </div>
+    <!-- **** -->
   </div>
 </template>
 
@@ -72,6 +97,11 @@ export default {
     user: {
       type: Object,
       required: true,
+    },
+    editUsers: {
+      // whether to show edit button or not
+      type: Boolean,
+      required: false,
     },
   },
   data() {

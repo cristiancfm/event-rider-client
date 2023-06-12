@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid text-start p-4">
     <div class="row">
-      <div class="col-sm-3 mb-3" style="max-width: 160px">
+      <div class="col-sm-3 mb-3" style="max-width: 130px">
         <div style="aspect-ratio: 1/1">
           <img
             :src="getImageSrc()"
@@ -15,6 +15,12 @@
       <div class="col-sm-9">
         <h3 style="text-transform: none">
           {{ user.name }} {{ user.surname }}
+          <span class="ms-1 me-2" v-if="user.authority === 'USER_VERIFIED'">
+            <i class="bi bi-patch-check-fill"></i>
+          </span>
+          <span class="ms-1 me-2" v-if="user.authority === 'ADMIN'">
+            <i class="bi bi-person-badge-fill"></i>
+          </span>
           <!-- Edit profile button -->
           <router-link
             class="btn btn-secondary m-1"
@@ -25,33 +31,29 @@
           </router-link>
           <!-- **** -->
         </h3>
-        <div class="row">
+        <div class="row" v-if="user.biography">
           <p>{{ user.biography }}</p>
         </div>
         <div class="row">
-          <div class="col-md-2">
+          <div class="col">
             <p class="text-secondary">
               {{ user.upcomingHostedEvents.length }}
               <span v-if="user.upcomingHostedEvents.length === 1">
                 upcoming event
               </span>
               <span v-else>upcoming events</span>
-            </p>
-            <p class="text-secondary">
+              |
               {{ user.hostedEvents.length }}
-              <span v-if="user.hostedEvents.lenght === 1">hosted event</span>
-              <span v-else>hosted events</span>
+              <span v-if="user.hostedEvents.lenght === 1">total event</span>
+              <span v-else>total events</span>
             </p>
-          </div>
-          <div class="col-md-2">
             <p>
               <router-link class="link-primary" to="/profile/followers">
                 {{ user.followers.length }}
                 <span v-if="user.followers.length === 1">follower</span>
                 <span v-else>followers</span>
               </router-link>
-            </p>
-            <p>
+              |
               <router-link class="link-primary" to="/profile/following">
                 {{ user.following.length }} following
               </router-link>

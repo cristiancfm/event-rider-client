@@ -74,7 +74,7 @@
     </ul>
     <div
       class="tab-content p-0 border-start border-end border-bottom"
-      id="events-nav-content"
+      id="categories-nav-content"
       style="border-radius: 0 0 5px 5px"
     >
       <div

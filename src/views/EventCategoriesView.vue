@@ -1,6 +1,6 @@
 <template>
   <EventCategoriesList
-    :title="`event <span style='font-family: Arial Black, serif'>categories</span>`"
+    :title="`Event <span style='font-family: Arial Black, serif'>Categories</span>`"
     :get-categories="getCategories"
   />
 </template>

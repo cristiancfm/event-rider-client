@@ -165,6 +165,7 @@ export default {
   data() {
     return {
       eventCategoryForm: {
+        id: "",
         name: "",
         status: "",
         error: null,

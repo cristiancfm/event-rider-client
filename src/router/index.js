@@ -33,6 +33,7 @@ import AdminCategories from "@/components/admin/AdminCategories";
 import AdminUsers from "@/components/admin/AdminUsers";
 import EventCategoryCreate from "@/components/categories/EventCategoryCreate";
 import EventCategoryEditView from "@/views/EventCategoryEditView";
+import UserEditView from "@/views/UserEditView";
 
 const routes = [
   {
@@ -91,8 +92,8 @@ const routes = [
         (event) => event.id.toString() === eventId
       );
 
-      if (isEventOwner || getStore().state.user.authority === "ADMIN") {
-        // El evento pertenece al usuario o el usuario es admin, permite el acceso a la ruta
+      if (isEventOwner) {
+        // El evento pertenece al usuario, permite el acceso a la ruta
         next();
       } else {
         // El evento no pertenece al usuario, mostrar un mensaje de error
@@ -136,6 +137,12 @@ const routes = [
     name: "Member Detail",
     component: UserDetailsView,
     meta: { public: true },
+  },
+  {
+    path: "/members/:id/edit",
+    name: "Edit Member",
+    component: UserEditView,
+    meta: { public: false, authority: "ADMIN" },
   },
   {
     path: "/about",
