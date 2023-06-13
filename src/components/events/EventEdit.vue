@@ -264,7 +264,24 @@
             </button>
             <!-- Info card -->
             <div
-              v-if="!isAdmin"
+              v-if="
+                !(isAdmin || isVerifiedUser) && this.event.status === 'REJECTED'
+              "
+              class="row p-1 m-1 mt-3 bg-warning"
+              style="border-radius: 5px"
+            >
+              <p class="mt-1">
+                <i class="bi bi-exclamation-triangle-fill"></i> If you update
+                this event, it will be sent for reviewing again
+              </p>
+            </div>
+            <!-- **** -->
+            <!-- Info card -->
+            <div
+              v-if="
+                !(isAdmin || isVerifiedUser) &&
+                !this.event.status === 'REJECTED'
+              "
               class="row p-1 m-1 mt-3 bg-info"
               style="border-radius: 5px"
             >
@@ -523,6 +540,11 @@ export default {
     },
     async updateEvent() {
       try {
+        //mark event as unreviewed if the status is rejected and
+        //if it is not being updated by an admin
+        if (this.event.status === "REJECTED" && !this.isAdmin) {
+          this.eventForm.status = "UNREVIEWED";
+        }
         await EventRepository.save(this.eventForm);
         if (this.$refs.imageSelector.imagesToDelete.length > 0) {
           for (const file of this.$refs.imageSelector.imagesToDelete) {
@@ -577,6 +599,9 @@ export default {
     },
     isAdmin() {
       return getStore().state.user.authority === "ADMIN";
+    },
+    isVerifiedUser() {
+      return getStore().state.user.authority === "USER_VERIFIED";
     },
   },
   async mounted() {
