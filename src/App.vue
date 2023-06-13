@@ -26,6 +26,10 @@ export default {
   color: #2c3e50;
 }
 
+body.suspended-user-view {
+  background: darkred;
+}
+
 nav {
   padding: 30px;
 }
