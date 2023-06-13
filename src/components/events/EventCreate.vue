@@ -177,7 +177,11 @@
               Cancel
             </button>
             <!-- Info card -->
-            <div class="row p-1 m-1 mt-3 bg-info" style="border-radius: 5px">
+            <div
+              v-if="!(isAdmin || isVerifiedUser)"
+              class="row p-1 m-1 mt-3 bg-info"
+              style="border-radius: 5px"
+            >
               <p class="mt-1">
                 <i class="bi bi-info-circle-fill"></i> Since you are an
                 unverified user, this event will be reviewed by administrators
@@ -323,6 +327,12 @@ export default {
   computed: {
     isLogged() {
       return getStore().state.user.logged;
+    },
+    isAdmin() {
+      return getStore().state.user.authority === "ADMIN";
+    },
+    isVerifiedUser() {
+      return getStore().state.user.authority === "USER_VERIFIED";
     },
   },
   mounted() {
