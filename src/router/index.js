@@ -34,6 +34,7 @@ import AdminUsers from "@/components/admin/AdminUsers";
 import EventCategoryCreate from "@/components/categories/EventCategoryCreate";
 import EventCategoryEditView from "@/views/EventCategoryEditView";
 import UserEditView from "@/views/UserEditView";
+import SuspendedUserView from "@/views/SuspendedUserView";
 
 const routes = [
   {
@@ -47,6 +48,12 @@ const routes = [
     name: "Signup",
     component: SignupForm,
     meta: { public: true, isSignupPage: true },
+  },
+  {
+    path: "/suspended",
+    name: "Suspended",
+    component: SuspendedUserView,
+    meta: { public: true, isSuspendedPage: true },
   },
   {
     path: "/",
@@ -233,32 +240,37 @@ router.beforeEach((to, from, next) => {
     const userIsLogged = getStore().state.user.logged;
     const loggedUserAuthority = getStore().state.user.authority;
 
-    if (requiresAuth) {
-      // página privada
-      if (userIsLogged) {
-        if (requiredAuthority && requiredAuthority != loggedUserAuthority) {
-          // usuario logueado pero sin permisos suficientes, le redirigimos a la página de login
-          alert(
-            "Acceso prohibido para el usuario actual; intenta autenticarte de nuevo"
-          );
-          auth.logout();
-          next("/login");
+    if (loggedUserAuthority == "USER_SUSPENDED" && !to.meta.isSuspendedPage) {
+      // usuario suspendido, redirigir a página de suspensión
+      next("/suspended");
+    } else {
+      if (requiresAuth) {
+        // página privada
+        if (userIsLogged) {
+          if (requiredAuthority && requiredAuthority != loggedUserAuthority) {
+            // usuario logueado pero sin permisos suficientes, le redirigimos a la página de login
+            alert(
+              "Acceso prohibido para el usuario actual; intenta autenticarte de nuevo"
+            );
+            auth.logout();
+            next("/login");
+          } else {
+            // usuario logueado y con permisos adecuados
+            next();
+          }
         } else {
-          // usuario logueado y con permisos adecuados
-          next();
+          // usuario no está logueado, no puede acceder a la página
+          alert("Esta página requiere autenticación");
+          next("/login");
         }
       } else {
-        // usuario no está logueado, no puede acceder a la página
-        alert("Esta página requiere autenticación");
-        next("/login");
-      }
-    } else {
-      // página pública
-      if (userIsLogged && to.meta.isLoginPage) {
-        // si estamos logueados no hace falta volver a mostrar el login
-        next({ name: "Home", replace: true });
-      } else {
-        next();
+        // página pública
+        if (userIsLogged && to.meta.isLoginPage) {
+          // si estamos logueados no hace falta volver a mostrar el login
+          next({ name: "Home", replace: true });
+        } else {
+          next();
+        }
       }
     }
   });
