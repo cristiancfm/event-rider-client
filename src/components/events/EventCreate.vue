@@ -64,7 +64,7 @@
                     </label>
                   </div>
                   <select
-                    class="form-control"
+                    class="form-control form-select"
                     id="category"
                     v-model="eventForm.existingCategoryId"
                     :disabled="!eventForm.existingCategoryChecked"

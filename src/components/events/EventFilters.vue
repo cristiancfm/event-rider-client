@@ -49,7 +49,7 @@
               Distance
             </label>
             <select
-              class="form-control form-control-sm"
+              class="form-control form-control-sm form-select form-select-sm"
               v-model="filters.distance"
               :disabled="this.locationInput === ''"
             >
@@ -74,7 +74,7 @@
               Category
             </label>
             <select
-              class="form-control form-control-sm"
+              class="form-control form-control-sm form-select form-select-sm"
               v-model="filters.category"
             >
               <option selected value="">(all)</option>
