@@ -3,7 +3,7 @@
     <div>
       <h1>401</h1>
 
-      <h2>No podrás pasar!</h2>
+      <h2>Access forbidden</h2>
 
       <router-link to="/" custom v-slot="{ href }">
         <a type="button" class="btn btn-secondary" :href="href"> Go Home </a>

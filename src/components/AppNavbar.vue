@@ -55,36 +55,6 @@
               About
             </router-link>
           </li>
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              ref="dropdownElement"
-            >
-              Dropdown
-            </a>
-            <ul class="dropdown-menu">
-              <li>
-                <router-link
-                  class="dropdown-item"
-                  to="/posts"
-                  active-class="active"
-                  >Como vue 2</router-link
-                >
-              </li>
-              <li>
-                <router-link
-                  class="dropdown-item"
-                  to="/posts-setup"
-                  active-class="active"
-                  >Script setup</router-link
-                >
-              </li>
-            </ul>
-          </li>
         </ul>
         <div class="d-flex">
           <div class="nav-item" v-if="!isLogged">
