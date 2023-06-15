@@ -312,7 +312,7 @@
             </button>
           </div>
           <div class="col-6">
-            <image-selector
+            <ImageSelector
               ref="imageSelector"
               :maxFiles="10"
               :maxFileSize="5 * 1024 * 1024"
@@ -598,7 +598,7 @@ export default {
       return getStore().state.user.authority === "USER_VERIFIED";
     },
   },
-  async mounted() {
+  async beforeMount() {
     EventCategoriesRepository.findAll().then((response) => {
       this.eventCategories = response;
     });
