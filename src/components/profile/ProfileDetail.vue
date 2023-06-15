@@ -120,7 +120,7 @@ export default {
       return "/profile-placeholder.jpg";
     },
     setPlaceholder(event) {
-      event.target.src = "/placeholder-square.png";
+      event.target.src = "/error-placeholder-square.png";
     },
   },
   computed: {

@@ -33,6 +33,7 @@
                 object-position: center;
                 aspect-ratio: 3/2;
               "
+              @error="setPlaceholder"
             />
             <button
               class="btn btn-secondary position-absolute top-0 end-0 m-2"
@@ -77,6 +78,9 @@ export default {
   methods: {
     bytesToMB(bytes) {
       return bytes / (1024 * 1024);
+    },
+    setPlaceholder(event) {
+      event.target.src = "/error-placeholder.png";
     },
     handleImageUpload(event) {
       const files = event.target.files;

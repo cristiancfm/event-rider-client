@@ -1,10 +1,10 @@
 <template>
   <div class="text-start p-2">
-    <h2>
+    <h2 class="m-2">
       About <span style="font-family: Arial Black, serif">Event Rider</span>
     </h2>
     <div class="row">
-      <div class="col">
+      <div class="col m-2">
         <p>
           Event Rider is a web application that allows you to search events
           happening in your area. You may view pictures and useful information,

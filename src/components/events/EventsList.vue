@@ -22,6 +22,7 @@
       </div>
       <div class="col-md-4 ps-md-0">
         <EventMap
+          class="m-2"
           v-if="events.length > 0"
           :events="events"
           :latitude="this.latitude"
