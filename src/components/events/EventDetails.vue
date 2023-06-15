@@ -2,12 +2,17 @@
   <div class="container-fluid text-start p-4">
     <div class="row">
       <h3 style="text-transform: none">{{ event.title }}</h3>
-      <p class="text-secondary">
-        <i class="bi bi-person-fill"></i>&nbsp;
+      <p>
         <router-link :to="'/members/' + event.host.id">
-          {{ event.host.name }}
-          {{ event.host.surname ? " " + event.host.surname : "" }}
+          {{ event.host.name
+          }}{{ event.host.surname ? " " + event.host.surname : "" }}
         </router-link>
+        <span class="ms-2" v-if="event.host.authority === 'USER_VERIFIED'">
+          <i class="bi bi-patch-check-fill"></i>
+        </span>
+        <span class="ms-2" v-if="event.host.authority === 'ADMIN'">
+          <i class="bi bi-person-badge-fill"></i>
+        </span>
       </p>
     </div>
     <div class="row mt-2">

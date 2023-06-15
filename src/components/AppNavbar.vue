@@ -76,7 +76,16 @@
             </router-link>
           </div>
           <div class="nav-item" v-if="isLogged && isAdmin">
-            <p class="text-secondary m-2 p-1">Admin Mode</p>
+            <p class="text-secondary m-2 p-1">
+              <i class="bi bi-person-badge-fill"></i>
+              Admin Mode
+            </p>
+          </div>
+          <div class="nav-item" v-if="isLogged && isVerified">
+            <p class="text-secondary m-2 p-1">
+              <i class="bi bi-patch-check-fill"></i>
+              Verified
+            </p>
           </div>
           <div class="nav-item" v-if="isLogged && isAdmin">
             <router-link
@@ -119,6 +128,9 @@ export default {
   computed: {
     isLogged() {
       return this.store.state.user.logged;
+    },
+    isVerified() {
+      return this.store.state.user.authority === "USER_VERIFIED";
     },
     isAdmin() {
       return this.store.state.user.authority === "ADMIN";

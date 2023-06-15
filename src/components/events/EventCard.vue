@@ -84,7 +84,16 @@
     </div>
     <div class="row p-3 pt-0 pb-0">
       <div class="col">
-        <p>{{ event.host.name }} {{ event.host.surname }}</p>
+        <p>
+          {{ event.host.name
+          }}{{ event.host.surname ? " " + event.host.surname : "" }}
+          <span class="ms-1" v-if="event.host.authority === 'USER_VERIFIED'">
+            <i class="bi bi-patch-check-fill"></i>
+          </span>
+          <span class="ms-1" v-if="event.host.authority === 'ADMIN'">
+            <i class="bi bi-person-badge-fill"></i>
+          </span>
+        </p>
         <p class="text-secondary">
           {{ new Date(event.startingDate).toLocaleString() }}
           -
