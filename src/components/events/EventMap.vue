@@ -1,6 +1,6 @@
 <template>
-  <div class="m-2" style="border: 1px solid var(--bs-border-color-translucent)">
-    <div id="map" ref="map"></div>
+  <div style="border: 1px solid var(--bs-border-color-translucent)">
+    <div id="map" ref="map" :style="{ height: height + 'px' }"></div>
   </div>
 </template>
 
@@ -33,6 +33,12 @@ export default {
     zoom: {
       type: Number,
       required: false,
+    },
+    height: {
+      //the height of the map in pixels
+      type: Number,
+      required: false,
+      default: 500,
     },
     showInMapEvent: {
       type: Object,
@@ -150,8 +156,4 @@ export default {
 };
 </script>
 
-<style scoped>
-#map {
-  height: 500px;
-}
-</style>
+<style scoped></style>

@@ -37,7 +37,7 @@
         <template v-if="event.numImages === 0">
           <div class="carousel-item active">
             <img
-              src="/placeholder.png"
+              src="/event-placeholder.png"
               class="d-block w-100"
               style="
                 object-fit: cover;

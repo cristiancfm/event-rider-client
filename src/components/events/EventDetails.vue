@@ -1,33 +1,116 @@
 <template>
   <div class="container-fluid text-start p-4">
     <div class="row">
-      <div class="col-sm-6">
-        <div class="row">
-          <h3 style="text-transform: none">{{ event.title }}</h3>
-          <div class="col">
+      <h3 style="text-transform: none">{{ event.title }}</h3>
+      <p class="text-secondary">
+        <i class="bi bi-person-fill"></i>&nbsp;
+        <router-link :to="'/members/' + event.host.id">
+          {{ event.host.name }}
+          {{ event.host.surname ? " " + event.host.surname : "" }}
+        </router-link>
+      </p>
+    </div>
+    <div class="row mt-2">
+      <div class="col-md me-2 mb-2">
+        <div id="event-carousel-indicators" class="carousel slide">
+          <div class="carousel-inner">
+            <template v-for="item in event.numImages" :key="item">
+              <div v-if="item - 1 === 0" class="carousel-item active">
+                <img
+                  :src="getImageSrc(item - 1)"
+                  class="d-block w-100"
+                  style="
+                    object-fit: cover;
+                    object-position: center;
+                    aspect-ratio: 3/2;
+                  "
+                  alt="Event image"
+                  @error="setPlaceholder"
+                />
+              </div>
+              <div v-if="item - 1 !== 0" class="carousel-item">
+                <img
+                  :src="getImageSrc(item - 1)"
+                  class="d-block w-100"
+                  style="
+                    object-fit: cover;
+                    object-position: center;
+                    aspect-ratio: 3/2;
+                  "
+                  alt="Event image"
+                  @error="setPlaceholder"
+                />
+              </div>
+            </template>
+            <template v-if="event.numImages === 0">
+              <div class="carousel-item active">
+                <img
+                  src="/event-placeholder.png"
+                  class="d-block w-100"
+                  style="
+                    object-fit: cover;
+                    object-position: center;
+                    aspect-ratio: 3/2;
+                  "
+                  alt="Event image"
+                />
+              </div>
+            </template>
+          </div>
+          <div v-if="event.numImages > 1">
+            <button
+              class="carousel-control-prev"
+              type="button"
+              data-bs-target="#event-carousel-indicators"
+              data-bs-slide="prev"
+            >
+              <span
+                class="carousel-control-prev-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button
+              class="carousel-control-next"
+              type="button"
+              data-bs-target="#event-carousel-indicators"
+              data-bs-slide="next"
+            >
+              <span
+                class="carousel-control-next-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md">
+        <div
+          class="row p-3"
+          style="border: 1px gainsboro solid; border-radius: 5px"
+        >
+          <h4>Details</h4>
+          <div class="col-6 col-lg-8">
             <p class="text-secondary">
-              <i class="bi bi-person-fill"></i> {{ event.host.name }}
-              {{ event.host.surname }}
-            </p>
-            <p class="text-secondary">
-              <i class="bi bi-calendar-week-fill"></i>
+              <i class="bi bi-calendar-week-fill"></i>&nbsp;
               {{ new Date(event.startingDate).toLocaleString() }}
               -
               {{ new Date(event.endingDate).toLocaleString() }}
             </p>
             <p class="text-secondary">
-              <i class="bi bi-ticket-perforated-fill"></i>
+              <i class="bi bi-ticket-perforated-fill"></i>&nbsp;
               {{ event.category.name }}
             </p>
             <p class="text-secondary">
-              <i class="bi bi-geo-alt-fill"></i>
+              <i class="bi bi-geo-alt-fill"></i>&nbsp;
               {{ eventAddress }}
             </p>
             <p class="text-secondary" v-if="event.locationDetails">
               {{ event.locationDetails }}
             </p>
           </div>
-          <div class="col">
+          <div class="col-6 col-lg-4">
             <!-- Save button -->
             <button
               class="btn btn-secondary m-1"
@@ -89,64 +172,21 @@
           </div>
         </div>
       </div>
-      <div class="col-sm-6">
-        <div id="event-carousel-indicators" class="carousel slide">
-          <div class="carousel-inner">
-            <template v-for="item in event.numImages" :key="item">
-              <div v-if="item - 1 === 0" class="carousel-item active">
-                <img
-                  :src="getImageSrc(item - 1)"
-                  class="d-block w-100"
-                  alt="Event image"
-                  @error="setPlaceholder"
-                />
-              </div>
-              <div v-if="item - 1 !== 0" class="carousel-item">
-                <img
-                  :src="getImageSrc(item - 1)"
-                  class="d-block w-100"
-                  alt="Event image"
-                  @error="setPlaceholder"
-                />
-              </div>
-            </template>
-          </div>
-          <div v-if="event.numImages > 1">
-            <button
-              class="carousel-control-prev"
-              type="button"
-              data-bs-target="#event-carousel-indicators"
-              data-bs-slide="prev"
-            >
-              <span
-                class="carousel-control-prev-icon"
-                aria-hidden="true"
-              ></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button
-              class="carousel-control-next"
-              type="button"
-              data-bs-target="#event-carousel-indicators"
-              data-bs-slide="next"
-            >
-              <span
-                class="carousel-control-next-icon"
-                aria-hidden="true"
-              ></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-          </div>
-        </div>
-      </div>
     </div>
-    <div class="row">
-      <div class="col-sm">
+    <div class="row mt-2">
+      <div class="col-md me-2 mb-2">
         <h4>Description</h4>
         <p>{{ event.description }}</p>
       </div>
-      <div class="col-sm">
-        <p>(mapa)</p>
+      <div class="col-md">
+        <h4>Map</h4>
+        <EventMap
+          :events="[event]"
+          :latitude="event.latitude"
+          :longitude="event.longitude"
+          :zoom="13"
+          :height="300"
+        ></EventMap>
       </div>
     </div>
   </div>
@@ -157,9 +197,11 @@ import { BACKEND_URL, MAPBOX_TOKEN } from "@/constants";
 import { getStore } from "@/common/store";
 import UserRepository from "@/repositories/UserRepository";
 import { MapBoxProvider } from "leaflet-geosearch";
+import EventMap from "@/components/events/EventMap";
 
 export default {
   name: "EventDetails",
+  components: { EventMap },
   props: {
     event: {
       type: Object,
