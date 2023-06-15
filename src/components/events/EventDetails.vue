@@ -178,10 +178,10 @@ export default {
       if (this.event.numImages > 0) {
         return `${BACKEND_URL}/events/${this.event.id}/image/${item}`;
       }
-      return "/placeholder.png";
+      return "/event-placeholder.png";
     },
     setPlaceholder(event) {
-      event.target.src = "/placeholder.png";
+      event.target.src = "/error-placeholder.png";
     },
     async subscribeToEvent() {
       this.$emit("subscribers", this.event);

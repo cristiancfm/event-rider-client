@@ -117,7 +117,7 @@ export default {
       return "/profile-placeholder.jpg";
     },
     setPlaceholder(event) {
-      event.target.src = "/placeholder-square.png";
+      event.target.src = "/error-placeholder-square.png";
     },
     async followUser() {
       this.$emit("followers", this.user);

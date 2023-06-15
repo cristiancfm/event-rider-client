@@ -13,6 +13,7 @@
             </label>
             <input
               type="search"
+              id="event-title"
               class="form-control form-control-sm"
               v-model="filters.title"
             />
@@ -27,6 +28,7 @@
               </span>
               <input
                 type="search"
+                id="event-location"
                 class="form-control form-control-sm"
                 v-model="locationInput"
                 list="locations-list"
@@ -49,6 +51,7 @@
               Distance
             </label>
             <select
+              id="event-distance"
               class="form-control form-control-sm form-select form-select-sm"
               v-model="filters.distance"
               :disabled="this.locationInput === ''"
@@ -65,6 +68,7 @@
             <label for="event-date" class="form-label m-0 mt-1">Date</label>
             <input
               type="date"
+              id="event-date"
               class="form-control form-control-sm"
               v-model="filters.date"
             />
@@ -74,6 +78,7 @@
               Category
             </label>
             <select
+              id="event-category"
               class="form-control form-control-sm form-select form-select-sm"
               v-model="filters.category"
             >
@@ -86,6 +91,19 @@
                 {{ eventCategory.name }}
               </option>
             </select>
+          </div>
+          <div class="col me-3" style="min-width: 150px">
+            <div class="form-check mt-4">
+              <input
+                type="checkbox"
+                id="cancelled-events"
+                class="form-check-input"
+                v-model="filters.cancelled"
+              />
+              <label class="form-check-label" for="cancelled-events">
+                Cancelled events
+              </label>
+            </div>
           </div>
           <div class="col-auto pt-4 me-3">
             <button class="btn btn-primary mt-1" type="submit">Apply</button>
@@ -123,6 +141,7 @@ export default {
         date: "",
         distance: "",
         category: "",
+        cancelled: false,
       },
       eventCategories: [],
     };

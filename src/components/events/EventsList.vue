@@ -102,6 +102,9 @@ export default {
       filters.category
         ? query.push({ name: "category", value: filters.category })
         : "";
+      filters.cancelled
+        ? query.push({ name: "cancelled", value: filters.cancelled })
+        : "";
       this.events = await this.getEvents(query, null);
     },
     updateSubscribers,
