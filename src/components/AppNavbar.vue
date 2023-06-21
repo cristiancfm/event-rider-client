@@ -56,58 +56,60 @@
             </router-link>
           </li>
         </ul>
-        <div class="d-flex">
-          <div class="nav-item" v-if="!isLogged">
-            <router-link
-              class="btn btn-primary m-2"
-              to="/login"
-              active-class="active"
-            >
-              Log In
-            </router-link>
-          </div>
-          <div class="nav-item" v-if="!isLogged">
-            <router-link
-              class="btn btn-primary m-2"
-              to="/signup"
-              active-class="active"
-            >
-              Sign Up
-            </router-link>
-          </div>
-          <div class="nav-item" v-if="isLogged && isAdmin">
-            <p class="text-secondary m-2 p-1">
-              <i class="bi bi-person-badge-fill"></i>
-              Admin Mode
-            </p>
-          </div>
-          <div class="nav-item" v-if="isLogged && isVerified">
-            <p class="text-secondary m-2 p-1">
-              <i class="bi bi-patch-check-fill"></i>
-              Verified
-            </p>
-          </div>
-          <div class="nav-item" v-if="isLogged && isAdmin">
-            <router-link
-              class="btn btn-primary m-2"
-              to="/admin"
-              active-class="active"
-            >
-              Administration
-            </router-link>
-          </div>
-          <div class="nav-item" v-if="isLogged">
-            <router-link
-              class="btn btn-primary m-2"
-              to="/profile"
-              active-class="active"
-            >
-              Profile
-            </router-link>
-          </div>
-          <div class="nav-item" v-if="isLogged">
-            <a class="btn btn-primary m-2" @click="logout()"> Log Out </a>
-          </div>
+        <div class="d-lg-flex me-auto me-lg-0">
+          <ul class="navbar-nav">
+            <li class="nav-item" v-if="!isLogged">
+              <router-link
+                class="btn btn-primary m-2"
+                to="/login"
+                active-class="active"
+              >
+                Log In
+              </router-link>
+            </li>
+            <li class="nav-item" v-if="!isLogged">
+              <router-link
+                class="btn btn-primary m-2"
+                to="/signup"
+                active-class="active"
+              >
+                Sign Up
+              </router-link>
+            </li>
+            <li class="nav-item" v-if="isLogged && isAdmin">
+              <p class="text-secondary m-2 p-1">
+                <i class="bi bi-person-badge-fill"></i>
+                Admin Mode
+              </p>
+            </li>
+            <li class="nav-item" v-if="isLogged && isVerified">
+              <p class="text-secondary m-2 p-1">
+                <i class="bi bi-patch-check-fill"></i>
+                Verified
+              </p>
+            </li>
+            <li class="nav-item" v-if="isLogged && isAdmin">
+              <router-link
+                class="btn btn-primary m-2"
+                to="/admin"
+                active-class="active"
+              >
+                Administration
+              </router-link>
+            </li>
+            <li class="nav-item" v-if="isLogged">
+              <router-link
+                class="btn btn-primary m-2"
+                to="/profile"
+                active-class="active"
+              >
+                Profile
+              </router-link>
+            </li>
+            <li class="nav-item" v-if="isLogged">
+              <a class="btn btn-primary m-2" @click="logout()"> Log Out </a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>

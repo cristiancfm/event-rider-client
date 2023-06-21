@@ -3,7 +3,7 @@
     <h2 class="m-2" v-if="this.title" v-html="title"></h2>
     <EventFilters ref="eventFilters" @filters-applied="applyFilters" />
     <div class="row">
-      <div class="col-md-8 pe-md-1">
+      <div class="col-md-8 pe-md-0">
         <div class="d-flex flex-wrap justify-content-start">
           <div
             class="col-sm-12 col-md-6"
@@ -20,7 +20,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-4 ps-md-0">
+      <div class="col-md-4 order-first order-md-last">
         <EventMap
           class="m-2"
           v-if="events.length > 0"
