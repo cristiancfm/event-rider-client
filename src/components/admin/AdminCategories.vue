@@ -15,37 +15,37 @@
   </div>
   <div class="row ps-3 pe-3">
     <ul class="nav nav-tabs" id="categories-nav" role="tablist">
+      <!--      <li class="nav-item" role="presentation">-->
+      <!--        <button-->
+      <!--          class="nav-link"-->
+      <!--          id="unreviewed-categories-tab"-->
+      <!--          data-bs-toggle="tab"-->
+      <!--          data-bs-target="#unreviewed-categories"-->
+      <!--          type="button"-->
+      <!--          role="tab"-->
+      <!--          aria-controls="unreviewed categories"-->
+      <!--          aria-selected="true"-->
+      <!--        >-->
+      <!--          Unreviewed-->
+      <!--        </button>-->
+      <!--      </li>-->
+      <!--      <li class="nav-item" role="presentation">-->
+      <!--        <button-->
+      <!--          class="nav-link"-->
+      <!--          id="rejected-categories-tab"-->
+      <!--          data-bs-toggle="tab"-->
+      <!--          data-bs-target="#rejected-categories"-->
+      <!--          type="button"-->
+      <!--          role="tab"-->
+      <!--          aria-controls="rejected categories"-->
+      <!--          aria-selected="false"-->
+      <!--        >-->
+      <!--          Rejected-->
+      <!--        </button>-->
+      <!--      </li>-->
       <li class="nav-item" role="presentation">
         <button
           class="nav-link active"
-          id="unreviewed-categories-tab"
-          data-bs-toggle="tab"
-          data-bs-target="#unreviewed-categories"
-          type="button"
-          role="tab"
-          aria-controls="unreviewed categories"
-          aria-selected="true"
-        >
-          Unreviewed
-        </button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button
-          class="nav-link"
-          id="rejected-categories-tab"
-          data-bs-toggle="tab"
-          data-bs-target="#rejected-categories"
-          type="button"
-          role="tab"
-          aria-controls="rejected categories"
-          aria-selected="false"
-        >
-          Rejected
-        </button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button
-          class="nav-link"
           id="published-categories-tab"
           data-bs-toggle="tab"
           data-bs-target="#published-categories"
@@ -77,32 +77,32 @@
       id="categories-nav-content"
       style="border-radius: 0 0 5px 5px"
     >
+      <!--      <div-->
+      <!--        class="tab-pane fade"-->
+      <!--        id="unreviewed-categories"-->
+      <!--        role="tabpanel"-->
+      <!--        aria-labelledby="unreviewed-categories-tab"-->
+      <!--      >-->
+      <!--        <EventCategoriesList-->
+      <!--          :title="''"-->
+      <!--          :get-categories="getUnreviewedCategories"-->
+      <!--          :edit-categories="true"-->
+      <!--        />-->
+      <!--      </div>-->
+      <!--      <div-->
+      <!--        class="tab-pane fade"-->
+      <!--        id="rejected-categories"-->
+      <!--        role="tabpanel"-->
+      <!--        aria-labelledby="rejected-categories-tab"-->
+      <!--      >-->
+      <!--        <EventCategoriesList-->
+      <!--          :title="''"-->
+      <!--          :get-categories="getRejectedCategories"-->
+      <!--          :edit-categories="true"-->
+      <!--        />-->
+      <!--      </div>-->
       <div
         class="tab-pane fade show active"
-        id="unreviewed-categories"
-        role="tabpanel"
-        aria-labelledby="unreviewed-categories-tab"
-      >
-        <EventCategoriesList
-          :title="''"
-          :get-categories="getUnreviewedCategories"
-          :edit-categories="true"
-        />
-      </div>
-      <div
-        class="tab-pane fade"
-        id="rejected-categories"
-        role="tabpanel"
-        aria-labelledby="rejected-categories-tab"
-      >
-        <EventCategoriesList
-          :title="''"
-          :get-categories="getRejectedCategories"
-          :edit-categories="true"
-        />
-      </div>
-      <div
-        class="tab-pane fade"
         id="published-categories"
         role="tabpanel"
         aria-labelledby="published-categories-tab"

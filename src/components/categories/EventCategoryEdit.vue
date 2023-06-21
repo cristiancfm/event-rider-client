@@ -17,48 +17,48 @@
                 required
               />
             </div>
-            <div class="mb-2">
-              <label for="status" class="form-label"> Category Status </label>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="status-radio"
-                  id="unreviewed-radio"
-                  value="UNREVIEWED"
-                  v-model="eventCategoryForm.status"
-                />
-                <label class="form-check-label" for="unreviewed-radio">
-                  Unreviewed
-                </label>
-              </div>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="status-radio"
-                  id="published-radio"
-                  value="PUBLISHED"
-                  v-model="eventCategoryForm.status"
-                />
-                <label class="form-check-label" for="published-radio">
-                  Published
-                </label>
-              </div>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="status-radio"
-                  id="rejected-radio"
-                  value="REJECTED"
-                  v-model="eventCategoryForm.status"
-                />
-                <label class="form-check-label" for="rejected-radio">
-                  Rejected
-                </label>
-              </div>
-            </div>
+            <!--            <div class="mb-2">-->
+            <!--              <label for="status" class="form-label"> Category Status </label>-->
+            <!--              <div class="form-check">-->
+            <!--                <input-->
+            <!--                  class="form-check-input"-->
+            <!--                  type="radio"-->
+            <!--                  name="status-radio"-->
+            <!--                  id="unreviewed-radio"-->
+            <!--                  value="UNREVIEWED"-->
+            <!--                  v-model="eventCategoryForm.status"-->
+            <!--                />-->
+            <!--                <label class="form-check-label" for="unreviewed-radio">-->
+            <!--                  Unreviewed-->
+            <!--                </label>-->
+            <!--              </div>-->
+            <!--              <div class="form-check">-->
+            <!--                <input-->
+            <!--                  class="form-check-input"-->
+            <!--                  type="radio"-->
+            <!--                  name="status-radio"-->
+            <!--                  id="published-radio"-->
+            <!--                  value="PUBLISHED"-->
+            <!--                  v-model="eventCategoryForm.status"-->
+            <!--                />-->
+            <!--                <label class="form-check-label" for="published-radio">-->
+            <!--                  Published-->
+            <!--                </label>-->
+            <!--              </div>-->
+            <!--              <div class="form-check">-->
+            <!--                <input-->
+            <!--                  class="form-check-input"-->
+            <!--                  type="radio"-->
+            <!--                  name="status-radio"-->
+            <!--                  id="rejected-radio"-->
+            <!--                  value="REJECTED"-->
+            <!--                  v-model="eventCategoryForm.status"-->
+            <!--                />-->
+            <!--                <label class="form-check-label" for="rejected-radio">-->
+            <!--                  Rejected-->
+            <!--                </label>-->
+            <!--              </div>-->
+            <!--            </div>-->
             <button
               type="submit"
               class="btn btn-primary mt-2"

@@ -49,7 +49,7 @@
                 Category
               </label>
               <div class="row">
-                <div class="col-6">
+                <div class="col">
                   <div class="form-check">
                     <input
                       type="radio"
@@ -64,7 +64,7 @@
                     </label>
                   </div>
                   <select
-                    class="form-control"
+                    class="form-control form-select"
                     id="category"
                     v-model="eventForm.existingCategoryId"
                     :disabled="!eventForm.existingCategoryChecked"
@@ -79,43 +79,43 @@
                     </option>
                   </select>
                 </div>
-                <div class="col-6">
-                  <div class="form-check">
-                    <input
-                      type="radio"
-                      class="form-check-input me-1"
-                      id="newCategory"
-                      name="categoryType"
-                      v-model="eventForm.existingCategoryChecked"
-                      :value="false"
-                    />
-                    <label for="newCategory" class="form-check-label">
-                      New category
-                    </label>
-                  </div>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="categoryNew"
-                    v-model="eventForm.newCategory"
-                    :disabled="eventForm.existingCategoryChecked"
-                    required
-                  />
-                </div>
+                <!--                <div class="col-6">-->
+                <!--                  <div class="form-check">-->
+                <!--                    <input-->
+                <!--                      type="radio"-->
+                <!--                      class="form-check-input me-1"-->
+                <!--                      id="newCategory"-->
+                <!--                      name="categoryType"-->
+                <!--                      v-model="eventForm.existingCategoryChecked"-->
+                <!--                      :value="false"-->
+                <!--                    />-->
+                <!--                    <label for="newCategory" class="form-check-label">-->
+                <!--                      New category-->
+                <!--                    </label>-->
+                <!--                  </div>-->
+                <!--                  <input-->
+                <!--                    type="text"-->
+                <!--                    class="form-control"-->
+                <!--                    id="categoryNew"-->
+                <!--                    v-model="eventForm.newCategory"-->
+                <!--                    :disabled="eventForm.existingCategoryChecked"-->
+                <!--                    required-->
+                <!--                  />-->
+                <!--                </div>-->
               </div>
               <!-- Info card -->
-              <div v-if="!isAdmin">
-                <div
-                  class="row p-1 m-1 mt-2 bg-info"
-                  style="border-radius: 5px"
-                >
-                  <p class="mt-1">
-                    <i class="bi bi-info-circle-fill"></i> New categories will
-                    be be reviewed by administrators before they become
-                    available
-                  </p>
-                </div>
-              </div>
+              <!--              <div v-if="!isAdmin">-->
+              <!--                <div-->
+              <!--                  class="row p-1 m-1 mt-2 bg-info"-->
+              <!--                  style="border-radius: 5px"-->
+              <!--                >-->
+              <!--                  <p class="mt-1">-->
+              <!--                    <i class="bi bi-info-circle-fill"></i> New categories will-->
+              <!--                    be be reviewed by administrators before they become-->
+              <!--                    available-->
+              <!--                  </p>-->
+              <!--                </div>-->
+              <!--              </div>-->
               <!-- **** -->
             </div>
             <div class="mb-2">
