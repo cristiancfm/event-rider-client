@@ -39,15 +39,11 @@
               <span v-else>total events</span>
             </p>
             <p>
-              <router-link to="/profile/followers">
-                {{ user.followers.length }}
-                <span v-if="user.followers.length === 1">follower</span>
-                <span v-else>followers</span>
-              </router-link>
+              {{ user.followers.length }}
+              <span v-if="user.followers.length === 1">follower</span>
+              <span v-else>followers</span>
               |
-              <router-link to="/profile/following">
-                {{ user.following.length }} following
-              </router-link>
+              {{ user.following.length }} following
             </p>
           </div>
         </div>

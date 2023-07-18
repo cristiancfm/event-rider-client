@@ -17,7 +17,7 @@ import { getStore } from "@/common/store";
 import UsersList from "@/components/users/UsersList";
 
 export default {
-  name: "ProfileFollowing",
+  name: "UserFollowing",
   components: { UsersList },
   props: {
     user: {

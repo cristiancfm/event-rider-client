@@ -104,7 +104,7 @@
       </div>
       <div class="col text-end">
         <button class="btn btn-secondary m-1" @click="showInMap">
-          <i class="bi bi-map-fill"></i> Show in map
+          <i class="bi bi-map-fill"></i> Show on map
         </button>
         <br />
         <!-- Save button -->

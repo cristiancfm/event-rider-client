@@ -20,8 +20,8 @@ import ProfileSubscribedCategories from "@/components/profile/ProfileSubscribedC
 import ProfileEditView from "@/views/ProfileEditView.vue";
 import EventCreate from "@/components/events/EventCreate.vue";
 import EventEditView from "@/views/EventEditView";
-import ProfileFollowers from "@/components/profile/ProfileFollowers";
-import ProfileFollowing from "@/components/profile/ProfileFollowing";
+import UserFollowers from "@/components/users/UserFollowers";
+import UserFollowing from "@/components/users/UserFollowing";
 import AdminView from "@/views/AdminView";
 import AdminEvents from "@/components/admin/AdminEvents";
 import UserRepository from "@/repositories/UserRepository";
@@ -162,8 +162,8 @@ const routes = [
       { path: "saved-events", component: ProfileSavedEvents },
       { path: "subscribed-events", component: ProfileSubscribedEvents },
       { path: "subscribed-categories", component: ProfileSubscribedCategories },
-      { path: "followers", component: ProfileFollowers },
-      { path: "following", component: ProfileFollowing },
+      { path: "followers", component: UserFollowers },
+      { path: "following", component: UserFollowing },
     ],
     meta: { public: false },
   },

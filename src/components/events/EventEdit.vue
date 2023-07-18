@@ -539,7 +539,6 @@ export default {
     },
     async updateEvent() {
       try {
-        await EventRepository.save(this.eventForm);
         if (this.$refs.imageSelector.imagesToDelete.length > 0) {
           for (const file of this.$refs.imageSelector.imagesToDelete) {
             const segments = file.url.split("/");
@@ -552,6 +551,7 @@ export default {
             await EventRepository.saveEventImage(this.eventForm.id, image.file);
           }
         }
+        await EventRepository.save(this.eventForm);
         this.$router.go(-1);
       } catch (err) {
         const response = JSON.parse(err.request.response);
