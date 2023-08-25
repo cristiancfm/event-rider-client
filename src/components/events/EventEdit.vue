@@ -302,14 +302,22 @@
                 Cancel Event...
               </button>
             </span>
-            <button
-              class="btn btn-danger"
-              @click.prevent
-              data-bs-toggle="modal"
-              data-bs-target="#deleteEventModal"
+            <span
+              v-if="
+                event.status === 'UNREVIEWED' ||
+                event.status === 'REJECTED' ||
+                isAdmin
+              "
             >
-              Delete Event...
-            </button>
+              <button
+                class="btn btn-danger"
+                @click.prevent
+                data-bs-toggle="modal"
+                data-bs-target="#deleteEventModal"
+              >
+                Delete Event...
+              </button>
+            </span>
           </div>
           <div class="col-6">
             <ImageSelector
@@ -454,7 +462,7 @@
           </button>
           <button
             type="button"
-            class="btn btn-danger"
+            class="btn btn-warning"
             data-bs-dismiss="modal"
             @click="cancelEvent"
           >
