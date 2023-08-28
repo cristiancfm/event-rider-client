@@ -1,6 +1,18 @@
 <template>
   <div class="m-2">
-    <form @submit.prevent="emitFilters">
+    <p>
+      <button
+        class="btn btn-secondary btn-collapse"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#collapseFilters"
+        aria-expanded="false"
+        aria-controls="collapseFilters"
+      >
+        Show Filters <i class="bi bi-caret-down-fill"></i>
+      </button>
+    </p>
+    <form class="collapse" id="collapseFilters" @submit.prevent="emitFilters">
       <fieldset
         class="reset-style bg-gradient bg-light"
         style="border-radius: 10px"
@@ -92,7 +104,7 @@
               </option>
             </select>
           </div>
-          <div class="col me-3" style="min-width: 150px">
+          <div class="col-12 col-sm me-3" style="min-width: 150px">
             <div class="form-check mt-4">
               <input
                 type="checkbox"
@@ -196,5 +208,14 @@ export default {
 <style scoped>
 .reset-style {
   all: revert;
+}
+@media (min-width: 768px) {
+  /* Styles for big screens */
+  #collapseFilters {
+    display: block; /* Show filters on big screens */
+  }
+  .btn-collapse {
+    display: none; /* Hide button on big screens */
+  }
 }
 </style>
