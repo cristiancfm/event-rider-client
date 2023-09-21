@@ -4,7 +4,7 @@
 **Event Rider** is a web application to manage and visualize events, which allows
 users to create and find events happening at a specific place in a simple way.
 
-![homepage](https://github.com/cristiancfm/tfg-client/assets/72354794/1c862767-b775-4135-9d97-f5f095d320a5)
+![homepage-screenshot](https://github.com/cristiancfm/tfg-client/assets/72354794/5f689a02-022c-4e89-a148-d2f77647dd8d)
 
 Users may filter events or view them using an interactive map, and also save events 
 into their profiles or get email notifications by subscribing to events and categories or 
