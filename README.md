@@ -18,7 +18,7 @@ Developed for my Bachelor's Final Project at the University of A Coruña (UDC).
 
 ## Dependencies
 Install the following dependencies:
-- NodeJS
+- NodeJS 16.20
 
 ## Project setup
 ```
